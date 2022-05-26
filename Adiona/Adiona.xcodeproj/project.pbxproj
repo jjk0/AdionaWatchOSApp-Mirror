@@ -1,0 +1,808 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		009BE46F284012480010A15F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009BE46E284012480010A15F /* HealthKit.framework */; };
+		00A5DCDE283FD26500147766 /* SessionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDD283FD26500147766 /* SessionList.swift */; };
+		00A5DCE0283FD2E500147766 /* SessionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDF283FD2E500147766 /* SessionDetail.swift */; };
+		00A5DCE2283FD4E600147766 /* SessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE1283FD4E600147766 /* SessionRow.swift */; };
+		00A5DCE8283FE2A300147766 /* BackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE7283FE2A300147766 /* BackgroundService.swift */; };
+		00A5DCEA283FE5CD00147766 /* BackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */; };
+		00A5DCEC283FE5EF00147766 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */; };
+		00A5DCEE283FE64C00147766 /* UrlDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCED283FE64C00147766 /* UrlDownloader.swift */; };
+		00B046A1283FC2EF00C95D9A /* Adiona.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00B046A0283FC2EF00C95D9A /* Adiona.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00B046A6283FC2F000C95D9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B046A5283FC2F000C95D9A /* Assets.xcassets */; };
+		00B046AC283FC2F000C95D9A /* Adiona WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00B046B1283FC2F000C95D9A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B0283FC2F000C95D9A /* ContentView.swift */; };
+		00B046B3283FC2F000C95D9A /* AdionaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B2283FC2F000C95D9A /* AdionaApp.swift */; };
+		00B046B5283FC2F000C95D9A /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B4283FC2F000C95D9A /* ComplicationController.swift */; };
+		00B046B7283FC2F000C95D9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B046B6283FC2F000C95D9A /* Assets.xcassets */; };
+		00B046BA283FC2F000C95D9A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B046B9283FC2F000C95D9A /* Preview Assets.xcassets */; };
+		00B046C5283FC2F100C95D9A /* AdionaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046C4283FC2F100C95D9A /* AdionaTests.swift */; };
+		00B046E6283FC36500C95D9A /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E5283FC36500C95D9A /* ComplicationViews.swift */; };
+		00B046EA283FC39300C95D9A /* UIImage+Lozenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */; };
+		00B046EB283FC39300C95D9A /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E9283FC39300C95D9A /* UIColor+Hex.swift */; };
+		00B046F0283FC3B500C95D9A /* SessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046EE283FC3B500C95D9A /* SessionData.swift */; };
+		00B046F1283FC3B500C95D9A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046EF283FC3B500C95D9A /* Session.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		00B046A2283FC2EF00C95D9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00B04696283FC2EF00C95D9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 00B0469F283FC2EF00C95D9A;
+			remoteInfo = "Adiona WatchKit App";
+		};
+		00B046AD283FC2F000C95D9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00B04696283FC2EF00C95D9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 00B046AA283FC2F000C95D9A;
+			remoteInfo = "Adiona WatchKit Extension";
+		};
+		00B046C1283FC2F100C95D9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00B04696283FC2EF00C95D9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 00B046AA283FC2F000C95D9A;
+			remoteInfo = "Adiona WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		00B046D7283FC2F100C95D9A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				00B046AC283FC2F000C95D9A /* Adiona WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00B046DB283FC2F100C95D9A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				00B046A1283FC2EF00C95D9A /* Adiona.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		009BE46C284012480010A15F /* Adiona WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Adiona WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		009BE46E284012480010A15F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		00A5DCDD283FD26500147766 /* SessionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionList.swift; sourceTree = "<group>"; };
+		00A5DCDF283FD2E500147766 /* SessionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetail.swift; sourceTree = "<group>"; };
+		00A5DCE1283FD4E600147766 /* SessionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRow.swift; sourceTree = "<group>"; };
+		00A5DCE7283FE2A300147766 /* BackgroundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundService.swift; sourceTree = "<group>"; };
+		00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundWorker.swift; sourceTree = "<group>"; };
+		00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		00A5DCED283FE64C00147766 /* UrlDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlDownloader.swift; sourceTree = "<group>"; };
+		00B0469C283FC2EF00C95D9A /* Adiona.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adiona.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00B046A0283FC2EF00C95D9A /* Adiona.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adiona.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00B046A5283FC2F000C95D9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Adiona WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00B046B0283FC2F000C95D9A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		00B046B2283FC2F000C95D9A /* AdionaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdionaApp.swift; sourceTree = "<group>"; };
+		00B046B4283FC2F000C95D9A /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		00B046B6283FC2F000C95D9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00B046B9283FC2F000C95D9A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		00B046BB283FC2F000C95D9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00B046C0283FC2F100C95D9A /* AdionaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdionaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00B046C4283FC2F100C95D9A /* AdionaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdionaTests.swift; sourceTree = "<group>"; };
+		00B046E5283FC36500C95D9A /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
+		00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Lozenge.swift"; sourceTree = "<group>"; };
+		00B046E9283FC39300C95D9A /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		00B046EE283FC3B500C95D9A /* SessionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionData.swift; sourceTree = "<group>"; };
+		00B046EF283FC3B500C95D9A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00B046A8283FC2F000C95D9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				009BE46F284012480010A15F /* HealthKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00B046BD283FC2F100C95D9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		009BE46D284012480010A15F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				009BE46E284012480010A15F /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		00A5DCE3283FDD0300147766 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				00A5DCE5283FDD2700147766 /* Sessions */,
+				00A5DCE4283FDD1800147766 /* Complications */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		00A5DCE4283FDD1800147766 /* Complications */ = {
+			isa = PBXGroup;
+			children = (
+				00B046E5283FC36500C95D9A /* ComplicationViews.swift */,
+			);
+			path = Complications;
+			sourceTree = "<group>";
+		};
+		00A5DCE5283FDD2700147766 /* Sessions */ = {
+			isa = PBXGroup;
+			children = (
+				00B046B0283FC2F000C95D9A /* ContentView.swift */,
+				00A5DCDD283FD26500147766 /* SessionList.swift */,
+				00A5DCE1283FD4E600147766 /* SessionRow.swift */,
+				00A5DCDF283FD2E500147766 /* SessionDetail.swift */,
+			);
+			path = Sessions;
+			sourceTree = "<group>";
+		};
+		00A5DCE6283FE28B00147766 /* Background Service */ = {
+			isa = PBXGroup;
+			children = (
+				00A5DCE7283FE2A300147766 /* BackgroundService.swift */,
+				00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */,
+				00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */,
+				00A5DCED283FE64C00147766 /* UrlDownloader.swift */,
+			);
+			path = "Background Service";
+			sourceTree = "<group>";
+		};
+		00B04695283FC2EF00C95D9A = {
+			isa = PBXGroup;
+			children = (
+				00B046A4283FC2EF00C95D9A /* Adiona WatchKit App */,
+				00B046AF283FC2F000C95D9A /* Adiona WatchKit Extension */,
+				00B046C3283FC2F100C95D9A /* AdionaTests */,
+				00B0469D283FC2EF00C95D9A /* Products */,
+				009BE46D284012480010A15F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		00B0469D283FC2EF00C95D9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00B0469C283FC2EF00C95D9A /* Adiona.app */,
+				00B046A0283FC2EF00C95D9A /* Adiona.app */,
+				00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */,
+				00B046C0283FC2F100C95D9A /* AdionaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00B046A4283FC2EF00C95D9A /* Adiona WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				00A5DCE6283FE28B00147766 /* Background Service */,
+				00B046ED283FC3AA00C95D9A /* Model */,
+				00B046E7283FC37D00C95D9A /* Helpers */,
+				00B046A5283FC2F000C95D9A /* Assets.xcassets */,
+			);
+			path = "Adiona WatchKit App";
+			sourceTree = "<group>";
+		};
+		00B046AF283FC2F000C95D9A /* Adiona WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				009BE46C284012480010A15F /* Adiona WatchKit Extension.entitlements */,
+				00B046B2283FC2F000C95D9A /* AdionaApp.swift */,
+				00B046B4283FC2F000C95D9A /* ComplicationController.swift */,
+				00A5DCE3283FDD0300147766 /* Views */,
+				00B046B6283FC2F000C95D9A /* Assets.xcassets */,
+				00B046BB283FC2F000C95D9A /* Info.plist */,
+				00B046B8283FC2F000C95D9A /* Preview Content */,
+			);
+			path = "Adiona WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		00B046B8283FC2F000C95D9A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				00B046B9283FC2F000C95D9A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		00B046C3283FC2F100C95D9A /* AdionaTests */ = {
+			isa = PBXGroup;
+			children = (
+				00B046C4283FC2F100C95D9A /* AdionaTests.swift */,
+			);
+			path = AdionaTests;
+			sourceTree = "<group>";
+		};
+		00B046E7283FC37D00C95D9A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				00B046E9283FC39300C95D9A /* UIColor+Hex.swift */,
+				00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		00B046ED283FC3AA00C95D9A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				00B046EF283FC3B500C95D9A /* Session.swift */,
+				00B046EE283FC3B500C95D9A /* SessionData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00B0469B283FC2EF00C95D9A /* Adiona */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00B046DC283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "Adiona" */;
+			buildPhases = (
+				00B0469A283FC2EF00C95D9A /* Resources */,
+				00B046DB283FC2F100C95D9A /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				00B046A3283FC2EF00C95D9A /* PBXTargetDependency */,
+			);
+			name = Adiona;
+			productName = Adiona;
+			productReference = 00B0469C283FC2EF00C95D9A /* Adiona.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		00B0469F283FC2EF00C95D9A /* Adiona WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00B046D8283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "Adiona WatchKit App" */;
+			buildPhases = (
+				00B0469E283FC2EF00C95D9A /* Resources */,
+				00B046D7283FC2F100C95D9A /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				00B046AE283FC2F000C95D9A /* PBXTargetDependency */,
+			);
+			name = "Adiona WatchKit App";
+			productName = "Adiona WatchKit App";
+			productReference = 00B046A0283FC2EF00C95D9A /* Adiona.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		00B046AA283FC2F000C95D9A /* Adiona WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00B046D4283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "Adiona WatchKit Extension" */;
+			buildPhases = (
+				00B046A7283FC2F000C95D9A /* Sources */,
+				00B046A8283FC2F000C95D9A /* Frameworks */,
+				00B046A9283FC2F000C95D9A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Adiona WatchKit Extension";
+			productName = "Adiona WatchKit Extension";
+			productReference = 00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+		00B046BF283FC2F100C95D9A /* AdionaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00B046DF283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "AdionaTests" */;
+			buildPhases = (
+				00B046BC283FC2F100C95D9A /* Sources */,
+				00B046BD283FC2F100C95D9A /* Frameworks */,
+				00B046BE283FC2F100C95D9A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				00B046C2283FC2F100C95D9A /* PBXTargetDependency */,
+			);
+			name = AdionaTests;
+			productName = AdionaTests;
+			productReference = 00B046C0283FC2F100C95D9A /* AdionaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		00B04696283FC2EF00C95D9A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					00B0469B283FC2EF00C95D9A = {
+						CreatedOnToolsVersion = 13.4;
+					};
+					00B0469F283FC2EF00C95D9A = {
+						CreatedOnToolsVersion = 13.4;
+					};
+					00B046AA283FC2F000C95D9A = {
+						CreatedOnToolsVersion = 13.4;
+					};
+					00B046BF283FC2F100C95D9A = {
+						CreatedOnToolsVersion = 13.4;
+						TestTargetID = 00B046AA283FC2F000C95D9A;
+					};
+				};
+			};
+			buildConfigurationList = 00B04699283FC2EF00C95D9A /* Build configuration list for PBXProject "Adiona" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 00B04695283FC2EF00C95D9A;
+			productRefGroup = 00B0469D283FC2EF00C95D9A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00B0469B283FC2EF00C95D9A /* Adiona */,
+				00B0469F283FC2EF00C95D9A /* Adiona WatchKit App */,
+				00B046AA283FC2F000C95D9A /* Adiona WatchKit Extension */,
+				00B046BF283FC2F100C95D9A /* AdionaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		00B0469A283FC2EF00C95D9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00B0469E283FC2EF00C95D9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00B046A6283FC2F000C95D9A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00B046A9283FC2F000C95D9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00B046BA283FC2F000C95D9A /* Preview Assets.xcassets in Resources */,
+				00B046B7283FC2F000C95D9A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00B046BE283FC2F100C95D9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		00B046A7283FC2F000C95D9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00A5DCEA283FE5CD00147766 /* BackgroundWorker.swift in Sources */,
+				00B046EA283FC39300C95D9A /* UIImage+Lozenge.swift in Sources */,
+				00A5DCE0283FD2E500147766 /* SessionDetail.swift in Sources */,
+				00B046B1283FC2F000C95D9A /* ContentView.swift in Sources */,
+				00A5DCE8283FE2A300147766 /* BackgroundService.swift in Sources */,
+				00A5DCDE283FD26500147766 /* SessionList.swift in Sources */,
+				00B046B3283FC2F000C95D9A /* AdionaApp.swift in Sources */,
+				00A5DCE2283FD4E600147766 /* SessionRow.swift in Sources */,
+				00A5DCEC283FE5EF00147766 /* ExtensionDelegate.swift in Sources */,
+				00A5DCEE283FE64C00147766 /* UrlDownloader.swift in Sources */,
+				00B046F1283FC3B500C95D9A /* Session.swift in Sources */,
+				00B046EB283FC39300C95D9A /* UIColor+Hex.swift in Sources */,
+				00B046F0283FC3B500C95D9A /* SessionData.swift in Sources */,
+				00B046E6283FC36500C95D9A /* ComplicationViews.swift in Sources */,
+				00B046B5283FC2F000C95D9A /* ComplicationController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00B046BC283FC2F100C95D9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00B046C5283FC2F100C95D9A /* AdionaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		00B046A3283FC2EF00C95D9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 00B0469F283FC2EF00C95D9A /* Adiona WatchKit App */;
+			targetProxy = 00B046A2283FC2EF00C95D9A /* PBXContainerItemProxy */;
+		};
+		00B046AE283FC2F000C95D9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 00B046AA283FC2F000C95D9A /* Adiona WatchKit Extension */;
+			targetProxy = 00B046AD283FC2F000C95D9A /* PBXContainerItemProxy */;
+		};
+		00B046C2283FC2F100C95D9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 00B046AA283FC2F000C95D9A /* Adiona WatchKit Extension */;
+			targetProxy = 00B046C1283FC2F100C95D9A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		00B046D2283FC2F100C95D9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		00B046D3283FC2F100C95D9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		00B046D5283FC2F100C95D9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Adiona WatchKit Extension/Adiona WatchKit Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Adiona WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Adiona WatchKit Extension";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = Adiona_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.5;
+			};
+			name = Debug;
+		};
+		00B046D6283FC2F100C95D9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Adiona WatchKit Extension/Adiona WatchKit Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Adiona WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Adiona WatchKit Extension";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = Adiona_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.5;
+			};
+			name = Release;
+		};
+		00B046D9283FC2F100C95D9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IBSC_MODULE = Adiona_WatchKit_Extension;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp;
+				PRODUCT_NAME = Adiona;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.5;
+			};
+			name = Debug;
+		};
+		00B046DA283FC2F100C95D9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IBSC_MODULE = Adiona_WatchKit_Extension;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp;
+				PRODUCT_NAME = Adiona;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.5;
+			};
+			name = Release;
+		};
+		00B046DD283FC2F100C95D9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		00B046DE283FC2F100C95D9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		00B046E0283FC2F100C95D9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.AdionaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Adiona WatchKit Extension.appex/Adiona WatchKit Extension";
+				WATCHOS_DEPLOYMENT_TARGET = 8.5;
+			};
+			name = Debug;
+		};
+		00B046E1283FC2F100C95D9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.AdionaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Adiona WatchKit Extension.appex/Adiona WatchKit Extension";
+				WATCHOS_DEPLOYMENT_TARGET = 8.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00B04699283FC2EF00C95D9A /* Build configuration list for PBXProject "Adiona" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00B046D2283FC2F100C95D9A /* Debug */,
+				00B046D3283FC2F100C95D9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00B046D4283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "Adiona WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00B046D5283FC2F100C95D9A /* Debug */,
+				00B046D6283FC2F100C95D9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00B046D8283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "Adiona WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00B046D9283FC2F100C95D9A /* Debug */,
+				00B046DA283FC2F100C95D9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00B046DC283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "Adiona" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00B046DD283FC2F100C95D9A /* Debug */,
+				00B046DE283FC2F100C95D9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00B046DF283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "AdionaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00B046E0283FC2F100C95D9A /* Debug */,
+				00B046E1283FC2F100C95D9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 00B04696283FC2EF00C95D9A /* Project object */;
+}
