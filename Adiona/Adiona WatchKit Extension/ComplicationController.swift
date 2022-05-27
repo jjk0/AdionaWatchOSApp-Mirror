@@ -134,20 +134,20 @@ extension ComplicationController {
 
 extension ComplicationController {
     func makeUtilitarianLargeFlat(session: Session) -> CLKComplicationTemplateUtilitarianLargeFlat {
-        let textProvider = CLKTextProvider(format: "\(session.name) for \(session.rationalizedTimeRemaining())")
+        let textProvider = CLKTextProvider(format: "\(session.description) for \(session.timeRemaining())")
         let complication = CLKComplicationTemplateUtilitarianLargeFlat(
             textProvider: textProvider)
         return complication
     }
     
     func makeUtilitarianSmallFlat(session: Session) -> CLKComplicationTemplateUtilitarianSmallFlat {
-        let textProvider = CLKTextProvider(format: "\(session.rationalizedTimeRemaining())")
+        let textProvider = CLKTextProvider(format: "\(session.timeRemaining())")
         let imageProvider = CLKImageProvider(onePieceImage: UIImage(named: "uchicago")!)
         return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProvider, imageProvider: imageProvider)
     }
 
     func makeUtilitarianSmall(session: Session) -> CLKComplicationTemplateUtilitarianSmallRingText {
-        let textProvider = CLKTextProvider(format: "\(session.rationalizedTimeRemaining())")
+        let textProvider = CLKTextProvider(format: "\(session.timeRemaining())")
         return CLKComplicationTemplateUtilitarianSmallRingText(textProvider: textProvider, fillFraction: 0.3, ringStyle: .closed)
     }
 

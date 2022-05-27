@@ -19,7 +19,7 @@ struct SessionDetail: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text(session.name)
+                Text(session.description)
                     .font(.headline)
                     .lineLimit(0)
                 Divider()
@@ -29,7 +29,7 @@ struct SessionDetail: View {
                     .bold()
                     .lineLimit(0)
 
-                Text(session.rationalizedTimeRemaining())
+                Text(session.timeRemaining())
                     .font(.caption)
             }
             .padding(16)

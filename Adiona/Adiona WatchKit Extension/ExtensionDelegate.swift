@@ -1,6 +1,7 @@
 import ClockKit
 import HealthKit
 import WatchKit
+import Sentry
 
 let typesToRead: Set = [
     HKObjectType.workoutType(),
@@ -30,72 +31,30 @@ let typesToWrite: Set = [
     HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
     HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!,
     HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-
 ]
 
-
-var healthStore: HKHealthStore!
+var healthStore: HKHealthStore = {
+    let healthStore = HKHealthStore()
+    healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { _, _ in
+        NotificationCenter.default.post(name: .healthKitPermissionsChanged, object: nil)
+    }
+    return healthStore
+}()
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate {
     private let backgroundWorker = BackgroundWorker()
     private var downloads: [String: UrlDownloader] = [:]
 
     func applicationDidFinishLaunching() {
+        SentrySDK.start { options in
+            options.dsn = "https://eadde9c57a2542d5a123b338aacd0441@o824011.ingest.sentry.io/6447191"
+            options.debug = true // Enabled debug when first installing is always helpful
+            options.sessionTrackingIntervalMillis = 6000
+        }
+
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
             self.backgroundWorker.schedule(firstTime: true)
         }
-        
-        requestAccessToHealthKit()
-    }
-
-    private func requestAccessToHealthKit() {
-//        let healthKitTypesToWrite: Set<HKSampleType> = [
-//            HKObjectType.workoutType(),
-//            HKSeriesType.workoutRoute(),
-//            HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-//            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-//            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-//            HKObjectType.quantityType(forIdentifier: .bodyMass)!,
-//            HKObjectType.quantityType(forIdentifier: .vo2Max)!,
-//            HKObjectType.quantityType(forIdentifier: .stepCount)!,
-//            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!
-//        ]
-
-//        let healthKitTypesToRead: Set<HKObjectType> = [
-//            HKObjectType.workoutType(),
-//            HKSeriesType.workoutRoute(),
-//            HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-//            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-//            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-//            HKObjectType.characteristicType(forIdentifier: .dateOfBirth)!,
-//            HKObjectType.quantityType(forIdentifier: .bodyMass)!,
-//            HKObjectType.quantityType(forIdentifier: .vo2Max)!,
-//            HKObjectType.quantityType(forIdentifier: .stepCount)!,
-//            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!
-//        ]
-
-        healthStore = HKHealthStore()
-
-        let authorizationStatus = healthStore.authorizationStatus(for: HKSampleType.workoutType())
-
-        switch authorizationStatus {
-        case .sharingAuthorized: print("sharing authorized")
-            print("sharing authorized this message is from Watch's extension delegate")
-
-        case .sharingDenied: print("sharing denied")
-            healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { _, _ in
-                print("Successful HealthKit Authorization from Watch's extension Delegate")
-            }
-
-        default: print("not determined")
-            healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { _, _ in
-                print("Successful HealthKit Authorization from Watch's extension Delegate")
-            }
-        }
-    }
-
-    override init() {
-        super.init()
     }
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		009BE46F284012480010A15F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009BE46E284012480010A15F /* HealthKit.framework */; };
+		009BE4732840F9330010A15F /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4722840F9330010A15F /* ErrorHandling.swift */; };
+		009BE4752840F9C30010A15F /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4742840F9C30010A15F /* Notifications.swift */; };
+		009BE4772840FA630010A15F /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 009BE4762840FA630010A15F /* Sentry */; };
+		009BE4792840FF210010A15F /* WorkouFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4782840FF210010A15F /* WorkouFactory.swift */; };
 		00A5DCDE283FD26500147766 /* SessionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDD283FD26500147766 /* SessionList.swift */; };
 		00A5DCE0283FD2E500147766 /* SessionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDF283FD2E500147766 /* SessionDetail.swift */; };
 		00A5DCE2283FD4E600147766 /* SessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE1283FD4E600147766 /* SessionRow.swift */; };
@@ -83,6 +87,9 @@
 /* Begin PBXFileReference section */
 		009BE46C284012480010A15F /* Adiona WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Adiona WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		009BE46E284012480010A15F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		009BE4722840F9330010A15F /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		009BE4742840F9C30010A15F /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		009BE4782840FF210010A15F /* WorkouFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkouFactory.swift; sourceTree = "<group>"; };
 		00A5DCDD283FD26500147766 /* SessionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionList.swift; sourceTree = "<group>"; };
 		00A5DCDF283FD2E500147766 /* SessionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetail.swift; sourceTree = "<group>"; };
 		00A5DCE1283FD4E600147766 /* SessionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRow.swift; sourceTree = "<group>"; };
@@ -115,6 +122,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				009BE46F284012480010A15F /* HealthKit.framework in Frameworks */,
+				009BE4772840FA630010A15F /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,7 +177,6 @@
 			children = (
 				00A5DCE7283FE2A300147766 /* BackgroundService.swift */,
 				00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */,
-				00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */,
 				00A5DCED283FE64C00147766 /* UrlDownloader.swift */,
 			);
 			path = "Background Service";
@@ -213,6 +220,7 @@
 			children = (
 				009BE46C284012480010A15F /* Adiona WatchKit Extension.entitlements */,
 				00B046B2283FC2F000C95D9A /* AdionaApp.swift */,
+				00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */,
 				00B046B4283FC2F000C95D9A /* ComplicationController.swift */,
 				00A5DCE3283FDD0300147766 /* Views */,
 				00B046B6283FC2F000C95D9A /* Assets.xcassets */,
@@ -243,6 +251,9 @@
 			children = (
 				00B046E9283FC39300C95D9A /* UIColor+Hex.swift */,
 				00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */,
+				009BE4722840F9330010A15F /* ErrorHandling.swift */,
+				009BE4742840F9C30010A15F /* Notifications.swift */,
+				009BE4782840FF210010A15F /* WorkouFactory.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -272,6 +283,9 @@
 				00B046A3283FC2EF00C95D9A /* PBXTargetDependency */,
 			);
 			name = Adiona;
+			packageProductDependencies = (
+				009BE4712840F80E0010A15F /* Sentry */,
+			);
 			productName = Adiona;
 			productReference = 00B0469C283FC2EF00C95D9A /* Adiona.app */;
 			productType = "com.apple.product-type.application.watchapp2-container";
@@ -306,6 +320,9 @@
 			dependencies = (
 			);
 			name = "Adiona WatchKit Extension";
+			packageProductDependencies = (
+				009BE4762840FA630010A15F /* Sentry */,
+			);
 			productName = "Adiona WatchKit Extension";
 			productReference = 00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
@@ -362,6 +379,9 @@
 				Base,
 			);
 			mainGroup = 00B04695283FC2EF00C95D9A;
+			packageReferences = (
+				009BE4702840F80E0010A15F /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
 			productRefGroup = 00B0469D283FC2EF00C95D9A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -424,8 +444,11 @@
 				00A5DCEC283FE5EF00147766 /* ExtensionDelegate.swift in Sources */,
 				00A5DCEE283FE64C00147766 /* UrlDownloader.swift in Sources */,
 				00B046F1283FC3B500C95D9A /* Session.swift in Sources */,
+				009BE4792840FF210010A15F /* WorkouFactory.swift in Sources */,
 				00B046EB283FC39300C95D9A /* UIColor+Hex.swift in Sources */,
 				00B046F0283FC3B500C95D9A /* SessionData.swift in Sources */,
+				009BE4752840F9C30010A15F /* Notifications.swift in Sources */,
+				009BE4732840F9330010A15F /* ErrorHandling.swift in Sources */,
 				00B046E6283FC36500C95D9A /* ComplicationViews.swift in Sources */,
 				00B046B5283FC2F000C95D9A /* ComplicationController.swift in Sources */,
 			);
@@ -803,6 +826,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		009BE4702840F80E0010A15F /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		009BE4712840F80E0010A15F /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 009BE4702840F80E0010A15F /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		009BE4762840FA630010A15F /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 009BE4702840F80E0010A15F /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 00B04696283FC2EF00C95D9A /* Project object */;
 }

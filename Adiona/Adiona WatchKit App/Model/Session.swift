@@ -3,44 +3,10 @@ import SwiftUI
 //
 
 var dummyData: Session = {
-        Session(
-            name: "Collecting Data",
-            longDescription: "In progress...",
-            workoutSession: WorkoutFactory().workout())
+    Session()
 }()
 
-struct WorkoutFactory {
-    func workout() -> HKWorkoutSession {
-        guard let healthStore = healthStore else {
-            fatalError("Health Store not established")
-        }
-
-        let configuration = HKWorkoutConfiguration()
-        configuration.activityType = .other
-        configuration.locationType = .indoor
-
-        do {
-            let authorizationStatus = healthStore.authorizationStatus(for: HKSampleType.workoutType())
-
-            let session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
-            let builder = session.associatedWorkoutBuilder()
-            builder.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
-                                                         workoutConfiguration: configuration)
-            
-            session.startActivity(with: Date())
-            builder.beginCollection(withStart: Date()) { (success, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-            }
-
-            return session
-        } catch {
-            // Handle failure here.
-            fatalError("Unable to create workout session")
-        }
-    }
-    
+class SessionDelegate: NSObject, HKLiveWorkoutBuilderDelegate {
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
         for type in collectedTypes {
             guard let quantityType = type as? HKQuantityType else {
@@ -57,40 +23,70 @@ struct WorkoutFactory {
         }
     }
 
+    func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
+    }
 }
 
-struct Session: Identifiable {
+struct Session: Identifiable, CustomStringConvertible  {
     var id = UUID()
-    var name: String
-    var longDescription: String
-    var workoutSession: HKWorkoutSession
+    var description: String {
+        date.description
+    }
+    
+    var workoutDelegate = SessionDelegate()
+    
+    private var workoutSession: HKWorkoutSession
     var date: Date {
         workoutSession.startDate ?? Date()
+    }
+    
+    init() {
+        workoutSession = WorkoutFactory().workout()
+        workoutSession.associatedWorkoutBuilder().delegate = workoutDelegate
+    }
+}
+
+extension Session {
+    func start() {
+        workoutSession.startActivity(with: Date())
+        workoutSession.associatedWorkoutBuilder().beginCollection(withStart: Date()) { (success, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func pause() {
+        workoutSession.pause()
+    }
+    
+    func end() {
+        workoutSession.end()
     }
 }
 
 extension Session {
     func minutesRemaining() -> Double {
         guard let date = workoutSession.startDate else { return 0.0 }
-        return (15 * 60) - date.timeIntervalSinceNow / 60.0
+        return (Session.fifteenMinutes + date.timeIntervalSinceNow) / 60.0
     }
 
     func progress() -> Double {
         let remaining = minutesRemaining()
-        return max(0, min(1.0, remaining > 0 ? remaining / (15 * 60) : 0))
+        return max(0, min(0, remaining > 0 ? remaining / Session.fifteenMinutes : 0))
     }
 
-    func rationalizedFractionCompleted() -> Double {
+    func fractionComplete() -> Double {
         progress()
     }
 
-    func rationalizedTimeRemaining() -> String {
+    func timeRemaining() -> String {
         let mins = minutesRemaining()
-        return "\(mins)m"
+        return "\(Int(mins))m"
     }
 }
 
 extension Session {
     static let oneHour = 3600.0
-
+    static let fifteenMinutes = 900.0
 }

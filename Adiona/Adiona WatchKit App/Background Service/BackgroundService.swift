@@ -29,8 +29,7 @@ class BackgroundService: NSObject {
         do {
             try content.write(to: cachesFolderURL)
             let backgroundTask = urlSession.uploadTask(with: URLRequest(url: url), fromFile: cachesFolderURL)
-            backgroundTask.delegate = self
-            backgroundTask.earliestBeginDate = Date().addingTimeInterval(15 * 60)
+            backgroundTask.earliestBeginDate = Date().addingTimeInterval(Session.fifteenMinutes)
             backgroundTask.resume()
         } catch {
             print(error)
@@ -43,14 +42,13 @@ class BackgroundService: NSObject {
         
         let _ = URLSession(configuration: configuration,
                            delegate: self, delegateQueue: nil)
-        
     }
 }
 
 extension BackgroundService : URLSessionTaskDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        self.pendingBackgroundTasks.forEach {
-            $0.setTaskCompletedWithSnapshot(false)
-        }
+//        self.pendingBackgroundTasks.forEach {
+//            $0.setTaskCompletedWithSnapshot(false)
+//        }
     }
 }

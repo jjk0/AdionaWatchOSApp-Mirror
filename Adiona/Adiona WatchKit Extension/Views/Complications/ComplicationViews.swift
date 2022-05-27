@@ -14,8 +14,8 @@ struct ComplicationStandard: View {
     var body: some View {
         ZStack {
             ProgressView(
-                "\(session.rationalizedTimeRemaining())",
-                value: 1.0 - session.rationalizedFractionCompleted(),
+                "\(session.timeRemaining())",
+                value: 1.0 - session.fractionComplete(),
                 total: 1.0)
                 .progressViewStyle(
                     CircularProgressViewStyle(tint: Color.accentColor))
@@ -29,8 +29,8 @@ struct ComplicationViewCircular: View {
     var body: some View {
         ZStack {
             ProgressView(
-                "\(session.rationalizedTimeRemaining())",
-                value: 1.0 - session.rationalizedFractionCompleted(),
+                "\(session.timeRemaining())",
+                value: session.fractionComplete(),
                 total: 1.0)
                 .progressViewStyle(
                     CircularProgressViewStyle(tint: Color.accentColor))
@@ -60,7 +60,7 @@ struct ComplicationViewCornerCircular: View {
                 Circle()
                     .fill(Color.white)
             }
-            Text("\(session.rationalizedTimeRemaining())")
+            Text("\(session.timeRemaining())")
                 .foregroundColor(Color.black)
                 .complicationForeground()
             Circle()
@@ -77,15 +77,14 @@ struct ComplicationViewRectangular: View {
         HStack(spacing: 10) {
             ComplicationViewCircular(session: session)
             VStack(alignment: .leading) {
-                Text(session.name)
+                Text(session.description)
                     .font(.title)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
                 HStack(spacing: 4.0) {
                     Spacer()
-                    Text("at")
-                    Text(session.date, style: .time)
+                    Text(session.timeRemaining())
                 }
                 .font(.footnote)
                 .complicationForeground()
@@ -125,19 +124,19 @@ struct ComplicationViewExtraLargeCircular: View {
             Circle()
                 .foregroundColor(Color.accentColor)
             ProgressView(
-                value: session.rationalizedFractionCompleted())
+                value: session.fractionComplete())
                 .progressViewStyle(ProgressArc(Color.white))
                 .complicationForeground()
             VStack(alignment: .center, spacing: 3.0) {
-                Text("In \(Text(session.date, style: .relative))")
+                Text(session.timeRemaining())
                     .font(.footnote)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)
-                Text(session.name)
+                Text(session.description)
                     .font(.headline)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)
-                Text("at \(Text(session.date, style: .time))")
+                Text(session.timeRemaining())
                     .font(.footnote)
             }
             .multilineTextAlignment(.center)
@@ -168,6 +167,7 @@ struct ProgressArc<S>: ProgressViewStyle where S: ShapeStyle {
 }
 
 struct ComplicationViews_Previews: PreviewProvider {
+    
     static var previews: some View {
         Group {
             CLKComplicationTemplateGraphicCircularView(

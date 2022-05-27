@@ -12,7 +12,7 @@ struct SessionRow: View {
 
     var body: some View {
         HStack {
-            Text(session.name)
+            Text(session.description)
         }
     }
 }
