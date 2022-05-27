@@ -8,15 +8,23 @@
 import SwiftUI
 import HealthKit
 
-struct SessionDetail: View {
-    @EnvironmentObject var sessionData: SessionData
-    var session: Session
-
-    var sessionIndex: Int {
-        sessionData.sessions.firstIndex(where: { $0.id == session.id })!
-    }
+// A view that shows the data for one Restaurant.
+struct ActionRow: View {
+    var action: Action
 
     var body: some View {
+        Button(action.name) {
+            action.block()
+        }
+    }
+}
+
+struct SessionDetail: View {
+    @EnvironmentObject var sessionData: SessionData
+    @StateObject var session: Session
+
+    var body: some View {
+
         ScrollView {
             VStack {
                 Text(session.description)
@@ -24,17 +32,15 @@ struct SessionDetail: View {
                     .lineLimit(0)
                 Divider()
 
-                Text(session.date.description)
+                Text("\(session.timeRemaining()) until Upload")
                     .font(.caption)
-                    .bold()
-                    .lineLimit(0)
-
-                Text(session.timeRemaining())
-                    .font(.caption)
+                
+            }.padding(16)
+            
+            ForEach(session.validActions(), id: \.self) { action in
+                ActionRow(action: action)
             }
-            .padding(16)
         }
-        .navigationTitle("Sessions")
     }
 }
 

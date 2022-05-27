@@ -48,7 +48,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
     func applicationDidFinishLaunching() {
         SentrySDK.start { options in
             options.dsn = "https://eadde9c57a2542d5a123b338aacd0441@o824011.ingest.sentry.io/6447191"
-            options.debug = true // Enabled debug when first installing is always helpful
+            options.debug = false // Enabled debug when first installing is always helpful
             options.sessionTrackingIntervalMillis = 6000
         }
 

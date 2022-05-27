@@ -45,7 +45,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         for complication: CLKComplication,
         withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void)
     {
-        if let next = dataController.nextSession(from: Date()),
+        if let next = dataController.activeSession,
            let ctemplate = makeTemplate(for: next, complication: complication)
         {
             let entry = CLKComplicationTimelineEntry(
@@ -63,28 +63,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         limit: Int,
         withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void)
     {
-        let timeline = dataController.sessions(after: date)
-        guard !timeline.isEmpty else {
-            handler(nil)
-            return
-        }
-
-        let fiveMinutes = 5.0 * 60.0
         var entries: [CLKComplicationTimelineEntry] = []
-        var current = date
-        let endDate = (timeline.last?.date ?? date).addingTimeInterval(Session.oneHour)
-
-        while current.compare(endDate) == .orderedAscending, entries.count < limit {
-            if let next = dataController.nextSession(from: current),
+        if let next = dataController.activeSession,
                let ctemplate = makeTemplate(for: next, complication: complication)
             {
                 let entry = CLKComplicationTimelineEntry(
-                    date: current,
+                    date: next.date,
                     complicationTemplate: ctemplate)
                 entries.append(entry)
             }
-            current = current.addingTimeInterval(fiveMinutes)
-        }
+        
         handler(entries)
     }
 

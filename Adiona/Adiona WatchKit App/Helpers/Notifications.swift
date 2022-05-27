@@ -9,4 +9,5 @@ import Foundation
 
 public extension NSNotification.Name {
     static let healthKitPermissionsChanged = NSNotification.Name("healthkit.permissions.changed")
+    static let workoutStateChanged = NSNotification.Name("healthkit.workout.state.changed")
 }

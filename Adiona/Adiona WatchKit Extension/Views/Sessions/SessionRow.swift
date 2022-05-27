@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SessionRow: View {
-    var session: Session
+    @StateObject var session: Session
 
     var body: some View {
         HStack {
