@@ -1,3 +1,4 @@
+import ClockKit
 import HealthKit
 import Sentry
 import SwiftUI
@@ -6,7 +7,99 @@ var dummyData: Session = {
     Session()
 }()
 
-class SessionDelegate: NSObject, HKLiveWorkoutBuilderDelegate, HKWorkoutSessionDelegate {
+class Session: NSObject, Identifiable, ObservableObject, HKLiveWorkoutBuilderDelegate, HKWorkoutSessionDelegate {
+    var id = UUID()
+    @Published var stateDescription: String = "Unknown"
+    @Published var percentageComplete: Double = 0
+
+    var timer: Timer?
+    var workoutSession: HKWorkoutSession
+    var date: Date {
+        workoutSession.startDate ?? Date()
+    }
+
+    override init() {
+        workoutSession = WorkoutFactory().workout()
+
+        super.init()
+
+        stateDescription = "Unknown"
+        workoutSession.delegate = self
+        workoutSession.associatedWorkoutBuilder().delegate = self
+        updateDescription()
+        
+        NotificationCenter.default.addObserver(forName: .workoutStateChanged, object: nil, queue: nil) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.updateDescription()
+                
+                if self?.workoutSession.state == .stopped {
+                    self?.workoutSession.end()
+                }
+                
+                if self?.workoutSession.state == .ended {
+                    self?.workoutSession.associatedWorkoutBuilder().endCollection(withEnd: Date()) { (success, error) in
+                        self?.workoutSession.associatedWorkoutBuilder().finishWorkout { workout, error in
+                            Serializer.serialize(workout: workout)
+                        }
+                    }
+                }
+            }
+        }
+
+        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { [weak self] _ in
+            self?.percentageComplete = self?.progress() ?? 0.0
+            self?.reloadComplication()
+        })
+    }
+
+    func reloadComplication() {
+        DispatchQueue.main.async {
+            let complicationServer = CLKComplicationServer.sharedInstance()
+            if let complications = complicationServer.activeComplications {
+                for complication in complications {
+                    complicationServer.reloadTimeline(for: complication)
+                }
+            }
+        }
+    }
+
+    func updateDescription() {
+        switch workoutSession.state {
+        case .prepared:
+            stateDescription = "Prepared"
+        case .notStarted:
+            stateDescription = "Not Started"
+        case .running:
+            stateDescription = "Running"
+        case .ended:
+            stateDescription = "Ended"
+        case .paused:
+            stateDescription = "Paused"
+        case .stopped:
+            stateDescription = "Stopped"
+        @unknown default:
+            stateDescription = "Unknown"
+        }
+
+        reloadComplication()
+    }
+}
+
+struct Action: Identifiable, Hashable {
+    static func == (lhs: Action, rhs: Action) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    let id = UUID()
+    let name: String
+    let block: () -> Void
+}
+
+extension Session {
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
         NotificationCenter.default.post(name: .workoutStateChanged, object: nil)
     }
@@ -16,87 +109,30 @@ class SessionDelegate: NSObject, HKLiveWorkoutBuilderDelegate, HKWorkoutSessionD
     }
 
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
-        for type in collectedTypes {
-            guard let quantityType = type as? HKQuantityType else {
-                return // Nothing to do.
-            }
+        for sampleType in collectedTypes {
+            if let quantityType = sampleType as? HKQuantityType {
+                guard let statistic = workoutBuilder.statistics(for: quantityType) else {
+                    continue
+                }
 
-            // Calculate statistics for the type.
-            let statistics = workoutBuilder.statistics(for: quantityType)
-            // let label = labelForQuantityType(quantityType)
+                guard let quantity = statistic.mostRecentQuantity() else {
+                    continue
+                }
 
-            DispatchQueue.main.async {
-                // Update the user interface.
+                print("\(quantityType) \(statistic) \(quantity)")
+                DispatchQueue.main.async {
+                    // update the UI based on the most recent quantitiy
+                }
+            } else if let quantityType = sampleType as? HKSeriesType {
+                print("SERIES: \(quantityType)")
+
+            } else {
+                print("OBJECT: \(sampleType)")
             }
         }
     }
 
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {}
-}
-
-class Session: Identifiable, CustomStringConvertible, ObservableObject {
-    var id = UUID()
-    @Published var description: String
-    @Published var percentageComplete: Double = 0
-
-    var workoutDelegate = SessionDelegate()
-    var timer: Timer?
-
-    private var workoutSession: HKWorkoutSession
-    var date: Date {
-        workoutSession.startDate ?? Date()
-    }
-
-    init() {
-        description = "Unknown"
-        workoutSession = WorkoutFactory().workout()
-        workoutSession.delegate = workoutDelegate
-        workoutSession.associatedWorkoutBuilder().delegate = workoutDelegate
-        updateDescription()
-
-        NotificationCenter.default.addObserver(forName: .workoutStateChanged, object: nil, queue: nil) { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.updateDescription()
-            }
-        }
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { [weak self] _ in
-            self?.percentageComplete = self?.progress() ?? 0.0
-        })
-    }
-
-    func updateDescription() {
-        switch workoutSession.state {
-        case .prepared:
-            description = "Prepared"
-        case .notStarted:
-            description = "Not Started"
-        case .running:
-            description = "Running"
-        case .ended:
-            description = "Ended"
-        case .paused:
-            description = "Paused"
-        case .stopped:
-            description = "Stopped"
-        @unknown default:
-            description = "Unknown"
-        }
-    }
-}
-
-struct Action: Identifiable, Hashable {
-    static func == (lhs: Action, rhs: Action) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    let id = UUID()
-    let name: String
-    let block: () -> Void
 }
 
 extension Session {
@@ -121,7 +157,10 @@ extension Session {
     }
 
     func end() {
-        workoutSession.end()
+        if workoutSession.state == .running {
+            workoutSession.stopActivity(with: Date())
+        }
+        
         updateDescription()
     }
 
@@ -164,9 +203,34 @@ extension Session {
         progress()
     }
 
-    func timeRemaining() -> String {
+    func timeRemaining(_ from: Date? = nil) -> String {
         let mins = minutesRemaining()
         return "\(Int(mins))m"
+    }
+
+    private func startTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+
+        return dateFormatter.string(from: date)
+    }
+
+    private func endTime() -> String? {
+        guard let date = workoutSession.endDate else {
+            return nil
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+
+        return dateFormatter.string(from: date)
+    }
+
+    func dateRange() -> String {
+        let start = startTime()
+        let end = endTime()
+
+        return end == nil ? start : "\(start) - \(end!)"
     }
 }
 

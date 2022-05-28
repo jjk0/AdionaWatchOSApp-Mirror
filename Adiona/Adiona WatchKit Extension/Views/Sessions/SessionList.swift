@@ -12,8 +12,16 @@ struct SessionList: View {
 
     var body: some View {
         NavigationView {
+            if let session = sessionData.activeSession {
+                NavigationLink {
+                    SessionDetail(session: session)
+                } label: {
+                    SessionRow(session: session)
+                }
+            }
+            Divider()
             List {
-                ForEach(sessionData.sessions) { session in
+                ForEach(sessionData.backlog) { session in
                     NavigationLink {
                         SessionDetail(session: session)
                     } label: {

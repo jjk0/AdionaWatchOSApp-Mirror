@@ -7,11 +7,14 @@ let typesToRead: Set = [
     HKObjectType.workoutType(),
     HKSeriesType.workoutRoute(),
     HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+    HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
+    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
     HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
     HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
     HKQuantityType.quantityType(forIdentifier: .appleMoveTime)!,
     HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
     HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
+    HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
     HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
     HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
     HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
@@ -26,6 +29,7 @@ let typesToWrite: Set = [
     HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
     HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
     HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
+    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
     HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
     HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
     HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
@@ -55,6 +59,11 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
             self.backgroundWorker.schedule(firstTime: true)
         }
+        
+        SessionData.shared.activeSession = Session()
+        
+        NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { notification in
+        }
     }
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
@@ -68,7 +77,16 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
                     if updateComplications {
                         Self.updateActiveComplications()
                     }
-
+                    
+                    if let activeSession = SessionData.shared.activeSession {
+                        activeSession.end()
+                        SessionData.shared.addToBacklog(session: activeSession)
+                    }
+                    
+                    let nextSession = Session()
+                    SessionData.shared.activeSession = nextSession
+                    nextSession.start()
+                    
                     backgroundWorker.schedule()
                     task.setTaskCompletedWithSnapshot(false)
                 }

@@ -11,8 +11,11 @@ struct SessionRow: View {
     @StateObject var session: Session
 
     var body: some View {
-        HStack {
-            Text(session.description)
+        VStack(alignment: .leading) {
+            Text(session.stateDescription)
+            Text(session.dateRange())
+                .fontWeight(.light)
+                .font(.caption)
         }
     }
 }

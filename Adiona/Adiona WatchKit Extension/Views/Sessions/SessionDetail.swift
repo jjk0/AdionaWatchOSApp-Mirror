@@ -27,7 +27,7 @@ struct SessionDetail: View {
 
         ScrollView {
             VStack {
-                Text(session.description)
+                Text(session.stateDescription)
                     .font(.headline)
                     .lineLimit(0)
                 Divider()
@@ -47,12 +47,14 @@ struct SessionDetail: View {
 struct SessionDetail_Previews: PreviewProvider {
     static var previews: some View {
         let sessionData = SessionData()
+        sessionData.activeSession = Session()
+        
         return Group {
-            SessionDetail(session: sessionData.sessions[0])
+            SessionDetail(session: sessionData.activeSession!)
                 .environmentObject(sessionData)
                 .previewDevice("Apple Watch Series 5 - 44mm")
 
-            SessionDetail(session: sessionData.sessions[1])
+            SessionDetail(session: sessionData.activeSession!)
                 .environmentObject(sessionData)
                 .previewDevice("Apple Watch Series 5 - 40mm")
         }

@@ -77,7 +77,7 @@ struct ComplicationViewRectangular: View {
         HStack(spacing: 10) {
             ComplicationViewCircular(session: session)
             VStack(alignment: .leading) {
-                Text(session.description)
+                Text(session.stateDescription)
                     .font(.title)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)
@@ -132,7 +132,7 @@ struct ComplicationViewExtraLargeCircular: View {
                     .font(.footnote)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)
-                Text(session.description)
+                Text(session.stateDescription)
                     .font(.headline)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)

@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D3485392-2D69-48F7-B3B0-F7E970665C84"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Adiona WatchKit App/Background Service/BackgroundService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "urlSession(_:task:didCompleteWithError:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "286417B6-06B8-4A3F-8AC6-8F5AC0D7AA3E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -32,6 +16,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
             endingLineNumber = "94"
+            landmarkName = "handle(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "95D8C251-F9AD-4D37-959A-E5635198F30C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adiona WatchKit Extension/ExtensionDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "handle(_:)"
             landmarkType = "7">
          </BreakpointContent>

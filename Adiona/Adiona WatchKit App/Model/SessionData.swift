@@ -5,20 +5,16 @@ import Foundation
 
 class SessionData: ObservableObject {
     static var shared = SessionData()
-    @Published var sessions: [Session]
+    @Published var backlog = [Session]()
+    @Published var activeSession: Session?
 
-    init(sessions: [Session] = [Session()]) {
-        self.sessions = sessions
-    }
-
-    var activeSession: Session? {
-        orderedSessions.first
+    func addToBacklog(session: Session) {
+        backlog.append(session)
+        backlog.sort { lhs, rhs in
+            lhs.date > rhs.date
+        }
     }
     
-    var orderedSessions: [Session] {
-        return sessions.sorted { $0.date < $1.date }
-    }
-
-    func removeSession(session: Session) {
+    func removeFromBacklog(session: Session) {
     }
 }

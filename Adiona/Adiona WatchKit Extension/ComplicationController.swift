@@ -29,7 +29,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         for complication: CLKComplication,
         withHandler handler: @escaping (Date?) -> Void)
     {
-        handler(dataController.orderedSessions.last?.date)
+        if let next = dataController.activeSession {
+            handler(next.date.addingTimeInterval(Session.fifteenMinutes))
+        } else {
+            handler(nil)
+        }
     }
 
     func getPrivacyBehavior(
@@ -46,7 +50,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void)
     {
         if let next = dataController.activeSession,
-           let ctemplate = makeTemplate(for: next, complication: complication)
+           let ctemplate = makeTemplate(for: next, using: Date(), complication: complication)
         {
             let entry = CLKComplicationTimelineEntry(
                 date: next.date,
@@ -64,14 +68,30 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void)
     {
         var entries: [CLKComplicationTimelineEntry] = []
-        if let next = dataController.activeSession,
-               let ctemplate = makeTemplate(for: next, complication: complication)
-            {
+        
+        guard let session = SessionData.shared.activeSession else {
+            handler(entries)
+            return
+        }
+        
+        let oneMinute = 60.0
+
+        // Calculate the start and end dates.
+        var current = date.addingTimeInterval(oneMinute)
+        let endDate = date.addingTimeInterval(Session.fifteenMinutes)
+
+        // Create a timeline entry for every minute from the starting time.
+        // Stop once you reach the limit or the end date.
+        while current < endDate && entries.count < limit {
+            if let ctemplate = makeTemplate(for: session, using: current, complication: complication) {
                 let entry = CLKComplicationTimelineEntry(
-                    date: next.date,
+                    date: current,
                     complicationTemplate: ctemplate)
+
                 entries.append(entry)
+                current = current.addingTimeInterval(oneMinute)
             }
+        }
         
         handler(entries)
     }
@@ -80,15 +100,19 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         for complication: CLKComplication,
         withHandler handler: @escaping (CLKComplicationTemplate?) -> Void)
     {
-        let session = dummyData
-        let ctemplate = makeTemplate(for: session, complication: complication)
-        handler(ctemplate)
+        if let session = dataController.activeSession {
+            let ctemplate = makeTemplate(for: session, complication: complication)
+            handler(ctemplate)
+        } else {
+            handler(nil)
+        }
     }
 }
 
 extension ComplicationController {
     func makeTemplate(
         for session: Session,
+        using date: Date? = nil,
         complication: CLKComplication) -> CLKComplicationTemplate?
     {
         switch complication.family {
@@ -105,7 +129,7 @@ extension ComplicationController {
         case .utilitarianSmallFlat:
             return makeUtilitarianSmallFlat(session: session)
         case .utilitarianLarge:
-            return makeUtilitarianLargeFlat(session: session)
+            return makeUtilitarianLargeFlat(session: session, fromDate: date)
         case .graphicExtraLarge:
             guard #available(watchOSApplicationExtension 7.0, *) else {
                 return nil
@@ -121,11 +145,20 @@ extension ComplicationController {
 }
 
 extension ComplicationController {
-    func makeUtilitarianLargeFlat(session: Session) -> CLKComplicationTemplateUtilitarianLargeFlat {
-        let textProvider = CLKTextProvider(format: "\(session.description) for \(session.timeRemaining())")
-        let complication = CLKComplicationTemplateUtilitarianLargeFlat(
-            textProvider: textProvider)
-        return complication
+    func makeUtilitarianLargeFlat(session: Session, fromDate: Date? = nil) -> CLKComplicationTemplateUtilitarianLargeFlat {
+        if let fromDate = fromDate {
+            let date = session.date
+            let difference = Int((fromDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60)
+            let textProvider = CLKTextProvider(format: "\(session.stateDescription) for \(difference)m")
+            let complication = CLKComplicationTemplateUtilitarianLargeFlat(
+                textProvider: textProvider)
+            return complication
+        } else {
+            let textProvider = CLKTextProvider(format: "\(session.stateDescription) for \(session.timeRemaining())")
+            let complication = CLKComplicationTemplateUtilitarianLargeFlat(
+                textProvider: textProvider)
+            return complication
+        }
     }
     
     func makeUtilitarianSmallFlat(session: Session) -> CLKComplicationTemplateUtilitarianSmallFlat {
