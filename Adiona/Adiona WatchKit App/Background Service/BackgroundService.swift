@@ -9,7 +9,8 @@ import WatchKit
 
 class BackgroundService: NSObject {
     static let shared = BackgroundService()
-    let url = URL(string: "api-url")!
+    let uploader = Uploader()
+    
     lazy var urlSession: URLSession = {
         let configuration = URLSessionConfiguration.background(withIdentifier: "adiona_bgtask_session")
         configuration.isDiscretionary = true
@@ -22,15 +23,36 @@ class BackgroundService: NSObject {
     // Store tasks in order to complete them when finished
     var pendingBackgroundTasks = [WKURLSessionRefreshBackgroundTask]()
     
-    func updateContent(content: Data) {
+    func updateContent(content: Data, identifier: String) {
         var cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-        cachesFolderURL.appendPathComponent("content.data")
+        let filename = "\(identifier).json"
+        cachesFolderURL.appendPathComponent(filename)
         
         do {
             try content.write(to: cachesFolderURL)
-            let backgroundTask = urlSession.uploadTask(with: URLRequest(url: url), fromFile: cachesFolderURL)
-            backgroundTask.earliestBeginDate = Date().addingTimeInterval(Session.fifteenMinutes)
-            backgroundTask.resume()
+            let url = URL(string: "http://localhost:3000/multiupload") // or upload
+            
+            let fileInfo = Uploader.FileInfo(withFileURL: cachesFolderURL, filename: filename, name: "uploadedFile", mimetype: "application/json")
+
+            uploader.upload(file: fileInfo, toURL: url!, withHttpMethod: .post) { (results, failedFilesList) in
+                print("HTTP status code:", results.response?.httpStatusCode ?? 0)
+                
+                if let error = results.error {
+                    print(error)
+                }
+                
+                if let data = results.data {
+                    if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
+                        print(toDictionary)
+                    }
+                }
+                
+                if let failedFiles = failedFilesList {
+                    for file in failedFiles {
+                        print(file)
+                    }
+                }
+            }
         } catch {
             print(error)
         }

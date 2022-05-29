@@ -34,9 +34,19 @@ struct SessionList: View {
     }
 }
 
+let sessionData: SessionData = {
+    SessionData.shared.activeSession = Session()
+    SessionData.shared.addToBacklog(session: Session())
+    SessionData.shared.addToBacklog(session: Session())
+    SessionData.shared.addToBacklog(session: Session())
+    return SessionData.shared
+}()
+
 struct SessionList_Previews: PreviewProvider {
+    
     static var previews: some View {
+
         SessionList()
-            .environmentObject(SessionData())
+            .environmentObject(sessionData)
     }
 }

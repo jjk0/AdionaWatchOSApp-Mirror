@@ -1,7 +1,7 @@
 import ClockKit
 import HealthKit
-import WatchKit
 import Sentry
+import WatchKit
 
 let typesToRead: Set = [
     HKObjectType.workoutType(),
@@ -59,10 +59,10 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
             self.backgroundWorker.schedule(firstTime: true)
         }
-        
+
         SessionData.shared.activeSession = Session()
-        
-        NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { notification in
+
+        NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { _ in
         }
     }
 
@@ -73,24 +73,19 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 task.setTaskCompletedWithSnapshot(false)
 
             case let task as WKApplicationRefreshBackgroundTask:
-                backgroundWorker.perform { updateComplications in
-                    if updateComplications {
-                        Self.updateActiveComplications()
-                    }
-                    
-                    if let activeSession = SessionData.shared.activeSession {
-                        activeSession.end()
-                        SessionData.shared.addToBacklog(session: activeSession)
-                    }
-                    
-                    let nextSession = Session()
-                    SessionData.shared.activeSession = nextSession
-                    nextSession.start()
-                    
-                    backgroundWorker.schedule()
-                    task.setTaskCompletedWithSnapshot(false)
+                Self.updateActiveComplications()
+
+                if let activeSession = SessionData.shared.activeSession {
+                    activeSession.end()
+                    SessionData.shared.addToBacklog(session: activeSession)
                 }
 
+                let nextSession = Session()
+                SessionData.shared.activeSession = nextSession
+                nextSession.start()
+
+                backgroundWorker.schedule()
+                task.setTaskCompletedWithSnapshot(false)
             case let task as WKURLSessionRefreshBackgroundTask:
                 backgroundWorker.schedule()
                 task.setTaskCompletedWithSnapshot(false)

@@ -9,13 +9,17 @@ import Foundation
 import HealthKit
 
 class Serializer {
-    class func serialize(workout: HKWorkout?) {
-        guard let workout = workout else { return }
+    class func serialize(workout: HKWorkout?, completion:@escaping ((Data?)->Void)) {
+        guard let workout = workout else { completion(nil)
+            return }
         let forWorkout = HKQuery.predicateForObjects(from: workout)
 
-        guard let activeEnergyBurnedType = HKSampleType.quantityType(forIdentifier: .activeEnergyBurned) else { return }
-        guard let stepsSampleType = HKSampleType.quantityType(forIdentifier: .stepCount) else { return }
-        guard let heartRateSampleType = HKSampleType.quantityType(forIdentifier: .heartRate) else { return }
+        guard let activeEnergyBurnedType = HKSampleType.quantityType(forIdentifier: .activeEnergyBurned) else { completion(nil)
+            return }
+        guard let stepsSampleType = HKSampleType.quantityType(forIdentifier: .stepCount) else { completion(nil)
+            return }
+        guard let heartRateSampleType = HKSampleType.quantityType(forIdentifier: .heartRate) else { completion(nil)
+            return }
 
         let stepsDescriptor = HKQueryDescriptor(sampleType: stepsSampleType,
                                                 predicate: forWorkout)
@@ -28,6 +32,7 @@ class Serializer {
                                                     predicate: forWorkout)
 
         // Create the query.
+        var JSON: String = String()
         let query = HKSampleQuery(queryDescriptors: [heartRateDescriptor, stepsDescriptor, activeEnergyDescriptor],
                                   limit: HKObjectQueryNoLimit) { _, samples, _ in
             guard let samples = samples else { return }
@@ -35,10 +40,14 @@ class Serializer {
             do {
                 for sample in samples {
                     let serializer = OMHSerializer()
-                    let jsonString = try serializer.json(for: sample)
-                    print(jsonString)
+                    JSON.append(contentsOf: try serializer.json(for: sample))
                 }
-            } catch {}
+                
+                let data = Data(JSON.utf8)
+                completion(data)
+            } catch {
+                completion(nil)
+            }
         }
 
         healthStore.execute(query)

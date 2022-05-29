@@ -22,9 +22,4 @@ final class BackgroundWorker {
                 }
             }
     }
-
-    public func perform(_ completion: (Bool) -> Void) {
-        BackgroundService.shared.updateContent(content: Data())
-        completion(true)
-    }
 }

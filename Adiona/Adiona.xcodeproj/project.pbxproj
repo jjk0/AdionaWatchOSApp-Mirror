@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		001916FD2842C3AC00775636 /* Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001916FC2842C3AC00775636 /* Uploader.swift */; };
 		0037E332284252010009D0B2 /* NSArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E326284252010009D0B2 /* NSArray+ObjectiveSugar.m */; };
 		0037E333284252010009D0B2 /* NSString+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E329284252010009D0B2 /* NSString+ObjectiveSugar.m */; };
 		0037E334284252010009D0B2 /* NSMutableArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E32B284252010009D0B2 /* NSMutableArray+ObjectiveSugar.m */; };
@@ -103,6 +104,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		001916FB2842C24200775636 /* Notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Notes.md; sourceTree = "<group>"; };
+		001916FC2842C3AC00775636 /* Uploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Uploader.swift; sourceTree = "<group>"; };
 		0037E325284252010009D0B2 /* NSSet+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+ObjectiveSugar.h"; sourceTree = "<group>"; };
 		0037E326284252010009D0B2 /* NSArray+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ObjectiveSugar.m"; sourceTree = "<group>"; };
 		0037E327284252010009D0B2 /* NSString+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ObjectiveSugar.h"; sourceTree = "<group>"; };
@@ -274,6 +277,7 @@
 				00A5DCE7283FE2A300147766 /* BackgroundService.swift */,
 				00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */,
 				00A5DCED283FE64C00147766 /* UrlDownloader.swift */,
+				001916FC2842C3AC00775636 /* Uploader.swift */,
 			);
 			path = "Background Service";
 			sourceTree = "<group>";
@@ -281,6 +285,7 @@
 		00B04695283FC2EF00C95D9A = {
 			isa = PBXGroup;
 			children = (
+				001916FB2842C24200775636 /* Notes.md */,
 				00B046A4283FC2EF00C95D9A /* Adiona WatchKit App */,
 				00B046AF283FC2F000C95D9A /* Adiona WatchKit Extension */,
 				00B046C3283FC2F100C95D9A /* AdionaTests */,
@@ -542,6 +547,7 @@
 				00A2ABB328424FBF009CC484 /* (null) in Sources */,
 				0037E332284252010009D0B2 /* NSArray+ObjectiveSugar.m in Sources */,
 				00A5DCE8283FE2A300147766 /* BackgroundService.swift in Sources */,
+				001916FD2842C3AC00775636 /* Uploader.swift in Sources */,
 				00A2ABB128424FBF009CC484 /* (null) in Sources */,
 				00A2AB9D28424F93009CC484 /* NSDate+RFC3339.m in Sources */,
 				00A5DCDE283FD26500147766 /* SessionList.swift in Sources */,

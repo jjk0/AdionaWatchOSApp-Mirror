@@ -39,7 +39,12 @@ class Session: NSObject, Identifiable, ObservableObject, HKLiveWorkoutBuilderDel
                 if self?.workoutSession.state == .ended {
                     self?.workoutSession.associatedWorkoutBuilder().endCollection(withEnd: Date()) { (success, error) in
                         self?.workoutSession.associatedWorkoutBuilder().finishWorkout { workout, error in
-                            Serializer.serialize(workout: workout)
+                            guard let workout = workout else { return } // Error handler
+                            Serializer.serialize(workout: workout) { data in
+                                if let data = data {
+                                    BackgroundService.shared.updateContent(content: data, identifier: workout.uuid.uuidString)
+                                }
+                            }
                         }
                     }
                 }
