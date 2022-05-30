@@ -7,8 +7,37 @@
 //
 
 import Foundation
+import SotoS3
 
 class Uploader: NSObject, URLSessionTaskDelegate {
+    let bucket = "adiona-ephemeris"
+    let client = AWSClient(
+        credentialProvider: .static(accessKeyId: "AKIA5XA6KJBMLSDKEFZ3", secretAccessKey: "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"),
+        httpClientProvider: .createNew
+    )
+    var s3: S3
+    
+    override init() {
+        s3 = S3(client: client, region: .useast2)
+        super.init()
+    }
+    
+    func sendToS3(filename: String, json: String)  {
+        DispatchQueue.global().async {
+            do {
+                let putObjectRequest = S3.PutObjectRequest(
+                    body: .string(json),
+                    bucket: self.bucket,
+                    key: filename
+                )
+                let _ = try self.s3.putObject(putObjectRequest).wait()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    
     // MARK: - Properties
     
     var requestHttpHeaders = UploaderEntity()

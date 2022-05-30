@@ -51,10 +51,10 @@ class Session: NSObject, Identifiable, ObservableObject, HKLiveWorkoutBuilderDel
             }
         }
 
-        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { [weak self] _ in
-            self?.percentageComplete = self?.progress() ?? 0.0
-            self?.reloadComplication()
-        })
+//        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { [weak self] _ in
+//            self?.percentageComplete = self?.progress() ?? 0.0
+//            self?.reloadComplication()
+//        })
     }
 
     func reloadComplication() {

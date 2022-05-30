@@ -2,6 +2,7 @@ import ClockKit
 import HealthKit
 import Sentry
 import WatchKit
+import SotoS3
 
 let typesToRead: Set = [
     HKObjectType.workoutType(),
@@ -62,6 +63,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
         SessionData.shared.activeSession = Session()
 
+        
         NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { _ in
         }
     }

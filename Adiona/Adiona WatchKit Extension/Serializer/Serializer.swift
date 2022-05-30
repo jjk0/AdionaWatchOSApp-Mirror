@@ -9,7 +9,7 @@ import Foundation
 import HealthKit
 
 class Serializer {
-    class func serialize(workout: HKWorkout?, completion:@escaping ((Data?)->Void)) {
+    class func serialize(workout: HKWorkout?, completion:@escaping ((String?)->Void)) {
         guard let workout = workout else { completion(nil)
             return }
         let forWorkout = HKQuery.predicateForObjects(from: workout)
@@ -43,8 +43,7 @@ class Serializer {
                     JSON.append(contentsOf: try serializer.json(for: sample))
                 }
                 
-                let data = Data(JSON.utf8)
-                completion(data)
+                completion(JSON)
             } catch {
                 completion(nil)
             }
