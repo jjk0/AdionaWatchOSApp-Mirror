@@ -59,6 +59,7 @@ class HealthDataManager: NSObject, ObservableObject {
                     if let _ = errorOrNil {
                         completionHandler()
                     } else {
+                        self.collectSamples()
                         completionHandler()
                     }
                 }
@@ -67,8 +68,6 @@ class HealthDataManager: NSObject, ObservableObject {
                 }
             }
         }
-
-
 
 //        Serializer.serialize(workout: workout) { data in
 //            if let data = data {
@@ -85,7 +84,10 @@ class HealthDataManager: NSObject, ObservableObject {
 
         let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
         let predicateHR = HKQuery.predicateForSamples(withStart: lastUpload, end: Date(), options: [.strictStartDate, .strictEndDate])
-        lastUpload = Date()
+        
+        DispatchQueue.main.async {
+            self.lastUpload = Date()
+        }
         
         let sampleQueryHR = HKSampleQuery(sampleType: heartRateType, predicate: predicateHR, limit: 0, sortDescriptors: nil)
             { (_, result, _) -> Void in
