@@ -10,13 +10,13 @@ import SwiftUI
 struct SessionView: View {
     var body: some View {
         SessionList()
-            .environmentObject(SessionData.shared)
+            .environmentObject(HealthDataManager.shared)
     }
 }
 
 struct SessionView_Previews: PreviewProvider {    
     static var previews: some View {
         SessionView()
-            .environmentObject(SessionData.shared)
+            .environmentObject(HealthDataManager.shared)
     }
 }

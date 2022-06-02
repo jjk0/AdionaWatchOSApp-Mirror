@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SessionRow: View {
-    @StateObject var session: Session
+    @StateObject var session: HealthDataManager
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(session.stateDescription)
+            Text("Adriona")
             Text(session.dateRange())
                 .fontWeight(.light)
                 .font(.caption)

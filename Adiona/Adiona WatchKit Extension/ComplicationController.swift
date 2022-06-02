@@ -11,7 +11,7 @@ import SwiftUI
 class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Complication Configuration
 
-    let dataController = SessionData.shared
+    let dataController = HealthDataManager.shared
 
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         let descriptors = [
@@ -29,11 +29,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         for complication: CLKComplication,
         withHandler handler: @escaping (Date?) -> Void)
     {
-        if let next = dataController.activeSession {
-            handler(next.date.addingTimeInterval(Session.fifteenMinutes))
-        } else {
-            handler(nil)
-        }
+        handler(dataController.lastUpload.addingTimeInterval(HealthDataManager.fifteenMinutes))
     }
 
     func getPrivacyBehavior(
@@ -49,11 +45,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         for complication: CLKComplication,
         withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void)
     {
-        if let next = dataController.activeSession,
-           let ctemplate = makeTemplate(for: next, using: Date(), complication: complication)
+        if let ctemplate = makeTemplate(for: dataController, using: Date(), complication: complication)
         {
             let entry = CLKComplicationTimelineEntry(
-                date: next.date,
+                date: dataController.lastUpload,
                 complicationTemplate: ctemplate)
             handler(entry)
         } else {
@@ -68,22 +63,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void)
     {
         var entries: [CLKComplicationTimelineEntry] = []
-        
-        guard let session = SessionData.shared.activeSession else {
-            handler(entries)
-            return
-        }
-        
+    
         let oneMinute = 60.0
 
         // Calculate the start and end dates.
-        var current = date.addingTimeInterval(oneMinute)
-        let endDate = date.addingTimeInterval(Session.fifteenMinutes)
+        var current = dataController.lastUpload.addingTimeInterval(oneMinute)
+        let endDate = dataController.lastUpload.addingTimeInterval(HealthDataManager.fifteenMinutes)
 
         // Create a timeline entry for every minute from the starting time.
         // Stop once you reach the limit or the end date.
         while current < endDate && entries.count < limit {
-            if let ctemplate = makeTemplate(for: session, using: current, complication: complication) {
+            if let ctemplate = makeTemplate(for: dataController, using: current, complication: complication) {
                 let entry = CLKComplicationTimelineEntry(
                     date: current,
                     complicationTemplate: ctemplate)
@@ -100,18 +90,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         for complication: CLKComplication,
         withHandler handler: @escaping (CLKComplicationTemplate?) -> Void)
     {
-        if let session = dataController.activeSession {
-            let ctemplate = makeTemplate(for: session, complication: complication)
-            handler(ctemplate)
-        } else {
-            handler(nil)
-        }
+        let ctemplate = makeTemplate(for: dataController, complication: complication)
+        handler(ctemplate)
     }
 }
 
 extension ComplicationController {
     func makeTemplate(
-        for session: Session,
+        for session: HealthDataManager,
         using date: Date? = nil,
         complication: CLKComplication) -> CLKComplicationTemplate?
     {
@@ -145,9 +131,9 @@ extension ComplicationController {
 }
 
 extension ComplicationController {
-    func makeUtilitarianLargeFlat(session: Session, fromDate: Date? = nil) -> CLKComplicationTemplateUtilitarianLargeFlat {
+    func makeUtilitarianLargeFlat(session: HealthDataManager, fromDate: Date? = nil) -> CLKComplicationTemplateUtilitarianLargeFlat {
         if let fromDate = fromDate {
-            let date = session.date
+            let date = session.lastUpload
             let difference = Int((fromDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60)
             let textProvider = CLKTextProvider(format: "\(session.stateDescription) for \(difference)m")
             let complication = CLKComplicationTemplateUtilitarianLargeFlat(
@@ -161,18 +147,18 @@ extension ComplicationController {
         }
     }
     
-    func makeUtilitarianSmallFlat(session: Session) -> CLKComplicationTemplateUtilitarianSmallFlat {
+    func makeUtilitarianSmallFlat(session: HealthDataManager) -> CLKComplicationTemplateUtilitarianSmallFlat {
         let textProvider = CLKTextProvider(format: "\(session.timeRemaining())")
         let imageProvider = CLKImageProvider(onePieceImage: UIImage(named: "uchicago")!)
         return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProvider, imageProvider: imageProvider)
     }
 
-    func makeUtilitarianSmall(session: Session) -> CLKComplicationTemplateUtilitarianSmallRingText {
+    func makeUtilitarianSmall(session: HealthDataManager) -> CLKComplicationTemplateUtilitarianSmallRingText {
         let textProvider = CLKTextProvider(format: "\(session.timeRemaining())")
         return CLKComplicationTemplateUtilitarianSmallRingText(textProvider: textProvider, fillFraction: 0.3, ringStyle: .closed)
     }
 
-    func makeCircularSmall(session: Session) -> CLKComplicationTemplateCircularSmallRingText {
+    func makeCircularSmall(session: HealthDataManager) -> CLKComplicationTemplateCircularSmallRingText {
         let textProvider = CLKTextProvider(format: "\(session.minutesRemaining())")
         let complication = CLKComplicationTemplateCircularSmallRingText(textProvider: textProvider, fillFraction: 0.3, ringStyle: .closed)
         return complication

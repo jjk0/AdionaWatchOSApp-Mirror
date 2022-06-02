@@ -8,45 +8,32 @@
 import SwiftUI
 
 struct SessionList: View {
-    @EnvironmentObject var sessionData: SessionData
+    @EnvironmentObject var healthData: HealthDataManager
 
     var body: some View {
         NavigationView {
-            if let session = sessionData.activeSession {
-                NavigationLink {
-                    SessionDetail(session: session)
-                } label: {
-                    SessionRow(session: session)
-                }
+            NavigationLink {
+                SessionDetail(session: healthData)
+            } label: {
+                SessionRow(session: healthData)
             }
-            Divider()
-            List {
-                ForEach(sessionData.backlog) { session in
-                    NavigationLink {
-                        SessionDetail(session: session)
-                    } label: {
-                        SessionRow(session: session)
-                    }
-                }
-            }
-            .navigationTitle("Sessions")
-        }
+//            Divider()
+//            List {
+//                ForEach(sessionData.backlog) { session in
+//                    NavigationLink {
+//                        SessionDetail(session: session)
+//                    } label: {
+//                        SessionRow(session: session)
+//                    }
+//                }
+//            }
+        }.navigationTitle("Sessions")
     }
 }
 
-let sessionData: SessionData = {
-    SessionData.shared.activeSession = Session()
-    SessionData.shared.addToBacklog(session: Session())
-    SessionData.shared.addToBacklog(session: Session())
-    SessionData.shared.addToBacklog(session: Session())
-    return SessionData.shared
-}()
-
 struct SessionList_Previews: PreviewProvider {
-    
     static var previews: some View {
-
         SessionList()
-            .environmentObject(sessionData)
+            .environmentObject(HealthDataManager.shared)
     }
 }

@@ -9,7 +9,7 @@ struct ComplicationViews: View {
 }
 
 struct ComplicationStandard: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         ZStack {
@@ -24,7 +24,7 @@ struct ComplicationStandard: View {
 }
 
 struct ComplicationViewCircular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         ZStack {
@@ -39,7 +39,7 @@ struct ComplicationViewCircular: View {
 }
 
 struct ComplicationViewCornerCircular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
     @Environment(\.complicationRenderingMode) var renderingMode
 
     var body: some View {
@@ -71,7 +71,7 @@ struct ComplicationViewCornerCircular: View {
 }
 
 struct ComplicationViewRectangular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         HStack(spacing: 10) {
@@ -117,7 +117,7 @@ struct CircularProgressArc: Shape {
 }
 
 struct ComplicationViewExtraLargeCircular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         ZStack(alignment: .center) {

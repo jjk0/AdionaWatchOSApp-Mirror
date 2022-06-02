@@ -20,8 +20,8 @@ struct ActionRow: View {
 }
 
 struct SessionDetail: View {
-    @EnvironmentObject var sessionData: SessionData
-    @StateObject var session: Session
+    @EnvironmentObject var sessionData: HealthDataManager
+    @StateObject var session: HealthDataManager
 
     var body: some View {
 
@@ -35,7 +35,12 @@ struct SessionDetail: View {
                 Text("\(session.timeRemaining()) until Upload")
                     .font(.caption)
                 
+                Button("Collect") {
+                    HealthDataManager.shared.collectSamples()
+                }
+                
             }.padding(16)
+            
             
             ForEach(session.validActions(), id: \.self) { action in
                 ActionRow(action: action)
@@ -46,15 +51,14 @@ struct SessionDetail: View {
 
 struct SessionDetail_Previews: PreviewProvider {
     static var previews: some View {
-        let sessionData = SessionData()
-        sessionData.activeSession = Session()
+        let sessionData = HealthDataManager()
         
         return Group {
-            SessionDetail(session: sessionData.activeSession!)
+            SessionDetail(session: sessionData)
                 .environmentObject(sessionData)
                 .previewDevice("Apple Watch Series 5 - 44mm")
 
-            SessionDetail(session: sessionData.activeSession!)
+            SessionDetail(session: sessionData)
                 .environmentObject(sessionData)
                 .previewDevice("Apple Watch Series 5 - 40mm")
         }

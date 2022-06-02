@@ -3,7 +3,7 @@ import WatchKit
 
 final class BackgroundWorker {
     public func schedule(firstTime: Bool = false) {
-        let minutes = firstTime ? 1 : 15
+        let minutes = firstTime ? 1 : 2
 
         let when = Calendar.current.date(
             byAdding: .minute,

@@ -26,38 +26,6 @@ class BackgroundService: NSObject {
     
     func updateContent(content: String, identifier: String) {
         uploader.sendToS3(filename: "\(identifier).txt", json: content)
-//        var cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-//        let filename = "\(identifier).json"
-//        cachesFolderURL.appendPathComponent(filename)
-//
-//        do {
-//            try content.write(to: cachesFolderURL)
-//            let url = URL(string: "http://localhost:3000/multiupload") // or upload
-//
-//            let fileInfo = Uploader.FileInfo(withFileURL: cachesFolderURL, filename: filename, name: "uploadedFile", mimetype: "application/json")
-//
-//            uploader.upload(file: fileInfo, toURL: url!, withHttpMethod: .post) { (results, failedFilesList) in
-//                print("HTTP status code:", results.response?.httpStatusCode ?? 0)
-//
-//                if let error = results.error {
-//                    print(error)
-//                }
-//
-//                if let data = results.data {
-//                    if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
-//                        print(toDictionary)
-//                    }
-//                }
-//
-//                if let failedFiles = failedFilesList {
-//                    for file in failedFiles {
-//                        print(file)
-//                    }
-//                }
-//            }
-//        } catch {
-//            print(error)
-//        }
     }
     
     func handleUpload(_ backgroundTask: WKURLSessionRefreshBackgroundTask) {

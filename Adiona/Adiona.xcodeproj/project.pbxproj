@@ -15,6 +15,7 @@
 		0037E336284252010009D0B2 /* NSNumber+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E330284252010009D0B2 /* NSNumber+ObjectiveSugar.m */; };
 		0037E337284252010009D0B2 /* NSSet+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E331284252010009D0B2 /* NSSet+ObjectiveSugar.m */; };
 		0037E339284259200009D0B2 /* Serializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0037E338284259200009D0B2 /* Serializer.swift */; };
+		0054EEB62848FEC60047B70F /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0054EEB52848FEC60047B70F /* UIHelper.swift */; };
 		009BE46F284012480010A15F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009BE46E284012480010A15F /* HealthKit.framework */; };
 		009BE4732840F9330010A15F /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4722840F9330010A15F /* ErrorHandling.swift */; };
 		009BE4752840F9C30010A15F /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4742840F9C30010A15F /* Notifications.swift */; };
@@ -49,8 +50,7 @@
 		00B046E6283FC36500C95D9A /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E5283FC36500C95D9A /* ComplicationViews.swift */; };
 		00B046EA283FC39300C95D9A /* UIImage+Lozenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */; };
 		00B046EB283FC39300C95D9A /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E9283FC39300C95D9A /* UIColor+Hex.swift */; };
-		00B046F0283FC3B500C95D9A /* SessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046EE283FC3B500C95D9A /* SessionData.swift */; };
-		00B046F1283FC3B500C95D9A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046EF283FC3B500C95D9A /* Session.swift */; };
+		00B046F1283FC3B500C95D9A /* HealthDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046EF283FC3B500C95D9A /* HealthDataManager.swift */; };
 		00F9A0FE2843A687000DE2B3 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 00F9A0FD2843A687000DE2B3 /* SotoS3 */; };
 		00F9A3662843A729000DE2B3 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 00F9A3652843A729000DE2B3 /* Sentry */; };
 		00F9A3682843A78E000DE2B3 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 00F9A3672843A78E000DE2B3 /* SotoS3 */; };
@@ -122,6 +122,7 @@
 		0037E330284252010009D0B2 /* NSNumber+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ObjectiveSugar.m"; sourceTree = "<group>"; };
 		0037E331284252010009D0B2 /* NSSet+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+ObjectiveSugar.m"; sourceTree = "<group>"; };
 		0037E338284259200009D0B2 /* Serializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serializer.swift; sourceTree = "<group>"; };
+		0054EEB52848FEC60047B70F /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		009BE46C284012480010A15F /* Adiona WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Adiona WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		009BE46E284012480010A15F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		009BE4722840F9330010A15F /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
@@ -159,8 +160,7 @@
 		00B046E5283FC36500C95D9A /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
 		00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Lozenge.swift"; sourceTree = "<group>"; };
 		00B046E9283FC39300C95D9A /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
-		00B046EE283FC3B500C95D9A /* SessionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionData.swift; sourceTree = "<group>"; };
-		00B046EF283FC3B500C95D9A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		00B046EF283FC3B500C95D9A /* HealthDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +271,7 @@
 				00A5DCDD283FD26500147766 /* SessionList.swift */,
 				00A5DCE1283FD4E600147766 /* SessionRow.swift */,
 				00A5DCDF283FD2E500147766 /* SessionDetail.swift */,
+				0054EEB52848FEC60047B70F /* UIHelper.swift */,
 			);
 			path = Sessions;
 			sourceTree = "<group>";
@@ -368,8 +369,7 @@
 		00B046ED283FC3AA00C95D9A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				00B046EF283FC3B500C95D9A /* Session.swift */,
-				00B046EE283FC3B500C95D9A /* SessionData.swift */,
+				00B046EF283FC3B500C95D9A /* HealthDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -568,11 +568,11 @@
 				0037E333284252010009D0B2 /* NSString+ObjectiveSugar.m in Sources */,
 				0037E337284252010009D0B2 /* NSSet+ObjectiveSugar.m in Sources */,
 				0037E336284252010009D0B2 /* NSNumber+ObjectiveSugar.m in Sources */,
-				00B046F1283FC3B500C95D9A /* Session.swift in Sources */,
+				0054EEB62848FEC60047B70F /* UIHelper.swift in Sources */,
+				00B046F1283FC3B500C95D9A /* HealthDataManager.swift in Sources */,
 				009BE4792840FF210010A15F /* WorkouFactory.swift in Sources */,
 				0037E339284259200009D0B2 /* Serializer.swift in Sources */,
 				00B046EB283FC39300C95D9A /* UIColor+Hex.swift in Sources */,
-				00B046F0283FC3B500C95D9A /* SessionData.swift in Sources */,
 				009BE4752840F9C30010A15F /* Notifications.swift in Sources */,
 				009BE4732840F9330010A15F /* ErrorHandling.swift in Sources */,
 				00A2ABB028424FBF009CC484 /* (null) in Sources */,
