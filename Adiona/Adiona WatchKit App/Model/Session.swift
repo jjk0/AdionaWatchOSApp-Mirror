@@ -145,7 +145,7 @@ extension Session {
         workoutSession.startActivity(with: Date())
         workoutSession.associatedWorkoutBuilder().beginCollection(withStart: Date()) { _, error in
             if let error = error {
-                print(error.localizedDescription)
+                track(error.localizedDescription)
             }
         }
         updateDescription()
