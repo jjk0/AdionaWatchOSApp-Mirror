@@ -140,7 +140,7 @@ extension ComplicationController {
                 textProvider: textProvider)
             return complication
         } else {
-            let textProvider = CLKTextProvider(format: "\(session.stateDescription) for \(session.timeRemaining())")
+            let textProvider = CLKTextProvider(format: "\(session.stateDescription) for \(session.timeSince())")
             let complication = CLKComplicationTemplateUtilitarianLargeFlat(
                 textProvider: textProvider)
             return complication
@@ -148,18 +148,18 @@ extension ComplicationController {
     }
     
     func makeUtilitarianSmallFlat(session: HealthDataManager) -> CLKComplicationTemplateUtilitarianSmallFlat {
-        let textProvider = CLKTextProvider(format: "\(session.timeRemaining())")
+        let textProvider = CLKTextProvider(format: "\(session.timeSince())")
         let imageProvider = CLKImageProvider(onePieceImage: UIImage(named: "uchicago")!)
         return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProvider, imageProvider: imageProvider)
     }
 
     func makeUtilitarianSmall(session: HealthDataManager) -> CLKComplicationTemplateUtilitarianSmallRingText {
-        let textProvider = CLKTextProvider(format: "\(session.timeRemaining())")
+        let textProvider = CLKTextProvider(format: "\(session.timeSince())")
         return CLKComplicationTemplateUtilitarianSmallRingText(textProvider: textProvider, fillFraction: 0.3, ringStyle: .closed)
     }
 
     func makeCircularSmall(session: HealthDataManager) -> CLKComplicationTemplateCircularSmallRingText {
-        let textProvider = CLKTextProvider(format: "\(session.minutesRemaining())")
+        let textProvider = CLKTextProvider(format: "\(session.timeSince())")
         let complication = CLKComplicationTemplateCircularSmallRingText(textProvider: textProvider, fillFraction: 0.3, ringStyle: .closed)
         return complication
     }

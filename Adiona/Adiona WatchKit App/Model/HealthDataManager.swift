@@ -46,7 +46,6 @@ class HealthDataManager: NSObject, ObservableObject {
     static var shared = HealthDataManager()
     @Published var stateDescription: String = "Adiona"
     @Published var lastUpload = Date().addingTimeInterval(-HealthDataManager.fifteenMinutes)
-    var heartRateArray = [Double]()
 
     override init() {
         super.init()
@@ -54,19 +53,19 @@ class HealthDataManager: NSObject, ObservableObject {
         updateDescription()
 
         NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { _ in
-            for sampleType in typesToRead {
-                let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
-                    if let _ = errorOrNil {
-                        completionHandler()
-                    } else {
-                        self.collectSamples()
-                        completionHandler()
-                    }
-                }
-                healthStore.execute(query)
-                healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { _, _ in
-                }
-            }
+//
+//            for sampleType in typesToRead {
+//                let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
+//                    if let _ = errorOrNil {
+//                        completionHandler()
+//                    } else {
+//                        completionHandler()
+//                    }
+//                }
+//                healthStore.execute(query)
+//                healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { _, _ in
+//                }
+//            }
         }
 
 //        Serializer.serialize(workout: workout) { data in
@@ -78,67 +77,57 @@ class HealthDataManager: NSObject, ObservableObject {
 
     func collectSamples() {
         guard HKHealthStore.isHealthDataAvailable() else {
-          print("No data available!")
-          return
+            print("No data available!")
+            return
         }
 
         let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
         let predicateHR = HKQuery.predicateForSamples(withStart: lastUpload, end: Date(), options: [.strictStartDate, .strictEndDate])
-        
+
         DispatchQueue.main.async {
             self.lastUpload = Date()
         }
-        
+
         let sampleQueryHR = HKSampleQuery(sampleType: heartRateType, predicate: predicateHR, limit: 0, sortDescriptors: nil)
-            { (_, result, _) -> Void in
-                if result == nil {
-                } else {
-                    for quantitySample in result! {
-                        let quantity = (quantitySample as! HKQuantitySample).quantity
-                        let quantityString = "\(quantity)"
-                        let quantityStringNumber = quantityString.replacingOccurrences(of: " count/s", with: "")
+            { (_, samples, _) -> Void in
+                guard let samples = samples else { return }
+                var JSON = ""
+                let serializer = OMHSerializer()
 
-                        if let doubleVersion = Double(quantityStringNumber) {
-                            let doubleVersion60 = doubleVersion * 60
-                            self.heartRateArray.append(doubleVersion60)
-                        } else {
-                            print("String can't be converted")
-                        }
+                for sample in samples {
+                    do {
+                        JSON.append(contentsOf: try serializer.json(for: sample))
+                    } catch {
+                        track(error)
                     }
-
-                    print(self.heartRateArray)
                 }
+
+                print(JSON)
             }
 
         healthStore.execute(sampleQueryHR)
-        
+
         let activeEnergyType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
 
         let sampleQueryActiveEnergy = HKSampleQuery(sampleType: activeEnergyType, predicate: predicateHR, limit: 0, sortDescriptors: nil)
-            { (_, result, _) -> Void in
-                if result == nil {
-                } else {
-                    for quantitySample in result! {
-                        let quantity = (quantitySample as! HKQuantitySample).quantity
-                        let quantityString = "\(quantity)"
-                        let quantityStringNumber = quantityString.replacingOccurrences(of: " count/s", with: "")
+            { (_, samples, _) -> Void in
+                guard let samples = samples else { return }
+                var JSON = ""
+                let serializer = OMHSerializer()
 
-                        if let doubleVersion = Double(quantityStringNumber) {
-                            let doubleVersion60 = doubleVersion * 60
-                            self.heartRateArray.append(doubleVersion60)
-                        } else {
-                            print("String can't be converted")
-                        }
+                for sample in samples {
+                    do {
+                        JSON.append(contentsOf: try serializer.json(for: sample))
+                    } catch {
+                        track(error)
                     }
-
-                    print(self.heartRateArray)
                 }
+
+                print(JSON)
             }
-
         healthStore.execute(sampleQueryActiveEnergy)
-
     }
-    
+
     func reloadComplication() {
         DispatchQueue.main.async {
             let complicationServer = CLKComplicationServer.sharedInstance()
@@ -216,12 +205,12 @@ extension HealthDataManager {
 }
 
 extension HealthDataManager {
-    func minutesRemaining() -> Double {
-        return (HealthDataManager.fifteenMinutes + lastUpload.timeIntervalSinceNow) / 60.0
+    func minutesSince() -> Double {
+        return abs((lastUpload.timeIntervalSinceNow) / 60.0)
     }
 
     func progress() -> Double {
-        let remaining = minutesRemaining()
+        let remaining = minutesSince()
         return max(0, min(0, remaining > 0 ? remaining / HealthDataManager.fifteenMinutes : 0))
     }
 
@@ -229,8 +218,8 @@ extension HealthDataManager {
         progress()
     }
 
-    func timeRemaining(_ from: Date? = nil) -> String {
-        let mins = minutesRemaining()
+    func timeSince(_ from: Date? = nil) -> String {
+        let mins = minutesSince()
         return "\(Int(mins))m"
     }
 

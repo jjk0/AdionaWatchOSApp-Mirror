@@ -32,7 +32,7 @@ struct SessionDetail: View {
                     .lineLimit(0)
                 Divider()
 
-                Text("\(session.timeRemaining()) until Upload")
+                Text("\(session.timeSince()) since last upload.")
                     .font(.caption)
                 
                 Button("Collect") {
