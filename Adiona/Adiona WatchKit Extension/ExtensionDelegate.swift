@@ -2,12 +2,10 @@ import ClockKit
 import HealthKit
 import Sentry
 import WatchKit
-import SotoS3
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate {
     private let healthDataManager = HealthDataManager.shared
     private let backgroundWorker = BackgroundWorker()
-    private var downloads: [String: UrlDownloader] = [:]
 
     func applicationDidFinishLaunching() {
         SentrySDK.start { options in
@@ -34,10 +32,14 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 task.setTaskCompletedWithSnapshot(false)
 
             case let task as WKApplicationRefreshBackgroundTask:
-                Self.updateActiveComplications()
-
-                healthDataManager.collectSamples()
-                
+                var json = ""
+                for (_,v) in healthDataManager.collectedJSON {
+                    json.append(v.0)
+                }
+                Uploader.shared.sendToS3(filename: "\(UUID().uuidString).txt", json: json)
+                for k in healthDataManager.collectedJSON.keys {
+                    healthDataManager.collectedJSON[k]?.0 = ""
+                }
                 backgroundWorker.schedule()
                 task.setTaskCompletedWithSnapshot(false)
             case let task as WKURLSessionRefreshBackgroundTask:
@@ -47,16 +49,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 task.setTaskCompletedWithSnapshot(false)
             }
         }
-    }
-
-    private func downloader(for identifier: String) -> UrlDownloader {
-        guard let download = downloads[identifier] else {
-            let downloader = UrlDownloader(identifier: identifier)
-            downloads[identifier] = downloader
-            return downloader
-        }
-
-        return download
     }
 
     public static func updateActiveComplications() {

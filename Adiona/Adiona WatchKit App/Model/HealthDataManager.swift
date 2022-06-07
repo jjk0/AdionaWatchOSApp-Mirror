@@ -46,6 +46,7 @@ class HealthDataManager: NSObject, ObservableObject {
     static var shared = HealthDataManager()
     @Published var stateDescription: String = "Adiona"
     @Published var lastUpload = Date().addingTimeInterval(-HealthDataManager.fifteenMinutes)
+    var collectedJSON = [String: (String, Date)]()
 
     override init() {
         super.init()
@@ -53,19 +54,28 @@ class HealthDataManager: NSObject, ObservableObject {
         updateDescription()
 
         NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { _ in
-//
-//            for sampleType in typesToRead {
-//                let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
-//                    if let _ = errorOrNil {
-//                        completionHandler()
-//                    } else {
-//                        completionHandler()
-//                    }
-//                }
-//                healthStore.execute(query)
-//                healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { _, _ in
-//                }
-//            }
+            for sampleType in typesToRead {
+                let authStatus = healthStore.authorizationStatus(for: sampleType)
+                
+                if authStatus != .sharingAuthorized {
+                    print("Not authorized for \(sampleType.identifier)")
+                    continue
+                }
+                                                                 
+                self.collectedJSON[sampleType.identifier] = ("", Date())
+
+                let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
+                    if let _ = errorOrNil {
+                        completionHandler()
+                    } else {
+                        self.collectSamples(for: sampleType)
+                        completionHandler()
+                    }
+                }
+                healthStore.execute(query)
+                healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { _, _ in
+                }
+            }
         }
 
 //        Serializer.serialize(workout: workout) { data in
@@ -75,57 +85,55 @@ class HealthDataManager: NSObject, ObservableObject {
 //        }
     }
 
-    func collectSamples() {
+    func updateSummary() {
+        let jsonItems = collectedJSON.compactMap { _, v in
+            v.0.count > 0 ? v.0 : nil
+        }
+
+        let summary = jsonItems.reduce(0) { partialResult, json in
+            partialResult + json.count
+        }
+
+        DispatchQueue.main.async {
+            self.stateDescription = "\(summary) bytes"
+        }
+    }
+
+    func collectSamples(for sample: HKSampleType) {
         guard HKHealthStore.isHealthDataAvailable() else {
             print("No data available!")
             return
         }
 
-        let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-        let predicateHR = HKQuery.predicateForSamples(withStart: lastUpload, end: Date(), options: [.strictStartDate, .strictEndDate])
+        
+        let collectionDate = Date()
+        guard var existingSampleData = collectedJSON[sample.identifier] else { fatalError() }
 
-        DispatchQueue.main.async {
-            self.lastUpload = Date()
-        }
+        let predicate = HKQuery.predicateForSamples(withStart: existingSampleData.1, end: collectionDate, options: [.strictStartDate, .strictEndDate])
 
-        let sampleQueryHR = HKSampleQuery(sampleType: heartRateType, predicate: predicateHR, limit: 0, sortDescriptors: nil)
+        let sampleQueryHR = HKSampleQuery(sampleType: sample, predicate: predicate, limit: 0, sortDescriptors: nil)
             { (_, samples, _) -> Void in
                 guard let samples = samples else { return }
-                var JSON = ""
                 let serializer = OMHSerializer()
 
-                for sample in samples {
+                var JSON = ""
+
+                for s in samples {
                     do {
-                        JSON.append(contentsOf: try serializer.json(for: sample))
+                        JSON.append(contentsOf: try serializer.json(for: s))
                     } catch {
                         track(error)
                     }
                 }
 
-                print(JSON)
+                existingSampleData.0.append(JSON)
+                existingSampleData.1 = collectionDate
+                self.collectedJSON[sample.identifier] = existingSampleData
+
+                self.updateSummary()
             }
 
         healthStore.execute(sampleQueryHR)
-
-        let activeEnergyType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
-
-        let sampleQueryActiveEnergy = HKSampleQuery(sampleType: activeEnergyType, predicate: predicateHR, limit: 0, sortDescriptors: nil)
-            { (_, samples, _) -> Void in
-                guard let samples = samples else { return }
-                var JSON = ""
-                let serializer = OMHSerializer()
-
-                for sample in samples {
-                    do {
-                        JSON.append(contentsOf: try serializer.json(for: sample))
-                    } catch {
-                        track(error)
-                    }
-                }
-
-                print(JSON)
-            }
-        healthStore.execute(sampleQueryActiveEnergy)
     }
 
     func reloadComplication() {
@@ -206,7 +214,7 @@ extension HealthDataManager {
 
 extension HealthDataManager {
     func minutesSince() -> Double {
-        return abs((lastUpload.timeIntervalSinceNow) / 60.0)
+        return abs(lastUpload.timeIntervalSinceNow / 60.0)
     }
 
     func progress() -> Double {

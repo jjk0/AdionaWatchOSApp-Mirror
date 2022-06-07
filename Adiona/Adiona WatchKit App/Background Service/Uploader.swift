@@ -7,34 +7,67 @@
 //
 
 import Foundation
-import SotoS3
+
 
 class Uploader: NSObject, URLSessionTaskDelegate {
-    let bucket = "adiona-ephemeris"
-    let client = AWSClient(
-        credentialProvider: .static(accessKeyId: "AKIA5XA6KJBMLSDKEFZ3", secretAccessKey: "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"),
-        httpClientProvider: .createNew
-    )
-    var s3: S3
+    static let shared = Uploader()
+    
+//    let bucket = "adiona-ephemeris"
+//    let client = AWSClient(
+//        credentialProvider: .static(accessKeyId: "AKIA5XA6KJBMLSDKEFZ3", secretAccessKey: "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"),
+//        httpClientProvider: .createNew
+//    )
+//    var s3: S3
     
     override init() {
-        s3 = S3(client: client, region: .useast2)
+//        s3 = S3(client: client, region: .useast2)
         super.init()
     }
     
     func sendToS3(filename: String, json: String)  {
-        DispatchQueue.global().async {
-            do {
-                let putObjectRequest = S3.PutObjectRequest(
-                    body: .string(json),
-                    bucket: self.bucket,
-                    key: filename
-                )
-                let _ = try self.s3.putObject(putObjectRequest).wait()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+        
+        
+//         NSString *fileContentTypeStr = @"image/png";
+//        AWSS3GetPreSignedURLRequest *urlRequest = [AWSS3GetPreSignedURLRequest new];
+//        urlRequest.bucket = @"bounty-app";
+//        urlRequest.key =[NSString stringWithFormat:@"submissions/photos/%@",nameOfImage];
+//        urlRequest.HTTPMethod = AWSHTTPMethodPUT;
+//        urlRequest.expires = [NSDate dateWithTimeIntervalSinceNow:3600];
+//        urlRequest.contentType = fileContentTypeStr;
+//        [[[AWSS3PreSignedURLBuilder defaultS3PreSignedURLBuilder] getPreSignedURL:urlRequest]
+//         continueWithBlock:^id(BFTask *task) {
+//
+//             if (task.error) {
+//                 NSLog(@"Error: %@",task.error);
+//             } else {
+//                 NSURL *presignedURL = task.result;
+//                 NSLog(@"upload presignedURL is: \n%@", presignedURL);
+//
+//                 NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:presignedURL];
+//                 request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+//                 [request setHTTPMethod:@"PUT"];
+//                 [request setValue:fileContentTypeStr forHTTPHeaderField:@"Content-Type"];
+//
+//                 NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"unique_name_of_tttask"];
+//                 NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+//                 NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromFile:savedPath];
+//
+//                 [uploadTask resume];
+//             }
+//             return nil;
+//         }];
+//        DispatchQueue.global().async {
+//            do {
+//                let putObjectRequest = S3.PutObjectRequest(
+//                    body: .string(json),
+//                    bucket: self.bucket,
+//                    key: filename
+//                )
+//                let _ = try self.s3.putObject(putObjectRequest).wait()
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
     }
 
     

@@ -132,29 +132,20 @@ extension ComplicationController {
 
 extension ComplicationController {
     func makeUtilitarianLargeFlat(session: HealthDataManager, fromDate: Date? = nil) -> CLKComplicationTemplateUtilitarianLargeFlat {
-        if let fromDate = fromDate {
-            let date = session.lastUpload
-            let difference = Int((fromDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60)
-            let textProvider = CLKTextProvider(format: "\(session.stateDescription) for \(difference)m")
-            let complication = CLKComplicationTemplateUtilitarianLargeFlat(
-                textProvider: textProvider)
-            return complication
-        } else {
-            let textProvider = CLKTextProvider(format: "\(session.stateDescription) for \(session.timeSince())")
-            let complication = CLKComplicationTemplateUtilitarianLargeFlat(
-                textProvider: textProvider)
-            return complication
-        }
+        let textProvider = CLKTextProvider(format: "\(session.stateDescription)")
+        let complication = CLKComplicationTemplateUtilitarianLargeFlat(
+            textProvider: textProvider)
+        return complication
     }
     
     func makeUtilitarianSmallFlat(session: HealthDataManager) -> CLKComplicationTemplateUtilitarianSmallFlat {
-        let textProvider = CLKTextProvider(format: "\(session.timeSince())")
+        let textProvider = CLKTextProvider(format: "\(session.stateDescription)")
         let imageProvider = CLKImageProvider(onePieceImage: UIImage(named: "uchicago")!)
         return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProvider, imageProvider: imageProvider)
     }
 
     func makeUtilitarianSmall(session: HealthDataManager) -> CLKComplicationTemplateUtilitarianSmallRingText {
-        let textProvider = CLKTextProvider(format: "\(session.timeSince())")
+        let textProvider = CLKTextProvider(format: "\(session.stateDescription)")
         return CLKComplicationTemplateUtilitarianSmallRingText(textProvider: textProvider, fillFraction: 0.3, ringStyle: .closed)
     }
 

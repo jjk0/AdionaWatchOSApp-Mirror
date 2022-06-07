@@ -7,53 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001916FD2842C3AC00775636 /* Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001916FC2842C3AC00775636 /* Uploader.swift */; };
-		0037E332284252010009D0B2 /* NSArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E326284252010009D0B2 /* NSArray+ObjectiveSugar.m */; };
-		0037E333284252010009D0B2 /* NSString+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E329284252010009D0B2 /* NSString+ObjectiveSugar.m */; };
-		0037E334284252010009D0B2 /* NSMutableArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E32B284252010009D0B2 /* NSMutableArray+ObjectiveSugar.m */; };
-		0037E335284252010009D0B2 /* NSDictionary+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E32D284252010009D0B2 /* NSDictionary+ObjectiveSugar.m */; };
-		0037E336284252010009D0B2 /* NSNumber+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E330284252010009D0B2 /* NSNumber+ObjectiveSugar.m */; };
-		0037E337284252010009D0B2 /* NSSet+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E331284252010009D0B2 /* NSSet+ObjectiveSugar.m */; };
-		0037E339284259200009D0B2 /* Serializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0037E338284259200009D0B2 /* Serializer.swift */; };
-		0054EEB62848FEC60047B70F /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0054EEB52848FEC60047B70F /* UIHelper.swift */; };
+		00398A2F284F7C56006ECFEC /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E9283FC39300C95D9A /* UIColor+Hex.swift */; };
+		00398A30284F7C56006ECFEC /* UIImage+Lozenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */; };
+		00398A31284F7C56006ECFEC /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4722840F9330010A15F /* ErrorHandling.swift */; };
+		00398A32284F7C56006ECFEC /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4742840F9C30010A15F /* Notifications.swift */; };
+		00398A33284F7C56006ECFEC /* WorkouFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4782840FF210010A15F /* WorkouFactory.swift */; };
+		00398A34284F7C56006ECFEC /* Serializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0037E338284259200009D0B2 /* Serializer.swift */; };
+		00398A35284F7C56006ECFEC /* NSArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E326284252010009D0B2 /* NSArray+ObjectiveSugar.m */; };
+		00398A36284F7C56006ECFEC /* NSDictionary+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E32D284252010009D0B2 /* NSDictionary+ObjectiveSugar.m */; };
+		00398A37284F7C56006ECFEC /* NSMutableArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E32B284252010009D0B2 /* NSMutableArray+ObjectiveSugar.m */; };
+		00398A38284F7C56006ECFEC /* NSNumber+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E330284252010009D0B2 /* NSNumber+ObjectiveSugar.m */; };
+		00398A39284F7C56006ECFEC /* NSSet+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E331284252010009D0B2 /* NSSet+ObjectiveSugar.m */; };
+		00398A3A284F7C56006ECFEC /* NSString+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0037E329284252010009D0B2 /* NSString+ObjectiveSugar.m */; };
+		00398A3B284F7C56006ECFEC /* NSDate+RFC3339.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9728424F93009CC484 /* NSDate+RFC3339.m */; };
+		00398A3C284F7C56006ECFEC /* OMHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9628424F93009CC484 /* OMHError.m */; };
+		00398A3D284F7C56006ECFEC /* OMHHealthKitConstantsMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9828424F93009CC484 /* OMHHealthKitConstantsMapper.m */; };
+		00398A3E284F7C56006ECFEC /* OMHSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9B28424F93009CC484 /* OMHSerializer.m */; };
+		00398A3F284F7C56006ECFEC /* AdionaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B2283FC2F000C95D9A /* AdionaApp.swift */; };
+		00398A40284F7C56006ECFEC /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */; };
+		00398A41284F7C56006ECFEC /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B4283FC2F000C95D9A /* ComplicationController.swift */; };
+		00398A42284F7C56006ECFEC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B0283FC2F000C95D9A /* ContentView.swift */; };
+		00398A43284F7C56006ECFEC /* SessionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDD283FD26500147766 /* SessionList.swift */; };
+		00398A44284F7C56006ECFEC /* SessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE1283FD4E600147766 /* SessionRow.swift */; };
+		00398A45284F7C56006ECFEC /* SessionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDF283FD2E500147766 /* SessionDetail.swift */; };
+		00398A46284F7C56006ECFEC /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0054EEB52848FEC60047B70F /* UIHelper.swift */; };
+		00398A47284F7C56006ECFEC /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E5283FC36500C95D9A /* ComplicationViews.swift */; };
+		00398A48284F7CBF006ECFEC /* HealthDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046EF283FC3B500C95D9A /* HealthDataManager.swift */; };
+		00398A49284F7CD3006ECFEC /* BackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE7283FE2A300147766 /* BackgroundService.swift */; };
+		00398A4A284F7CD3006ECFEC /* BackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */; };
+		00398A4B284F7CE2006ECFEC /* Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001916FC2842C3AC00775636 /* Uploader.swift */; };
 		009BE46F284012480010A15F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009BE46E284012480010A15F /* HealthKit.framework */; };
-		009BE4732840F9330010A15F /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4722840F9330010A15F /* ErrorHandling.swift */; };
-		009BE4752840F9C30010A15F /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4742840F9C30010A15F /* Notifications.swift */; };
-		009BE4792840FF210010A15F /* WorkouFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4782840FF210010A15F /* WorkouFactory.swift */; };
 		00A2AB8D28424BED009CC484 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 009BE4712840F80E0010A15F /* Sentry */; };
-		00A2AB9C28424F93009CC484 /* OMHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9628424F93009CC484 /* OMHError.m */; };
-		00A2AB9D28424F93009CC484 /* NSDate+RFC3339.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9728424F93009CC484 /* NSDate+RFC3339.m */; };
-		00A2AB9E28424F93009CC484 /* OMHHealthKitConstantsMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9828424F93009CC484 /* OMHHealthKitConstantsMapper.m */; };
-		00A2AB9F28424F93009CC484 /* OMHSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2AB9B28424F93009CC484 /* OMHSerializer.m */; };
-		00A2ABAF28424FBF009CC484 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		00A2ABB028424FBF009CC484 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		00A2ABB128424FBF009CC484 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		00A2ABB228424FBF009CC484 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		00A2ABB328424FBF009CC484 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		00A2ABB428424FBF009CC484 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		00A5DCDE283FD26500147766 /* SessionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDD283FD26500147766 /* SessionList.swift */; };
-		00A5DCE0283FD2E500147766 /* SessionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCDF283FD2E500147766 /* SessionDetail.swift */; };
-		00A5DCE2283FD4E600147766 /* SessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE1283FD4E600147766 /* SessionRow.swift */; };
-		00A5DCE8283FE2A300147766 /* BackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE7283FE2A300147766 /* BackgroundService.swift */; };
-		00A5DCEA283FE5CD00147766 /* BackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */; };
-		00A5DCEC283FE5EF00147766 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */; };
-		00A5DCEE283FE64C00147766 /* UrlDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCED283FE64C00147766 /* UrlDownloader.swift */; };
 		00B046A1283FC2EF00C95D9A /* Adiona.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00B046A0283FC2EF00C95D9A /* Adiona.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00B046A6283FC2F000C95D9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B046A5283FC2F000C95D9A /* Assets.xcassets */; };
 		00B046AC283FC2F000C95D9A /* Adiona WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00B046B1283FC2F000C95D9A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B0283FC2F000C95D9A /* ContentView.swift */; };
-		00B046B3283FC2F000C95D9A /* AdionaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B2283FC2F000C95D9A /* AdionaApp.swift */; };
-		00B046B5283FC2F000C95D9A /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046B4283FC2F000C95D9A /* ComplicationController.swift */; };
 		00B046B7283FC2F000C95D9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B046B6283FC2F000C95D9A /* Assets.xcassets */; };
 		00B046BA283FC2F000C95D9A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B046B9283FC2F000C95D9A /* Preview Assets.xcassets */; };
 		00B046C5283FC2F100C95D9A /* AdionaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046C4283FC2F100C95D9A /* AdionaTests.swift */; };
-		00B046E6283FC36500C95D9A /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E5283FC36500C95D9A /* ComplicationViews.swift */; };
-		00B046EA283FC39300C95D9A /* UIImage+Lozenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */; };
-		00B046EB283FC39300C95D9A /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E9283FC39300C95D9A /* UIColor+Hex.swift */; };
-		00B046F1283FC3B500C95D9A /* HealthDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046EF283FC3B500C95D9A /* HealthDataManager.swift */; };
 		00F9A0FE2843A687000DE2B3 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 00F9A0FD2843A687000DE2B3 /* SotoS3 */; };
 		00F9A3662843A729000DE2B3 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 00F9A3652843A729000DE2B3 /* Sentry */; };
-		00F9A3682843A78E000DE2B3 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 00F9A3672843A78E000DE2B3 /* SotoS3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,7 +121,6 @@
 		009BE4742840F9C30010A15F /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		009BE4782840FF210010A15F /* WorkouFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkouFactory.swift; sourceTree = "<group>"; };
 		00A2AB8E28424C7B009CC484 /* Adiona WatchKit Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Adiona WatchKit Extension-Bridging-Header.h"; sourceTree = "<group>"; };
-		00A2AB9128424DB6009CC484 /* Granola.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Granola.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A2AB9428424F93009CC484 /* OMHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMHError.h; path = "Adiona WatchKit Extension/Serializer/Granola/OMHError.h"; sourceTree = SOURCE_ROOT; };
 		00A2AB9528424F93009CC484 /* NSDate+RFC3339.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+RFC3339.h"; path = "Adiona WatchKit Extension/Serializer/Granola/NSDate+RFC3339.h"; sourceTree = SOURCE_ROOT; };
 		00A2AB9628424F93009CC484 /* OMHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMHError.m; path = "Adiona WatchKit Extension/Serializer/Granola/OMHError.m"; sourceTree = SOURCE_ROOT; };
@@ -144,7 +135,6 @@
 		00A5DCE7283FE2A300147766 /* BackgroundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundService.swift; sourceTree = "<group>"; };
 		00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundWorker.swift; sourceTree = "<group>"; };
 		00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
-		00A5DCED283FE64C00147766 /* UrlDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlDownloader.swift; sourceTree = "<group>"; };
 		00B0469C283FC2EF00C95D9A /* Adiona.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adiona.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B046A0283FC2EF00C95D9A /* Adiona.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adiona.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B046A5283FC2F000C95D9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -168,7 +158,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00F9A3682843A78E000DE2B3 /* SotoS3 in Frameworks */,
 				009BE46F284012480010A15F /* HealthKit.framework in Frameworks */,
 				00F9A3662843A729000DE2B3 /* Sentry in Frameworks */,
 			);
@@ -196,7 +185,6 @@
 		009BE46D284012480010A15F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				00A2AB9128424DB6009CC484 /* Granola.framework */,
 				009BE46E284012480010A15F /* HealthKit.framework */,
 			);
 			name = Frameworks;
@@ -281,7 +269,6 @@
 			children = (
 				00A5DCE7283FE2A300147766 /* BackgroundService.swift */,
 				00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */,
-				00A5DCED283FE64C00147766 /* UrlDownloader.swift */,
 				001916FC2842C3AC00775636 /* Uploader.swift */,
 			);
 			path = "Background Service";
@@ -420,9 +407,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00B046D4283FC2F100C95D9A /* Build configuration list for PBXNativeTarget "Adiona WatchKit Extension" */;
 			buildPhases = (
-				00B046A7283FC2F000C95D9A /* Sources */,
 				00B046A8283FC2F000C95D9A /* Frameworks */,
 				00B046A9283FC2F000C95D9A /* Resources */,
+				00398A2E284F7C37006ECFEC /* Sources */,
 			);
 			buildRules = (
 			);
@@ -431,7 +418,6 @@
 			name = "Adiona WatchKit Extension";
 			packageProductDependencies = (
 				00F9A3652843A729000DE2B3 /* Sentry */,
-				00F9A3672843A78E000DE2B3 /* SotoS3 */,
 			);
 			productName = "Adiona WatchKit Extension";
 			productReference = 00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */;
@@ -541,46 +527,39 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		00B046A7283FC2F000C95D9A /* Sources */ = {
+		00398A2E284F7C37006ECFEC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00A5DCEA283FE5CD00147766 /* BackgroundWorker.swift in Sources */,
-				00B046EA283FC39300C95D9A /* UIImage+Lozenge.swift in Sources */,
-				00A2ABB228424FBF009CC484 /* (null) in Sources */,
-				00A5DCE0283FD2E500147766 /* SessionDetail.swift in Sources */,
-				00A2AB9C28424F93009CC484 /* OMHError.m in Sources */,
-				00B046B1283FC2F000C95D9A /* ContentView.swift in Sources */,
-				00A2ABB328424FBF009CC484 /* (null) in Sources */,
-				0037E332284252010009D0B2 /* NSArray+ObjectiveSugar.m in Sources */,
-				00A5DCE8283FE2A300147766 /* BackgroundService.swift in Sources */,
-				001916FD2842C3AC00775636 /* Uploader.swift in Sources */,
-				00A2ABB128424FBF009CC484 /* (null) in Sources */,
-				00A2AB9D28424F93009CC484 /* NSDate+RFC3339.m in Sources */,
-				00A5DCDE283FD26500147766 /* SessionList.swift in Sources */,
-				0037E334284252010009D0B2 /* NSMutableArray+ObjectiveSugar.m in Sources */,
-				00B046B3283FC2F000C95D9A /* AdionaApp.swift in Sources */,
-				00A5DCE2283FD4E600147766 /* SessionRow.swift in Sources */,
-				00A5DCEC283FE5EF00147766 /* ExtensionDelegate.swift in Sources */,
-				00A5DCEE283FE64C00147766 /* UrlDownloader.swift in Sources */,
-				00A2AB9E28424F93009CC484 /* OMHHealthKitConstantsMapper.m in Sources */,
-				0037E335284252010009D0B2 /* NSDictionary+ObjectiveSugar.m in Sources */,
-				0037E333284252010009D0B2 /* NSString+ObjectiveSugar.m in Sources */,
-				0037E337284252010009D0B2 /* NSSet+ObjectiveSugar.m in Sources */,
-				0037E336284252010009D0B2 /* NSNumber+ObjectiveSugar.m in Sources */,
-				0054EEB62848FEC60047B70F /* UIHelper.swift in Sources */,
-				00B046F1283FC3B500C95D9A /* HealthDataManager.swift in Sources */,
-				009BE4792840FF210010A15F /* WorkouFactory.swift in Sources */,
-				0037E339284259200009D0B2 /* Serializer.swift in Sources */,
-				00B046EB283FC39300C95D9A /* UIColor+Hex.swift in Sources */,
-				009BE4752840F9C30010A15F /* Notifications.swift in Sources */,
-				009BE4732840F9330010A15F /* ErrorHandling.swift in Sources */,
-				00A2ABB028424FBF009CC484 /* (null) in Sources */,
-				00A2ABB428424FBF009CC484 /* (null) in Sources */,
-				00A2ABAF28424FBF009CC484 /* (null) in Sources */,
-				00A2AB9F28424F93009CC484 /* OMHSerializer.m in Sources */,
-				00B046E6283FC36500C95D9A /* ComplicationViews.swift in Sources */,
-				00B046B5283FC2F000C95D9A /* ComplicationController.swift in Sources */,
+				00398A4B284F7CE2006ECFEC /* Uploader.swift in Sources */,
+				00398A49284F7CD3006ECFEC /* BackgroundService.swift in Sources */,
+				00398A4A284F7CD3006ECFEC /* BackgroundWorker.swift in Sources */,
+				00398A48284F7CBF006ECFEC /* HealthDataManager.swift in Sources */,
+				00398A2F284F7C56006ECFEC /* UIColor+Hex.swift in Sources */,
+				00398A30284F7C56006ECFEC /* UIImage+Lozenge.swift in Sources */,
+				00398A31284F7C56006ECFEC /* ErrorHandling.swift in Sources */,
+				00398A32284F7C56006ECFEC /* Notifications.swift in Sources */,
+				00398A33284F7C56006ECFEC /* WorkouFactory.swift in Sources */,
+				00398A34284F7C56006ECFEC /* Serializer.swift in Sources */,
+				00398A35284F7C56006ECFEC /* NSArray+ObjectiveSugar.m in Sources */,
+				00398A36284F7C56006ECFEC /* NSDictionary+ObjectiveSugar.m in Sources */,
+				00398A37284F7C56006ECFEC /* NSMutableArray+ObjectiveSugar.m in Sources */,
+				00398A38284F7C56006ECFEC /* NSNumber+ObjectiveSugar.m in Sources */,
+				00398A39284F7C56006ECFEC /* NSSet+ObjectiveSugar.m in Sources */,
+				00398A3A284F7C56006ECFEC /* NSString+ObjectiveSugar.m in Sources */,
+				00398A3B284F7C56006ECFEC /* NSDate+RFC3339.m in Sources */,
+				00398A3C284F7C56006ECFEC /* OMHError.m in Sources */,
+				00398A3D284F7C56006ECFEC /* OMHHealthKitConstantsMapper.m in Sources */,
+				00398A3E284F7C56006ECFEC /* OMHSerializer.m in Sources */,
+				00398A3F284F7C56006ECFEC /* AdionaApp.swift in Sources */,
+				00398A40284F7C56006ECFEC /* ExtensionDelegate.swift in Sources */,
+				00398A41284F7C56006ECFEC /* ComplicationController.swift in Sources */,
+				00398A42284F7C56006ECFEC /* ContentView.swift in Sources */,
+				00398A43284F7C56006ECFEC /* SessionList.swift in Sources */,
+				00398A44284F7C56006ECFEC /* SessionRow.swift in Sources */,
+				00398A45284F7C56006ECFEC /* SessionDetail.swift in Sources */,
+				00398A46284F7C56006ECFEC /* UIHelper.swift in Sources */,
+				00398A47284F7C56006ECFEC /* ComplicationViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -996,11 +975,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 009BE4702840F80E0010A15F /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
-		};
-		00F9A3672843A78E000DE2B3 /* SotoS3 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 00F9A0FC2843A687000DE2B3 /* XCRemoteSwiftPackageReference "soto" */;
-			productName = SotoS3;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

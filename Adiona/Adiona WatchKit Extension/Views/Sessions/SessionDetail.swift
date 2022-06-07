@@ -30,17 +30,10 @@ struct SessionDetail: View {
                 Text(session.stateDescription)
                     .font(.headline)
                     .lineLimit(0)
-                Divider()
-
-                Text("\(session.timeSince()) since last upload.")
-                    .font(.caption)
-                
-                Button("Collect") {
-                    HealthDataManager.shared.collectSamples()
+                Button("Update") {
+                    session.updateSummary()
                 }
-                
             }.padding(16)
-            
             
             ForEach(session.validActions(), id: \.self) { action in
                 ActionRow(action: action)
