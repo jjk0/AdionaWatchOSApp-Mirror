@@ -36,6 +36,9 @@
 		00398A49284F7CD3006ECFEC /* BackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE7283FE2A300147766 /* BackgroundService.swift */; };
 		00398A4A284F7CD3006ECFEC /* BackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A5DCE9283FE5CD00147766 /* BackgroundWorker.swift */; };
 		00398A4B284F7CE2006ECFEC /* Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001916FC2842C3AC00775636 /* Uploader.swift */; };
+		00398A4D284F9825006ECFEC /* SotoTimestreamWrite in Frameworks */ = {isa = PBXBuildFile; productRef = 00398A4C284F9825006ECFEC /* SotoTimestreamWrite */; };
+		00398A4F284F9913006ECFEC /* SotoTimestreamWrite in Frameworks */ = {isa = PBXBuildFile; productRef = 00398A4E284F9913006ECFEC /* SotoTimestreamWrite */; };
+		00398A51284F9957006ECFEC /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 00398A50284F9957006ECFEC /* SotoS3 */; };
 		009BE46F284012480010A15F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009BE46E284012480010A15F /* HealthKit.framework */; };
 		00A2AB8D28424BED009CC484 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 009BE4712840F80E0010A15F /* Sentry */; };
 		00B046A1283FC2EF00C95D9A /* Adiona.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00B046A0283FC2EF00C95D9A /* Adiona.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -159,7 +162,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				009BE46F284012480010A15F /* HealthKit.framework in Frameworks */,
+				00398A51284F9957006ECFEC /* SotoS3 in Frameworks */,
 				00F9A3662843A729000DE2B3 /* Sentry in Frameworks */,
+				00398A4D284F9825006ECFEC /* SotoTimestreamWrite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +181,7 @@
 			files = (
 				00A2AB8D28424BED009CC484 /* Sentry in Frameworks */,
 				00F9A0FE2843A687000DE2B3 /* SotoS3 in Frameworks */,
+				00398A4F284F9913006ECFEC /* SotoTimestreamWrite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +387,7 @@
 			packageProductDependencies = (
 				009BE4712840F80E0010A15F /* Sentry */,
 				00F9A0FD2843A687000DE2B3 /* SotoS3 */,
+				00398A4E284F9913006ECFEC /* SotoTimestreamWrite */,
 			);
 			productName = Adiona;
 			productReference = 00B0469C283FC2EF00C95D9A /* Adiona.app */;
@@ -418,6 +425,8 @@
 			name = "Adiona WatchKit Extension";
 			packageProductDependencies = (
 				00F9A3652843A729000DE2B3 /* Sentry */,
+				00398A4C284F9825006ECFEC /* SotoTimestreamWrite */,
+				00398A50284F9957006ECFEC /* SotoS3 */,
 			);
 			productName = "Adiona WatchKit Extension";
 			productReference = 00B046AB283FC2F000C95D9A /* Adiona WatchKit Extension.appex */;
@@ -961,6 +970,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		00398A4C284F9825006ECFEC /* SotoTimestreamWrite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00F9A0FC2843A687000DE2B3 /* XCRemoteSwiftPackageReference "soto" */;
+			productName = SotoTimestreamWrite;
+		};
+		00398A4E284F9913006ECFEC /* SotoTimestreamWrite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00F9A0FC2843A687000DE2B3 /* XCRemoteSwiftPackageReference "soto" */;
+			productName = SotoTimestreamWrite;
+		};
+		00398A50284F9957006ECFEC /* SotoS3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00F9A0FC2843A687000DE2B3 /* XCRemoteSwiftPackageReference "soto" */;
+			productName = SotoS3;
+		};
 		009BE4712840F80E0010A15F /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 009BE4702840F80E0010A15F /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
