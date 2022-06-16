@@ -7,32 +7,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1AF3612E-250D-4DAD-B308-922E654D2A28"
+            uuid = "5918B6BA-7B2E-4FC1-91DE-4CFA77079492"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Adiona WatchKit App/Background Service/Uploader.swift"
+            filePath = "Adiona WatchKit Extension/ExtensionDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "sendToTimeLine(filename:json:)"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "applicationDidEnterBackground()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0D8A6108-5E89-487A-9673-8691113D8E03"
+            uuid = "C3BFC2B3-0D60-4EF1-B0CA-A65B5D19DF70"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Adiona WatchKit App/Background Service/Uploader.swift"
+            filePath = "Adiona WatchKit App/Model/HealthDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "sendToTimeLine(filename:json:)"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
+            landmarkName = "startAccelerometer()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A595F43A-809F-4510-9B6B-F3B4D965A137"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adiona WatchKit App/Model/HealthDataManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
+            landmarkName = "startAccelerometer()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

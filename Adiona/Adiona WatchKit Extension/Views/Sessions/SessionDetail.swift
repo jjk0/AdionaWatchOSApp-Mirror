@@ -31,7 +31,6 @@ struct SessionDetail: View {
                     .font(.headline)
                     .lineLimit(0)
                 Button("Update") {
-                    Uploader.shared.sendToTimeLine(filename: "", json: "")
                     //session.updateSummary()
                 }
             }.padding(16)

@@ -2,40 +2,52 @@ import ClockKit
 import HealthKit
 import Sentry
 import SwiftUI
+import CoreMotion
 
 var dummyData: HealthDataManager = {
     HealthDataManager()
 }()
 
+
+class AccelerometerData: Encodable {
+    let startQueryTime = Date()
+    let frequency = 32
+    var x_val: [Double] = []
+    var y_val: [Double] = []
+    var z_val: [Double] = []
+}
+
+//     HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
+//     HKQuantityType.quantityType(forIdentifier: .appleMoveTime)!,
+//     HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
+
+
 let typesToRead: Set = [
     HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
     HKQuantityType.quantityType(forIdentifier: .stepCount)!,
     HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
     HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
-    HKQuantityType.quantityType(forIdentifier: .appleMoveTime)!,
     HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
     HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
-    HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
     HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
     HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
     HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!,
     HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
 ]
 
-let typesToWrite: Set = [
-    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-    HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
-    HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-    HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
-    HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
-    HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-]
+let typesToWrite = Set<HKQuantityType>()
+//= [
+//    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+//    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+//    HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
+//    HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
+//    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
+//    HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
+//    HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
+//    HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
+//    HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!,
+//    HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+//]
 
 var healthStore: HKHealthStore = {
     let healthStore = HKHealthStore()
@@ -47,6 +59,10 @@ class HealthDataManager: NSObject, ObservableObject {
     @Published var stateDescription: String = "Adiona"
     @Published var lastUpload = Date().addingTimeInterval(-HealthDataManager.fifteenMinutes)
     var collectedJSON = [String: (String, Date)]()
+    var acclerometerData = AccelerometerData()
+    let motion = CMMotionManager()
+    let accelerometerQueue = OperationQueue()
+    let recorder = CMSensorRecorder()
 
     override init() {
         super.init()
@@ -76,13 +92,9 @@ class HealthDataManager: NSObject, ObservableObject {
                 healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { _, _ in
                 }
             }
+            
+            self.startAccelerometer()
         }
-
-//        Serializer.serialize(workout: workout) { data in
-//            if let data = data {
-//                BackgroundService.shared.updateContent(content: data, identifier: workout.uuid.uuidString)
-//            }
-//        }
     }
 
     func updateSummary() {
@@ -105,7 +117,6 @@ class HealthDataManager: NSObject, ObservableObject {
             return
         }
 
-        
         let collectionDate = Date()
         guard var existingSampleData = collectedJSON[sample.identifier] else { fatalError() }
 
@@ -256,4 +267,31 @@ extension HealthDataManager {
 extension HealthDataManager {
     static let oneHour = 3600.0
     static let fifteenMinutes = 900.0
+}
+
+extension HealthDataManager {
+    func startAccelerometer() {
+        
+        if CMSensorRecorder.isAccelerometerRecordingAvailable() {
+            recorder.recordAccelerometer(forDuration: 20 * 60)
+        }
+        
+       if self.motion.isAccelerometerAvailable {
+           motion.stopAccelerometerUpdates()
+
+           self.motion.accelerometerUpdateInterval = 1.0 / 32.0  // 32 Hz
+           self.motion.startAccelerometerUpdates(to: accelerometerQueue) { accelerometerData, error in
+               guard let accelerometerData = accelerometerData else { return }
+               
+               self.acclerometerData.x_val.append(accelerometerData.acceleration.x)
+               self.acclerometerData.y_val.append(accelerometerData.acceleration.y)
+               self.acclerometerData.z_val.append(accelerometerData.acceleration.z)
+           }
+       }
+    }
+    
+    func stopAccelerometer() {
+        guard motion.isAccelerometerActive else { return }
+        motion.stopAccelerometerUpdates()
+    }
 }

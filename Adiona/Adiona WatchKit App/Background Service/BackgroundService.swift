@@ -6,7 +6,7 @@
 //
 
 import WatchKit
-//import SotoS3
+import SotoS3
 
 class BackgroundService: NSObject {
     static let shared = BackgroundService()
@@ -23,11 +23,7 @@ class BackgroundService: NSObject {
     
     // Store tasks in order to complete them when finished
     var pendingBackgroundTasks = [WKURLSessionRefreshBackgroundTask]()
-    
-    func updateContent(content: String, identifier: String) {
-        uploader.sendToS3(filename: "\(identifier).txt", json: content)
-    }
-    
+        
     func handleUpload(_ backgroundTask: WKURLSessionRefreshBackgroundTask, from: URL) {
 //        let request = URLRequest(url: URL("soemthing"))
 //        let task = urlSession.uploadTask(with: request, fromFile: from)
