@@ -9,12 +9,12 @@ struct ComplicationViews: View {
 }
 
 struct ComplicationStandard: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         ZStack {
             ProgressView(
-                "\(session.timeRemaining())",
+                "\(session.timeSince())",
                 value: 1.0 - session.fractionComplete(),
                 total: 1.0)
                 .progressViewStyle(
@@ -24,12 +24,12 @@ struct ComplicationStandard: View {
 }
 
 struct ComplicationViewCircular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         ZStack {
             ProgressView(
-                "\(session.timeRemaining())",
+                "\(session.timeSince())",
                 value: session.fractionComplete(),
                 total: 1.0)
                 .progressViewStyle(
@@ -39,7 +39,7 @@ struct ComplicationViewCircular: View {
 }
 
 struct ComplicationViewCornerCircular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
     @Environment(\.complicationRenderingMode) var renderingMode
 
     var body: some View {
@@ -60,7 +60,7 @@ struct ComplicationViewCornerCircular: View {
                 Circle()
                     .fill(Color.white)
             }
-            Text("\(session.timeRemaining())")
+            Text("\(session.timeSince())")
                 .foregroundColor(Color.black)
                 .complicationForeground()
             Circle()
@@ -71,7 +71,7 @@ struct ComplicationViewCornerCircular: View {
 }
 
 struct ComplicationViewRectangular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         HStack(spacing: 10) {
@@ -84,7 +84,7 @@ struct ComplicationViewRectangular: View {
                     .multilineTextAlignment(.leading)
                 HStack(spacing: 4.0) {
                     Spacer()
-                    Text(session.timeRemaining())
+                    Text(session.timeSince())
                 }
                 .font(.footnote)
                 .complicationForeground()
@@ -117,7 +117,7 @@ struct CircularProgressArc: Shape {
 }
 
 struct ComplicationViewExtraLargeCircular: View {
-    @State var session: Session
+    @State var session: HealthDataManager
 
     var body: some View {
         ZStack(alignment: .center) {
@@ -128,7 +128,7 @@ struct ComplicationViewExtraLargeCircular: View {
                 .progressViewStyle(ProgressArc(Color.white))
                 .complicationForeground()
             VStack(alignment: .center, spacing: 3.0) {
-                Text(session.timeRemaining())
+                Text(session.timeSince())
                     .font(.footnote)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)
@@ -136,7 +136,7 @@ struct ComplicationViewExtraLargeCircular: View {
                     .font(.headline)
                     .minimumScaleFactor(0.4)
                     .lineLimit(2)
-                Text(session.timeRemaining())
+                Text(session.timeSince())
                     .font(.footnote)
             }
             .multilineTextAlignment(.center)

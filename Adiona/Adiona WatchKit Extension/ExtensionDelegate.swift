@@ -2,53 +2,10 @@ import ClockKit
 import HealthKit
 import Sentry
 import WatchKit
-import SotoS3
-
-let typesToRead: Set = [
-    HKObjectType.workoutType(),
-    HKSeriesType.workoutRoute(),
-    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-    HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
-    HKQuantityType.quantityType(forIdentifier: .appleMoveTime)!,
-    HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
-    HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
-    HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
-    HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
-    HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-]
-
-let typesToWrite: Set = [
-    HKObjectType.workoutType(),
-    HKSeriesType.workoutRoute(),
-    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-    HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
-    HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-    HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
-    HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
-    HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-]
-
-var healthStore: HKHealthStore = {
-    let healthStore = HKHealthStore()
-    healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { _, _ in
-        NotificationCenter.default.post(name: .healthKitPermissionsChanged, object: nil)
-    }
-    return healthStore
-}()
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate {
+    private let healthDataManager = HealthDataManager.shared
     private let backgroundWorker = BackgroundWorker()
-    private var downloads: [String: UrlDownloader] = [:]
 
     func applicationDidFinishLaunching() {
         SentrySDK.start { options in
@@ -60,11 +17,11 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
             self.backgroundWorker.schedule(firstTime: true)
         }
-
-        SessionData.shared.activeSession = Session()
-
         
-        NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { _ in
+        healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { _, _ in
+            let status = healthStore.authorizationStatus(for: typesToRead.first!)
+            
+            NotificationCenter.default.post(name: .healthKitPermissionsChanged, object: nil)
         }
     }
 
@@ -75,17 +32,14 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 task.setTaskCompletedWithSnapshot(false)
 
             case let task as WKApplicationRefreshBackgroundTask:
-                Self.updateActiveComplications()
-
-                if let activeSession = SessionData.shared.activeSession {
-                    activeSession.end()
-                    SessionData.shared.addToBacklog(session: activeSession)
+                var json = ""
+                for (_,v) in healthDataManager.collectedJSON {
+                    json.append(v.0)
                 }
-
-                let nextSession = Session()
-                SessionData.shared.activeSession = nextSession
-                nextSession.start()
-
+                Uploader.shared.sendToS3(filename: "\(UUID().uuidString).txt", json: json)
+                for k in healthDataManager.collectedJSON.keys {
+                    healthDataManager.collectedJSON[k]?.0 = ""
+                }
                 backgroundWorker.schedule()
                 task.setTaskCompletedWithSnapshot(false)
             case let task as WKURLSessionRefreshBackgroundTask:
@@ -95,16 +49,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 task.setTaskCompletedWithSnapshot(false)
             }
         }
-    }
-
-    private func downloader(for identifier: String) -> UrlDownloader {
-        guard let download = downloads[identifier] else {
-            let downloader = UrlDownloader(identifier: identifier)
-            downloads[identifier] = downloader
-            return downloader
-        }
-
-        return download
     }
 
     public static func updateActiveComplications() {
