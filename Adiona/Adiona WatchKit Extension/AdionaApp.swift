@@ -9,7 +9,6 @@ import SwiftUI
 import HealthKit
 
 
-// The quantity types to read from the health store.
 @main
 struct AdionaApp: App {
     @WKExtensionDelegateAdaptor(ExtensionDelegate.self)

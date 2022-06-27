@@ -9,7 +9,7 @@ var dummyData: HealthDataManager = {
 }()
 
 
-class AccelerometerData: Encodable {
+class AccelerometerData: Encodable, ObservableObject {
     let startQueryTime = Date()
     let frequency = 32
     var x_val: [Double] = []
@@ -59,7 +59,7 @@ class HealthDataManager: NSObject, ObservableObject {
     @Published var stateDescription: String = "Adiona"
     @Published var lastUpload = Date().addingTimeInterval(-HealthDataManager.fifteenMinutes)
     var collectedJSON = [String: (String, Date)]()
-    var acclerometerData = AccelerometerData()
+    @Published var acclerometerData = AccelerometerData()
     let motion = CMMotionManager()
     let accelerometerQueue = OperationQueue()
     let recorder = CMSensorRecorder()
@@ -107,7 +107,14 @@ class HealthDataManager: NSObject, ObservableObject {
         }
 
         DispatchQueue.main.async {
-            self.stateDescription = "\(summary) bytes"
+            if let data = self.recorder.accelerometerData(from: self.acclerometerData.startQueryTime, to: Date()) {
+                for item in data {
+                    print(item)
+                }
+            }
+            
+            
+            self.stateDescription = "\(summary) / \(self.acclerometerData.x_val.count)"
         }
     }
 
@@ -271,7 +278,6 @@ extension HealthDataManager {
 
 extension HealthDataManager {
     func startAccelerometer() {
-        
         if CMSensorRecorder.isAccelerometerRecordingAvailable() {
             recorder.recordAccelerometer(forDuration: 20 * 60)
         }

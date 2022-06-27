@@ -45,11 +45,14 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
                     json.append(v.0)
                 }
                 
-                if let rpos = json.range(of:"}", options:.backwards) {
-                    json.removeSubrange(rpos)
+                if json.count > 0,
+                   let rpos = json.range(of:"}", options:.backwards) {
+                        json.removeSubrange(rpos)
+                    json.append("\"acceleration\": { \(String(data: data, encoding: .utf8)!) }")
+                } else {
+                    json.append("{\"acceleration\": { \(String(data: data, encoding: .utf8)!) }}")
                 }
 
-                json.append("acceleration: { \(String(data: data, encoding: .utf8)!) }")
 
                 Uploader.shared.sendToS3(filename: "\(UUID().uuidString).txt", json: json)
                 for k in healthDataManager.collectedJSON.keys {

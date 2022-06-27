@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00398A2F284F7C56006ECFEC /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E9283FC39300C95D9A /* UIColor+Hex.swift */; };
-		00398A30284F7C56006ECFEC /* UIImage+Lozenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */; };
 		00398A31284F7C56006ECFEC /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4722840F9330010A15F /* ErrorHandling.swift */; };
 		00398A32284F7C56006ECFEC /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009BE4742840F9C30010A15F /* Notifications.swift */; };
 		00398A34284F7C56006ECFEC /* Serializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0037E338284259200009D0B2 /* Serializer.swift */; };
@@ -149,8 +147,6 @@
 		00B046C0283FC2F100C95D9A /* AdionaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdionaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B046C4283FC2F100C95D9A /* AdionaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdionaTests.swift; sourceTree = "<group>"; };
 		00B046E5283FC36500C95D9A /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
-		00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Lozenge.swift"; sourceTree = "<group>"; };
-		00B046E9283FC39300C95D9A /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		00B046EF283FC3B500C95D9A /* HealthDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -319,11 +315,11 @@
 				009BE46C284012480010A15F /* Adiona WatchKit Extension.entitlements */,
 				00B046B2283FC2F000C95D9A /* AdionaApp.swift */,
 				00A5DCEB283FE5EF00147766 /* ExtensionDelegate.swift */,
+				00A2AB8E28424C7B009CC484 /* Adiona WatchKit Extension-Bridging-Header.h */,
 				00B046B4283FC2F000C95D9A /* ComplicationController.swift */,
 				00A5DCE3283FDD0300147766 /* Views */,
 				00B046B6283FC2F000C95D9A /* Assets.xcassets */,
 				00B046BB283FC2F000C95D9A /* Info.plist */,
-				00A2AB8E28424C7B009CC484 /* Adiona WatchKit Extension-Bridging-Header.h */,
 				00B046B8283FC2F000C95D9A /* Preview Content */,
 			);
 			path = "Adiona WatchKit Extension";
@@ -348,8 +344,6 @@
 		00B046E7283FC37D00C95D9A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				00B046E9283FC39300C95D9A /* UIColor+Hex.swift */,
-				00B046E8283FC39300C95D9A /* UIImage+Lozenge.swift */,
 				009BE4722840F9330010A15F /* ErrorHandling.swift */,
 				009BE4742840F9C30010A15F /* Notifications.swift */,
 			);
@@ -541,8 +535,6 @@
 				00398A49284F7CD3006ECFEC /* BackgroundService.swift in Sources */,
 				00398A4A284F7CD3006ECFEC /* BackgroundWorker.swift in Sources */,
 				00398A48284F7CBF006ECFEC /* HealthDataManager.swift in Sources */,
-				00398A2F284F7C56006ECFEC /* UIColor+Hex.swift in Sources */,
-				00398A30284F7C56006ECFEC /* UIImage+Lozenge.swift in Sources */,
 				00398A31284F7C56006ECFEC /* ErrorHandling.swift in Sources */,
 				00398A32284F7C56006ECFEC /* Notifications.swift in Sources */,
 				00398A34284F7C56006ECFEC /* Serializer.swift in Sources */,
