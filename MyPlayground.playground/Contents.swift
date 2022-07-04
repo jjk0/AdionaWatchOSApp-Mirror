@@ -1,76 +1,75 @@
-//: A UIKit based Playground for presenting user interface
-  
-import CoreMotion
-import Foundation
-import PlaygroundSupport
 import UIKit
-// 2022-06-12T07:25:00Z
+
+class Value<T>: Encodable where T: Encodable {
+    var value = [T]()
+    let queryTime = Date()
+}
+
 class AccelerometerData: Encodable {
-    let startQueryTime = Date()
     let frequency = 32
-    var x_val: [Double] = []
-    var y_val: [Double] = []
-    var z_val: [Double] = []
+    
+    func prepareForReuse() {
+        print("prepareForReuse()")
+        queryTime = Date()
+        x_val = Array<Double>()
+        y_val = Array<Double>()
+        z_val = Array<Double>()
+    }
+    
+    var queryTime = Date()
+    var x_val = Array<Double>()
+    var y_val = Array<Double>()
+    var z_val = Array<Double>()
 }
 
-var acclerometerData = AccelerometerData()
+struct MetaData: Encodable {
+    let connectivity_status: String
+    let device_ID: String
+}
 
-class MyViewController: UIViewController {
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+struct AdionaData: Encodable {
+    let metaData = MetaData(connectivity_status: "wifi", device_ID: UUID().uuidString)
+    let acceleration = AccelerometerData()
+    let heart_rate = Value<Int>()
+    let step_count = Value<Int>()
+    let respiratory_rate = Value<Int>()
+    let oxygen_saturation = Value<Int>()
+}
+
+extension Encodable {
+    /// Converting object to postable JSON
+    func toJSON(_ encoder: JSONEncoder = JSONEncoder()) throws -> NSString {
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.outputFormatting = .prettyPrinted
+        let data = try encoder.encode(self)
+        let result = String(decoding: data, as: UTF8.self)
+        return NSString(string: result)
     }
 }
 
-    let acceleration = CMAcceleration(x: 1.234, y: 2.345, z: 3.456)
-    
-for _ in 0 ... 2 { // (32 * 60) * 5 {
-        add(acceleration)
-    }
-    
-//        "acceleration": {
-//            "x_val": [0.05, 0.17],
-//            "y_val": [0.12, 1.2],
-//            "z_val": [-0.41, 1.7],
-//            "startQueryTime": "2022-06-12T07:25:00Z",
-//            "frequency": 32
-//        },
 
-    // 1,324,967
-    let encoder = JSONEncoder()
-    encoder.dateEncodingStrategy = .iso8601
-    encoder.outputFormatting = .prettyPrinted
+let data = AdionaData()
+data.heart_rate.value.append(43)
+data.heart_rate.value.append(44)
 
-    let data = try! encoder.encode(acclerometerData)
-    
-    print(ByteCountFormatter().string(fromByteCount: Int64(data.count)))
+data.oxygen_saturation.value.append(99)
+data.oxygen_saturation.value.append(98)
+data.oxygen_saturation.value.append(102)
 
-    let string = String(data: data, encoding: .utf8)!
-    
-    var JSON = """
-    {"menu": {
-              "id": "file",
-              "value": "File",
-              "popup": {
-                "menuitem": [
-                  {"value": "New", "onclick": "CreateNewDoc()"},
-                  {"value": "Close", "onclick": "CloseDoc()"}
-                ]
-              }
-            }}
-    """
-    
-    if let rpos = JSON.range(of:"}", options:.backwards) {
-        JSON.removeSubrange(rpos)
-    }
-    
-    print(JSON)
+data.respiratory_rate.value.append(44)
+data.respiratory_rate.value.append(80)
+
+data.acceleration.x_val.append(45.00)
+data.acceleration.x_val.append(46.00)
+
+data.acceleration.y_val.append(48.00)
+data.acceleration.y_val.append(48.00)
+
+data.acceleration.z_val.append(49.00)
+data.acceleration.z_val.append(49.00)
 
 
-func add(_ acceleration: CMAcceleration) {
-    acclerometerData.x_val.append(acceleration.x)
-    acclerometerData.y_val.append(acceleration.y)
-    acclerometerData.z_val.append(acceleration.z)
-}
+let jsonString = try! data.toJSON()
+print(jsonString)
 
-// Present the view controller in the Live View window
-//PlaygroundPage.current.liveView = MyViewController()
+
