@@ -32,7 +32,7 @@ struct ContentView: View {
                 showingKeypard.toggle()
             }
             Button("Set Fence") {
-                Location.shared.geoFence = nil
+                Location.shared.resetGeofence()
             }
         }.fullScreenCover(isPresented: $showingKeypard) {
             KeypadView(enteredDigits: "")

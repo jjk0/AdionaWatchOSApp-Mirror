@@ -8,11 +8,20 @@
 import CoreLocation
 import Foundation
 
+class GeoFence: NSObject {
+    let region: CLCircularRegion
+    var inFence: Bool
+    
+    init(region: CLCircularRegion, inFence: Bool) {
+        self.region = region
+        self.inFence = inFence
+    }
+}
+
 class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
     static var shared = Location()
     
-    var geoFence: CLCircularRegion?
-    var inFence = true
+    var geoFences = [GeoFence]()
     
     @Published var geoFenceStatus: String = "In Fence"
     
@@ -25,16 +34,36 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
         manager.distanceFilter = 10
         requestAuthorization()
     }
-
-    func monitorRegionAtLocation(center: CLLocationCoordinate2D, radius: CLLocationDistance, identifier: String) -> CLCircularRegion {
-        let region = CLCircularRegion(center: center,
-                                      radius: radius, identifier: identifier)
-        region.notifyOnEntry = true
-        region.notifyOnExit = false
-        
-        return region
-    }
     
+    func resetGeofence() {
+        Downloader.shared.getFromS3(filename: "geofences.json") { JSON in
+            if let JSON = JSON,
+               let jsonData = JSON.data(using: .utf8) {
+                do {
+                    let geoFenceData: GeofenceData = try JSONDecoder().decode(GeofenceData.self, from: jsonData)
+                    let fences = geoFenceData.geofences
+                    self.geoFences.removeAll()
+                    
+                    for (latitude, longitude, radius, identifier) in zip(fences.latitude, fences.longitude, fences.radius, fences.identifier) {
+                        
+                        let radiusInFeet = Measurement(value: radius, unit: UnitLength.feet)
+                        let radiusInMeters = radiusInFeet.converted(to: UnitLength.meters)
+
+                        let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        let region = CLCircularRegion(center: center,
+                                                      radius: radiusInMeters.value, identifier: identifier)
+                        region.notifyOnExit = true
+                        region.notifyOnEntry = false
+                        
+                        self.geoFences.append(GeoFence(region: region, inFence: false))
+                    }
+                } catch {
+                    track(error)
+                }
+            }
+        }
+    }
+
     func requestAuthorization() {
         let currentStatus = manager.authorizationStatus
         
@@ -60,42 +89,39 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for location in locations {
-            if geoFence == nil {
-                geoFence = monitorRegionAtLocation(center: location.coordinate, radius: 10, identifier: "Ken")
-            }
-            
             HealthDataManager.shared.adionaData.locations.latitude.append(location.coordinate.latitude)
             HealthDataManager.shared.adionaData.locations.longitude.append(location.coordinate.longitude)
             HealthDataManager.shared.adionaData.locations.timestamp.append(location.timestamp)
             
-            if let geoFence = geoFence {
-                let coordinate = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                let distanceInMeters = coordinate.distance(from: CLLocation(latitude: geoFence.center.latitude, longitude: geoFence.center.longitude))
+            let coordinate = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
 
-                let locationData = LocationData()
-                locationData.longitude.append(location.coordinate.longitude)
-                locationData.latitude.append(location.coordinate.latitude)
-                locationData.timestamp.append(Date())
+            let locationData = LocationData()
+            locationData.longitude.append(location.coordinate.longitude)
+            locationData.latitude.append(location.coordinate.latitude)
+            locationData.timestamp.append(Date())
 
-                do {
-                    if geoFence.contains(location.coordinate) {
-                        self.inFence = true
+            do {
+                for fence in geoFences {
+                    let distanceInMeters = coordinate.distance(from: CLLocation(latitude: fence.region.center.latitude, longitude: fence.region.center.longitude))
+
+                    if fence.region.contains(location.coordinate) {
+                        fence.inFence = true
                         DispatchQueue.main.async {
-                            self.geoFenceStatus = "In fence: \(distanceInMeters)"
+                            self.geoFenceStatus = "In fence \(fence.region.identifier): \(distanceInMeters)"
                         }
                     } else {
-                        if inFence {
-                            self.inFence = false
-                            Uploader.shared.sendToS3(filename: "Out of fence-\(UUID().uuidString).txt", json: try locationData.toJSON() as String) {
+                        if fence.inFence {
+                            fence.inFence = false
+                            Uploader.shared.sendToS3(filename: "Geofence \(fence.region.identifier) Exit at \(Date().description).txt", json: try locationData.toJSON() as String) {
                                 DispatchQueue.main.async {
-                                    self.geoFenceStatus = "Out of fence: \(distanceInMeters)"
+                                    self.geoFenceStatus = "Out of fence \(fence.region.identifier): \(distanceInMeters)"
                                 }
                             }
                         }
                     }
-                } catch {
-                    track(error)
                 }
+            } catch {
+                track(error)
             }
         }
     }
