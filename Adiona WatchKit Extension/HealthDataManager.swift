@@ -11,7 +11,7 @@ var dummyData: HealthDataManager = {
 //     HKQuantityType.quantityType(forIdentifier: .appleMoveTime)!,
 //     HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
 
-let quantityTypes: [HKQuantityTypeIdentifier] = [
+let quantityTypes: Set<HKQuantityTypeIdentifier> = [
     .heartRateVariabilitySDNN,
     .heartRate,
     .restingHeartRate,
@@ -21,22 +21,14 @@ let quantityTypes: [HKQuantityTypeIdentifier] = [
     .stairAscentSpeed,
     .stairDescentSpeed,
     .sixMinuteWalkTestDistance,
-    .respiratoryRate
+    .respiratoryRate,
+    .distanceWalkingRunning
 ]
 
-let typesToRead: Set = [
-    HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-    HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-    HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-    HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!,
-    HKQuantityType.quantityType(forIdentifier: .stairAscentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .stairDescentSpeed)!,
-    HKQuantityType.quantityType(forIdentifier: .sixMinuteWalkTestDistance)!,
-    HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!,
-    HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!,
-    HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-]
+var typesToRead: Set<HKQuantityType> = {
+    let mapping = quantityTypes.compactMap { HKQuantityType.quantityType(forIdentifier: $0) }
+    return Set<HKQuantityType>(mapping)
+}()
 
 let typesToWrite = Set<HKQuantityType>()
 
@@ -49,6 +41,7 @@ class HealthDataManager: NSObject, ObservableObject {
     static var shared = HealthDataManager()
     var adionaData = AdionaData()
     var timer: Timer?
+    var activeDataQueries = [HKQuery]()
     var acclerometerData = AccelerometerData()
     lazy var motion: CMMotionManager = {
         let m = CMMotionManager()
@@ -68,48 +61,84 @@ class HealthDataManager: NSObject, ObservableObject {
 
     override init() {
         super.init()
+        print("init")
+
+        NotificationCenter.default.addObserver(forName: .bucketNameEstablished, object: nil, queue: nil) { _ in
+            
+        }
 
         NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { _ in
-            for sampleType in quantityTypes {
-                // A query that returns changes to the HealthKit store, including a snapshot of new changes and continuous monitoring as a long-running query.
-            }
-            self.startAccelerometer()
+            print("Healthkit Permission Change")
+            self.restart()
+        }
+        
+        healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { success, error in
+            track(error)
+            self.restart()
         }
     }
 
+    func restart() {
+        activeDataQueries.forEach { healthStore.stop($0) }
+        activeDataQueries.removeAll()
+        Location.shared.manager.stopUpdatingLocation()
+        stopAccelerometer()
+        
+        for sampleType in quantityTypes {
+            self.startQuery(quantityTypeIdentifier: sampleType)
+        }
+        
+        for sampleType in typesToRead {
+            self.setupQueryMethod(for: sampleType)
+        }
+        
+        self.startAccelerometer()
+        Location.shared.manager.startUpdatingLocation()
+    }
+    
     func collectSamples() {
         HealthDataManager.shared.adionaData.metaData.end_date = Date()
         for sampleType in typesToRead {
             self.adionaData.addSamples(for: sampleType)
         }
     }
-
-    func setupAnchoredQuery(sampleType: HKSampleType) {
-        let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
-            _, samples, _, _, error in
-                
-                if let samples = samples as? [HKQuantitySample] {
-                    self.adionaData.addQuantitySamples(for: samples)
-                }
-                if let error = error {
-                    track(error)
-                }
-            }
-
-        // It provides us with both the ability to receive a snapshot of data, and then on subsequent calls, a snapshot of what has changed.\
-        let datePredicate = HKQuery.predicateForSamples(withStart: Date(), end: Date().addingTimeInterval(.greatestFiniteMagnitude), options: [.strictStartDate])
-
-        let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
-        let query = HKAnchoredObjectQuery(type: sampleType, predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [devicePredicate, datePredicate]), anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: updateHandler)
-        query.updateHandler = updateHandler
-        
-        healthStore.execute(query)
-    }
     
+    func startQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {
+           let datePredicate = HKQuery.predicateForSamples(withStart: Date(), end: nil, options: .strictStartDate)
+           let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
+           let queryPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:[datePredicate, devicePredicate])
+           
+           let updateHandler: ((HKAnchoredObjectQuery, [HKSample]?,
+               [HKDeletedObject]?,
+               HKQueryAnchor?,
+               Error?) -> Void) = { query,
+               samples,
+               deletedObjects,
+               queryAnchor,
+               error in
+               if let samples = samples as? [HKQuantitySample] {
+                   self.adionaData.addQuantitySamples(for: samples)
+               }
+
+               //self.process(samples: samples, quantityTypeIdentifier: quantityTypeIdentifier)
+           }
+           
+           let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: quantityTypeIdentifier)!,
+                                             predicate: queryPredicate,
+                                             anchor: nil,
+                                             limit: HKObjectQueryNoLimit,
+                                             resultsHandler: updateHandler)
+           query.updateHandler = updateHandler
+            activeDataQueries.append(query)
+           healthStore.execute(query)
+           
+       }
+
     func setupQueryMethod(for sampleType: HKSampleType) {
         let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
             if let error = errorOrNil {
                 track(error)
+                print(sampleType)
             } else {
                 self.adionaData.addSamples(for: sampleType)
             }
@@ -117,17 +146,19 @@ class HealthDataManager: NSObject, ObservableObject {
             completionHandler()
         }
 
+        activeDataQueries.append(query)
+        healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { success, error in
+            track(error)
+            if let _ = error {
+                print(sampleType)
+            }
+        }
+        
         healthStore.execute(query)
-        healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { success, error in }
     }
     
     func resetCollectors() {
         adionaData = AdionaData()
-    }
-    
-    func updateSummary() {
-        DispatchQueue.main.async {
-        }
     }
 
     func reloadComplication() {
@@ -174,9 +205,4 @@ extension HealthDataManager {
         motion.stopAccelerometerUpdates()
     }
 }
-
-
-//        if CMSensorRecorder.isAccelerometerRecordingAvailable() {
-//            recorder.recordAccelerometer(forDuration: 20 * 60)
-//        }
 

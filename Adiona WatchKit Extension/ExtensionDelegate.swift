@@ -11,7 +11,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
     private let location = Location.shared
     
     func applicationDidFinishLaunching() {
-        
         SentrySDK.start { options in
             options.dsn = "https://eadde9c57a2542d5a123b338aacd0441@o824011.ingest.sentry.io/6447191"
             options.debug = false // Enabled debug when first installing is always helpful
@@ -19,10 +18,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
         }
 
         schedule(firstTime: true)
-
-        healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { _, _ in
-            NotificationCenter.default.post(name: .healthKitPermissionsChanged, object: nil)
-        }
     }
     
     func applicationDidBecomeActive() {
@@ -59,7 +54,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
     
     func applicationDidEnterBackground() {
         schedule()
-        healthDataManager.startAccelerometer()
+        HealthDataManager.shared.restart()
     }
 
     func sendHealthData(completion: @escaping () -> Void) {
@@ -79,8 +74,8 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
             completion()
         }
     }
+    
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
-        
         backgroundTasks.forEach { task in
             switch task {
             case let task as WKSnapshotRefreshBackgroundTask:

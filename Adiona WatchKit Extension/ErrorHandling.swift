@@ -8,7 +8,8 @@
 import Foundation
 import Sentry
 
-func track(_ error: Error, file: String = #file, function: String = #function, line: Int = #line) {
+func track(_ error: Error?, file: String = #file, function: String = #function, line: Int = #line) {
+    guard let error = error else { return }
     track(String(describing: error), file: file, function: function, line: line)
 }
 

@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var showingKeypard = false
+    @State var showingKeypard = Uploader.shared.bucketName == nil
     @StateObject var location: Location
 
+    var buildNumber: String = {
+        if let info = Bundle.main.infoDictionary {
+            let appBuild = info[kCFBundleVersionKey as String] as? String ?? "x.x"
+            return "(\(appBuild))"
+        }
+        
+        return "X.X"
+    }()
+    
     var body: some View {
         VStack {
-            Text(location.geoFenceStatus)
-            Button("Send It") {
+            Text(buildNumber)
+            Button("Upload") {
                 gExtensionDelegate.sendHealthData() {
                     print("Sent")
                 }
@@ -25,9 +34,6 @@ struct ContentView: View {
             Button("Set Fence") {
                 Location.shared.geoFence = nil
             }
-//            .sheet(isPresented: $showingKeypard) {
-//                KeypadView(enteredDigits: "")
-//            }
         }.fullScreenCover(isPresented: $showingKeypard) {
             KeypadView(enteredDigits: "")
         }

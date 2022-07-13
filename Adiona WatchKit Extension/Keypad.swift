@@ -18,7 +18,7 @@ struct NumericButton: View {
             Text(digit)
                 .font(.system(size: 14).bold())
                 .foregroundColor(.white)
-                .background(Color.red)
+                .background(Color.clear)
         }
         .background(Color("KeyColor"))
         .frame(width: 55, height: 44, alignment: .center)
@@ -33,6 +33,8 @@ let columns = [
 ]
 
 struct KeypadView: View {
+    @Environment(\.presentationMode) var presentationMode
+
     var onDismiss: (() -> Void)?
     @State var enteredDigits: String
     @State private var showingAlert = false
@@ -50,7 +52,7 @@ struct KeypadView: View {
                     
                     if !exists {
                         Uploader.shared.createBucket(bucketName: enteredDigits) { success in
-                            
+                            presentationMode.wrappedValue.dismiss()
                         }
                     }
                 }
@@ -61,8 +63,11 @@ struct KeypadView: View {
             VStack {
             }
             .alert("ID \(enteredDigits) is in use.  Are you sure you entered it correctly?", isPresented: $showingAlert) {
-                Button("YES", role: .destructive) { }
-                Button("Reenter", role: .cancel) {
+                Button("YES", role: .destructive) {
+                    Uploader.shared.bucketName = enteredDigits
+                    presentationMode.wrappedValue.dismiss()
+                }
+                Button("Re-enter", role: .cancel) {
                     showingAlert = false
                     enteredDigits = ""
                 }

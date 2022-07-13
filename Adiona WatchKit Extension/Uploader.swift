@@ -9,11 +9,21 @@ import Foundation
 import SotoS3
 import NIO
 
-class Uploader: NSObject, URLSessionTaskDelegate {
+class Uploader: NSObject, URLSessionTaskDelegate, ObservableObject {
     static let shared = Uploader()
     static let rootBucket = "development-adiona-watch-raw-data"
 
-    var bucket = rootBucket
+    var bucketName: String? {
+        get {
+            guard let bucketName = UserDefaults.standard.string(forKey: "bucket_name") else { return nil }
+            return "\(Uploader.rootBucket)/\(bucketName)/"
+        }
+        
+        set(newValue) {
+            UserDefaults.standard.set(newValue, forKey: "bucket_name")
+        }
+    }
+    
     let client = AWSClient(
         credentialProvider: .static(accessKeyId: "AKIA3LD2DR65C72R2ZVW", secretAccessKey: "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"),
         httpClientProvider: .createNew
@@ -22,29 +32,30 @@ class Uploader: NSObject, URLSessionTaskDelegate {
     
     override init() {
         s3 = S3(client: client, region: .useast2)
-        if let bucketname = UserDefaults.standard.string(forKey: "bucket_name") {
-            self.bucket = bucketname
-        }
-
         super.init()
     }
     
     func sendToS3(filename: String, json: String, completion: @escaping ()->Void)  {
-            let putObjectRequest = S3.PutObjectRequest(
-                body: .string(json),
-                bucket: self.bucket,
-                key: filename
-            )
-            
-            let _ = self.s3.putObject(putObjectRequest).always { result in
-                switch result {
-                case .failure(let error):
-                    track(error)
-                case .success:
-                    print("Success")
-                }
-                completion()
+        guard let bucket = self.bucketName else {
+            track("Bucket not set in sendToS3")
+            return
+        }
+        
+        let putObjectRequest = S3.PutObjectRequest(
+            body: .string(json),
+            bucket: bucket,
+            key: filename
+        )
+        
+        let _ = self.s3.putObject(putObjectRequest).always { result in
+            switch result {
+            case .failure(let error):
+                track(error)
+            case .success:
+                print("Success")
             }
+            completion()
+        }
     }
     
     func lookupBucket(bucketName: String, completion: @escaping (Bool)->Void) { // Bool becomes error later
@@ -68,12 +79,12 @@ class Uploader: NSObject, URLSessionTaskDelegate {
         let createBucketRequest = S3.CreateBucketRequest(bucket: newBucketName)
         let createBucketFuture = s3.createBucket(createBucketRequest)
         createBucketFuture.whenFailure({ error in
+            track(error)
             completion(error)
         })
         
         createBucketFuture.whenSuccess({ output in
-            self.bucket = newBucketName
-            UserDefaults.standard.set(newBucketName, forKey: "bucket_name")
+            self.bucketName = bucketName
             completion(nil)
         })
     }

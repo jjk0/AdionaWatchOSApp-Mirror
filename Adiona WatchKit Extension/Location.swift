@@ -79,18 +79,14 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
 
                 do {
                     if geoFence.contains(location.coordinate) {
-                        if !inFence {
-                            Uploader.shared.sendToS3(filename: "In Fence-\(UUID().uuidString).txt", json: try locationData.toJSON() as String) {
-                                self.inFence = true
-                                DispatchQueue.main.async {
-                                    self.geoFenceStatus = "In fence: \(distanceInMeters)"
-                                }
-                            }
+                        self.inFence = true
+                        DispatchQueue.main.async {
+                            self.geoFenceStatus = "In fence: \(distanceInMeters)"
                         }
                     } else {
                         if inFence {
+                            self.inFence = false
                             Uploader.shared.sendToS3(filename: "Out of fence-\(UUID().uuidString).txt", json: try locationData.toJSON() as String) {
-                                self.inFence = false
                                 DispatchQueue.main.async {
                                     self.geoFenceStatus = "Out of fence: \(distanceInMeters)"
                                 }
