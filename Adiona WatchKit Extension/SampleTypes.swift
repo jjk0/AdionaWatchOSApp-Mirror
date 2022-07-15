@@ -73,6 +73,9 @@ class AdionaData: Encodable {
                 self.heart_rate_variability.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierHeartRate":
                 let value = s.quantity.doubleValue(for: HKUnit(from: "count/min"))
+                if value > 30 { // This removes those fractional heart rates (Anomolies)
+                    HealthDataManager.shared.heartrate = "\(Int(value))"
+                }
                 self.heart_rate.values.append(value)
                 self.heart_rate.timestamps.append(s.startDate)
                 self.heart_rate.lastQueryTime = collectionDate
@@ -120,7 +123,9 @@ class AdionaData: Encodable {
 
         let sampleQueryHR = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: 1000, sortDescriptors: nil)
             { [weak self] (_, samples, _) -> Void in
-                guard let samples = samples as? [HKQuantitySample], let self = self else { return }
+                guard let samples = samples as? [HKQuantitySample],
+                        samples.count > 0,
+                        let self = self else { return }
                 self.addQuantitySamples(for: samples)
             }
 

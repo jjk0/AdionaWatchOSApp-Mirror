@@ -18,7 +18,7 @@ struct AdionaApp: App {
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            ContentView(location: Location.shared)
+            ContentView()
         }
     }
 }

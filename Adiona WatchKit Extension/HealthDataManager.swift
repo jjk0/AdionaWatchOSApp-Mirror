@@ -39,6 +39,10 @@ var healthStore: HKHealthStore = {
 
 class HealthDataManager: NSObject, ObservableObject {
     static var shared = HealthDataManager()
+    
+    @Published var stepsToday: String = "-"
+    @Published var heartrate: String = "-"
+    
     var adionaData = AdionaData()
     var timer: Timer?
     var activeDataQueries = [HKQuery]()
@@ -116,7 +120,8 @@ class HealthDataManager: NSObject, ObservableObject {
                deletedObjects,
                queryAnchor,
                error in
-               if let samples = samples as? [HKQuantitySample] {
+               if let samples = samples as? [HKQuantitySample],
+                  samples.count > 0 {
                    self.adionaData.addQuantitySamples(for: samples)
                }
 

@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		0006A28A28661CBF002E1306 /* Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0006A28928661CBF002E1306 /* Uploader.swift */; };
 		0006A28C28661CEA002E1306 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 0006A28B28661CEA002E1306 /* SotoS3 */; };
+		000CF6FA288094E600AE7580 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000CF6F9288094E600AE7580 /* ContentView.swift */; };
 		0031715A28677B1B009BF698 /* SampleTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0031715928677B1B009BF698 /* SampleTypes.swift */; };
 		0038EFDC28637A8C0055B2E6 /* Adiona WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0038EFDB28637A8C0055B2E6 /* Adiona WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0038EFE128637A8E0055B2E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0038EFE028637A8E0055B2E6 /* Assets.xcassets */; };
 		0038EFE728637A8F0055B2E6 /* Adiona WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0038EFE628637A8F0055B2E6 /* Adiona WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		0038EFEE28637A8F0055B2E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038EFED28637A8F0055B2E6 /* ContentView.swift */; };
+		0038EFEE28637A8F0055B2E6 /* DeveloperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038EFED28637A8F0055B2E6 /* DeveloperView.swift */; };
 		0038EFF428637A8F0055B2E6 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038EFF328637A8F0055B2E6 /* ComplicationController.swift */; };
 		0038EFF628637A8F0055B2E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0038EFF528637A8F0055B2E6 /* Assets.xcassets */; };
 		0038EFF928637A8F0055B2E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0038EFF828637A8F0055B2E6 /* Preview Assets.xcassets */; };
@@ -39,6 +40,7 @@
 		009E7414287F2F6600869529 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7413287F2F6600869529 /* Downloader.swift */; };
 		009E7416287F2FE000869529 /* S3Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7415287F2FE000869529 /* S3Session.swift */; };
 		009E7418287F3BB800869529 /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7417287F3BB800869529 /* Zip4Sequence.swift */; };
+		00B940A9288197C10086BFBB /* CodeChangeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */; };
 		00C9C24328649D6600EB6B78 /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C24228649D6600EB6B78 /* ComplicationViews.swift */; };
 		00C9C2452864A03200EB6B78 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C2442864A03200EB6B78 /* ErrorHandling.swift */; };
 		00D49E8A286CD21A00BED749 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D49E89286CD21A00BED749 /* Keypad.swift */; };
@@ -96,13 +98,14 @@
 
 /* Begin PBXFileReference section */
 		0006A28928661CBF002E1306 /* Uploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uploader.swift; sourceTree = "<group>"; };
+		000CF6F9288094E600AE7580 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0031715928677B1B009BF698 /* SampleTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTypes.swift; sourceTree = "<group>"; };
 		0038EFD728637A8C0055B2E6 /* Adiona.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adiona.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0038EFDB28637A8C0055B2E6 /* Adiona WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Adiona WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0038EFE028637A8E0055B2E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0038EFE628637A8F0055B2E6 /* Adiona WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Adiona WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0038EFEB28637A8F0055B2E6 /* AdionaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdionaApp.swift; sourceTree = "<group>"; };
-		0038EFED28637A8F0055B2E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0038EFED28637A8F0055B2E6 /* DeveloperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperView.swift; sourceTree = "<group>"; };
 		0038EFF328637A8F0055B2E6 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		0038EFF528637A8F0055B2E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0038EFF828637A8F0055B2E6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -141,6 +144,7 @@
 		009E7413287F2F6600869529 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		009E7415287F2FE000869529 /* S3Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Session.swift; sourceTree = "<group>"; };
 		009E7417287F3BB800869529 /* Zip4Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip4Sequence.swift; sourceTree = "<group>"; };
+		00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeChangeConfirmation.swift; sourceTree = "<group>"; };
 		00C9C24128649BE500EB6B78 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		00C9C24228649D6600EB6B78 /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
 		00C9C2442864A03200EB6B78 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
@@ -213,7 +217,9 @@
 				0031715928677B1B009BF698 /* SampleTypes.swift */,
 				0038F03228637FB40055B2E6 /* Notifications.swift */,
 				00C9C2442864A03200EB6B78 /* ErrorHandling.swift */,
-				0038EFED28637A8F0055B2E6 /* ContentView.swift */,
+				0038EFED28637A8F0055B2E6 /* DeveloperView.swift */,
+				00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */,
+				000CF6F9288094E600AE7580 /* ContentView.swift */,
 				00D49E89286CD21A00BED749 /* Keypad.swift */,
 				00806313286DCEE4005E4954 /* Location.swift */,
 				009E7411287F2DF700869529 /* Geofences.model.swift */,
@@ -474,12 +480,14 @@
 				006289F22864782000CE868A /* NSNumber+ObjectiveSugar.m in Sources */,
 				009E7412287F2DF700869529 /* Geofences.model.swift in Sources */,
 				006289F52864782000CE868A /* NSSet+ObjectiveSugar.m in Sources */,
-				0038EFEE28637A8F0055B2E6 /* ContentView.swift in Sources */,
+				0038EFEE28637A8F0055B2E6 /* DeveloperView.swift in Sources */,
 				006289EF2864782000CE868A /* OMHError.m in Sources */,
 				009E7416287F2FE000869529 /* S3Session.swift in Sources */,
 				0006A28A28661CBF002E1306 /* Uploader.swift in Sources */,
 				0038F03128637F400055B2E6 /* HealthDataManager.swift in Sources */,
+				00B940A9288197C10086BFBB /* CodeChangeConfirmation.swift in Sources */,
 				00C9C2452864A03200EB6B78 /* ErrorHandling.swift in Sources */,
+				000CF6FA288094E600AE7580 /* ContentView.swift in Sources */,
 				00D49E8A286CD21A00BED749 /* Keypad.swift in Sources */,
 				00806314286DCEE4005E4954 /* Location.swift in Sources */,
 				0031715A28677B1B009BF698 /* SampleTypes.swift in Sources */,
