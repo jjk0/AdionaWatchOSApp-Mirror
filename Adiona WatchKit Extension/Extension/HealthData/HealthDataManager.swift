@@ -8,9 +8,6 @@ var dummyData: HealthDataManager = {
     HealthDataManager()
 }()
 
-//     HKQuantityType.quantityType(forIdentifier: .appleMoveTime)!,
-//     HKQuantityType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
-
 let quantityTypes: Set<HKQuantityTypeIdentifier> = [
     .heartRateVariabilitySDNN,
     .heartRate,
@@ -40,13 +37,15 @@ var healthStore: HKHealthStore = {
 class HealthDataManager: NSObject, ObservableObject {
     static var shared = HealthDataManager()
     
+    
     @Published var stepsToday: String = "-"
     @Published var heartrate: String = "-"
     
+    var profileData: ProfileData?
     var adionaData = AdionaData()
-    var timer: Timer?
     var activeDataQueries = [HKQuery]()
     var acclerometerData = AccelerometerData()
+    
     lazy var motion: CMMotionManager = {
         let m = CMMotionManager()
         m.accelerometerUpdateInterval = 1.0 / 32.0 // 32 Hz
@@ -61,20 +60,8 @@ class HealthDataManager: NSObject, ObservableObject {
         return oq
     }()
     
-    let recorder = CMSensorRecorder()
-
     override init() {
         super.init()
-        print("init")
-
-        NotificationCenter.default.addObserver(forName: .bucketNameEstablished, object: nil, queue: nil) { _ in
-            
-        }
-
-        NotificationCenter.default.addObserver(forName: .healthKitPermissionsChanged, object: nil, queue: nil) { _ in
-            print("Healthkit Permission Change")
-            self.restart()
-        }
         
         healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { success, error in
             track(error)
@@ -103,7 +90,7 @@ class HealthDataManager: NSObject, ObservableObject {
     func collectSamples() {
         HealthDataManager.shared.adionaData.metaData.end_date = Date()
         for sampleType in typesToRead {
-            self.adionaData.addSamples(for: sampleType)
+            self.adionaData.addSamples(for: sampleType, from: "cs")
         }
     }
     
@@ -122,10 +109,8 @@ class HealthDataManager: NSObject, ObservableObject {
                error in
                if let samples = samples as? [HKQuantitySample],
                   samples.count > 0 {
-                   self.adionaData.addQuantitySamples(for: samples)
+                   self.adionaData.addQuantitySamples(for: samples, source: "aq")
                }
-
-               //self.process(samples: samples, quantityTypeIdentifier: quantityTypeIdentifier)
            }
            
            let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: quantityTypeIdentifier)!,
@@ -136,7 +121,6 @@ class HealthDataManager: NSObject, ObservableObject {
            query.updateHandler = updateHandler
             activeDataQueries.append(query)
            healthStore.execute(query)
-           
        }
 
     func setupQueryMethod(for sampleType: HKSampleType) {
@@ -145,7 +129,7 @@ class HealthDataManager: NSObject, ObservableObject {
                 track(error)
                 print(sampleType)
             } else {
-                self.adionaData.addSamples(for: sampleType)
+                self.adionaData.addSamples(for: sampleType, from: "qm")
             }
 
             completionHandler()
@@ -165,32 +149,13 @@ class HealthDataManager: NSObject, ObservableObject {
     func resetCollectors() {
         adionaData = AdionaData()
     }
-
-    func reloadComplication() {
-        DispatchQueue.main.async {
-            let complicationServer = CLKComplicationServer.sharedInstance()
-            if let complications = complicationServer.activeComplications {
-                for complication in complications {
-                    complicationServer.reloadTimeline(for: complication)
-                }
-            }
-        }
-    }
-}
-
-extension HealthDataManager {
-    static let oneHour = 3600.0
-    static let fifteenMinutes = 900.0
 }
 
 extension HealthDataManager {
     func startAccelerometer() {
-        print("Start Acceleromter?")
-        
         if motion.isAccelerometerAvailable {
             motion.stopAccelerometerUpdates()
             
-            print("Starting Acceleromter")
             motion.startAccelerometerUpdates(to: accelerometerQueue) { [weak self] reading, error in
                 guard let self = self else { return }
                 guard error == nil else { return }

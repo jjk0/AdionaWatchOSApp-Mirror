@@ -7,14 +7,14 @@
 
 import CoreLocation
 
-struct Geofences: Decodable {
+struct Geofences: Codable {
     let latitude: Array<CLLocationDegrees>
     let longitude: Array<CLLocationDegrees>
     let radius: Array<Double>
     let identifier: Array<String>
 }
 
-struct GeofenceData: Decodable {
+struct GeofenceData: Codable {
     let geofences: Geofences
 }
 

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-// Color("BackgroundBlue")
 
 struct ContentView: View {
     @State var showingKeypard = false

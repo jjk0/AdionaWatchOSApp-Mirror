@@ -36,12 +36,14 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     func resetGeofence() {
-        Downloader.shared.getFromS3(filename: "geofences.json") { JSON in
+        S3Session.dataBucket.getFromS3(filename: "geofences.json") { JSON in
             if let JSON = JSON,
                let jsonData = JSON.data(using: .utf8) {
                 do {
                     let geoFenceData: GeofenceData = try JSONDecoder().decode(GeofenceData.self, from: jsonData)
                     let fences = geoFenceData.geofences
+                    HealthDataManager.shared.adionaData.metaData.geofences = geoFenceData
+
                     self.geoFences.removeAll()
                     
                     for (latitude, longitude, radius, identifier) in zip(fences.latitude, fences.longitude, fences.radius, fences.identifier) {
@@ -57,6 +59,7 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
                         
                         self.geoFences.append(GeoFence(region: region, inFence: false))
                     }
+                    
                 } catch {
                     track(error)
                 }
@@ -87,42 +90,47 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
         requestAuthorization()
     }
     
+    func checkGeoFences(location: CLLocation) {
+        let coordinate = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+
+        do {
+            for fence in geoFences {
+                let distanceInMeters = coordinate.distance(from: CLLocation(latitude: fence.region.center.latitude, longitude: fence.region.center.longitude))
+
+                if fence.region.contains(location.coordinate) {
+                    fence.inFence = true
+                    DispatchQueue.main.async {
+                        self.geoFenceStatus = "In fence \(fence.region.identifier): \(distanceInMeters)"
+                    }
+                } else {
+                    if fence.inFence {
+                        fence.inFence = false
+                        
+                        let locationData = LocationData()
+                        locationData.longitude.append(location.coordinate.longitude)
+                        locationData.latitude.append(location.coordinate.latitude)
+                        locationData.timestamp.append(Date())
+
+                        S3Session.dataBucket.sendToS3(filename: "Geofence \(fence.region.identifier) Exit at \(Date().description).txt", json: try locationData.toJSON() as String) {
+                            DispatchQueue.main.async {
+                                self.geoFenceStatus = "Out of fence \(fence.region.identifier): \(distanceInMeters)"
+                            }
+                        }
+                    }
+                }
+            }
+        } catch {
+            track(error)
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for location in locations {
             HealthDataManager.shared.adionaData.locations.latitude.append(location.coordinate.latitude)
             HealthDataManager.shared.adionaData.locations.longitude.append(location.coordinate.longitude)
             HealthDataManager.shared.adionaData.locations.timestamp.append(location.timestamp)
-            
-            let coordinate = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-
-            let locationData = LocationData()
-            locationData.longitude.append(location.coordinate.longitude)
-            locationData.latitude.append(location.coordinate.latitude)
-            locationData.timestamp.append(Date())
-
-            do {
-                for fence in geoFences {
-                    let distanceInMeters = coordinate.distance(from: CLLocation(latitude: fence.region.center.latitude, longitude: fence.region.center.longitude))
-
-                    if fence.region.contains(location.coordinate) {
-                        fence.inFence = true
-                        DispatchQueue.main.async {
-                            self.geoFenceStatus = "In fence \(fence.region.identifier): \(distanceInMeters)"
-                        }
-                    } else {
-                        if fence.inFence {
-                            fence.inFence = false
-                            Uploader.shared.sendToS3(filename: "Geofence \(fence.region.identifier) Exit at \(Date().description).txt", json: try locationData.toJSON() as String) {
-                                DispatchQueue.main.async {
-                                    self.geoFenceStatus = "Out of fence \(fence.region.identifier): \(distanceInMeters)"
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch {
-                track(error)
-            }
+         
+            checkGeoFences(location: location)
         }
     }
 }

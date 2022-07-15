@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DeveloperView: View {
-    @State var showingKeypard = Uploader.shared.bucketName == nil
+    @State var showingKeypard = S3Session.dataBucket.bucketName == nil
     @StateObject var location: Location
 
     var buildNumber: String = {

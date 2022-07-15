@@ -49,11 +49,11 @@ struct KeypadView: View {
             
             if enteredDigits.count == 5 {
                 showingProgress = true
-                Uploader.shared.lookupBucket(bucketName: enteredDigits) { exists in
+                S3Session.dataBucket.lookupBucket(bucketName: enteredDigits) { exists in
                     showingExistsAlert = exists
                     
                     if !exists {
-                        Uploader.shared.createBucket(bucketName: enteredDigits) { success in
+                        S3Session.dataBucket.createBucket(bucketName: enteredDigits) { success in
                             showingProgress = false
                             showingSuccessAlert = true
                         }
@@ -71,7 +71,7 @@ struct KeypadView: View {
                 ZStack {
                     Color("BackgroundBlue")
                     Button("YES", role: .destructive) {
-                        Uploader.shared.bucketName = enteredDigits
+                        S3Session.dataBucket.bucketName = enteredDigits
                         self.showingExistsAlert.toggle()
                         self.dismissFlag.toggle()
                     }
