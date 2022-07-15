@@ -36,8 +36,6 @@ var healthStore: HKHealthStore = {
 
 class HealthDataManager: NSObject, ObservableObject {
     static var shared = HealthDataManager()
-    
-    
     @Published var stepsToday: String = "-"
     @Published var heartrate: String = "-"
     
@@ -72,7 +70,9 @@ class HealthDataManager: NSObject, ObservableObject {
     func restart() {
         activeDataQueries.forEach { healthStore.stop($0) }
         activeDataQueries.removeAll()
-        Location.shared.manager.stopUpdatingLocation()
+        DispatchQueue.main.async {
+            Location.shared.manager.stopUpdatingLocation()
+        }
         stopAccelerometer()
         
         for sampleType in quantityTypes {
@@ -84,7 +84,10 @@ class HealthDataManager: NSObject, ObservableObject {
         }
         
         self.startAccelerometer()
-        Location.shared.manager.startUpdatingLocation()
+        
+        DispatchQueue.main.async {
+            Location.shared.manager.startUpdatingLocation()
+        }
     }
     
     func collectSamples() {
