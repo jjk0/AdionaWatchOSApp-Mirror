@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @State var showingKeypard = false
     @State var showCodeChangeConfirmation = false
-    let phone = "8139924221"
     
     var body: some View {
         ZStack {
@@ -61,7 +60,8 @@ struct ContentView: View {
 
                 }
                 Button(action: {
-                    if let telURL = URL(string:"tel:\(phone)") {
+                    if let phone = HealthDataManager.shared.profileData?.profile_info.caregiver_phone,
+                        let telURL = URL(string:"tel:\(phone)") {
                         WKExtension.shared().openSystemURL(telURL)
                     }
                 }) {
@@ -71,7 +71,7 @@ struct ContentView: View {
                             .foregroundColor(.blue)
                             .aspectRatio(1, contentMode: .fit)
                             .frame(width: 28, height: 28, alignment: .center)
-                        Text("Call Kathy")
+                        Text("Call Carer")
                             .font(.system(size: 18, weight: .heavy))
                             .foregroundColor(.blue)
                     }

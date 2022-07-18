@@ -38,6 +38,7 @@ struct KeypadView: View {
     @State private var showingSuccessAlert = false
     @State private var showingExistsAlert = false
     @State private var showingProgress = false
+    @EnvironmentObject private var extensionDelegate: ExtensionDelegate
 
     let data = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "D"].map { "\($0)" }
 
@@ -73,7 +74,7 @@ struct KeypadView: View {
                     Button("YES", role: .destructive) {
                         S3Session.dataBucket.bucketName = enteredDigits
                         self.showingExistsAlert.toggle()
-                        self.dismissFlag.toggle()
+                        self.showingSuccessAlert.toggle()
                     }
                     Button("Re-enter", role: .cancel) {
                         showingExistsAlert = false
@@ -86,6 +87,7 @@ struct KeypadView: View {
                     Color("BackgroundBlue")
                     Text("Connection Successful!").foregroundColor(Color.white)
                     Button("Done", role: .cancel) {
+                        extensionDelegate.getProfileData()
                         showingSuccessAlert.toggle()
                         self.dismissFlag.toggle()
                     }.background(Color.white)
@@ -139,8 +141,6 @@ struct KeypadView: View {
                             .fill(Color.black).opacity(showingProgress ? 0.6 : 0)
                             .edgesIgnoringSafeArea(.all)
                         
-                        // the magic bit - our ProgressView just displays an activity
-                        // indicator, with some text underneath showing what we are doing
                         VStack(alignment: .center) {
                             Spacer()
                             ProgressView()
@@ -155,11 +155,3 @@ struct KeypadView: View {
         }
     }
 }
-
-//struct KeypadView_Previews: PreviewProvider {
-//    static var previews: some View {
-////        @Binding var dismissFlag = false
-////
-////        KeypadView(dismissFlag: $dismissFlag)
-//    }
-//}

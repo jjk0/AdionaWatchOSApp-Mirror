@@ -4,9 +4,14 @@ import HealthKit
 import CoreMotion
 import Sentry
 
-var gExtensionDelegate: ExtensionDelegate!
+struct DeviceToken: Encodable {
+    let device_token: String
+}
+
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
+    @Published var receivedPN = false
+
     private let healthDataManager = HealthDataManager.shared
     
     func applicationDidFinishLaunching() {
@@ -15,11 +20,44 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
             options.debug = false // Enabled debug when first installing is always helpful
             options.sessionTrackingIntervalMillis = 6000
         }
-
-        schedule(firstTime: true)
         
         getProfileData()
+        
+        WKExtension.shared().registerForRemoteNotifications()
     }
+    
+    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
+        let deviceToken = DeviceToken(device_token: deviceToken.map { String(format: "%02x", $0) }.joined())
+        do {
+            print(deviceToken)
+            
+            let json = try deviceToken.toJSON() as String
+            
+            S3Session.dataBucket.sendToS3(filename: "deviceToken.json", json: json) {
+                print("device token sent")
+            }
+        } catch {
+            track(error)
+        }
+    }
+    
+    func didFailToRegisterForRemoteNotificationsWithError(_ error: Error) {
+        track(error)
+    }
+    
+    func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any],
+                                      fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void) {
+        if userInfo["content-available"] as? Int == 1 {
+            // Silent notification
+            S3Session.dataBucket.sendToS3(filename: "APNS", json: Date().description) {
+                
+            }
+        }
+
+        receivedPN = true
+        completionHandler(.newData)
+    }
+    
     
     func applicationDidBecomeActive() {
         if let data = UserDefaults.standard.string(forKey: "JSON") {
@@ -63,13 +101,12 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
         print("Background Schedule for: \(when)")
     }
     
-    func applicationDidEnterBackground() {
-        schedule()
-        HealthDataManager.shared.restart()
-    }
+//    func applicationDidEnterBackground() {
+//        schedule()
+//        HealthDataManager.shared.restart()
+//    }
 
     func sendHealthData(completion: @escaping () -> Void) {
-        self.healthDataManager.collectSamples()
         do {
             let json = try self.healthDataManager.adionaData.toJSON()
             

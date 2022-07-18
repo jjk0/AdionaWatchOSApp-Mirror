@@ -113,6 +113,8 @@
 		00B940AF2881C0020086BFBB /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		00C9C24228649D6600EB6B78 /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
 		00C9C2442864A03200EB6B78 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		00D7ECFD288308C400788DEB /* aps_development.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = aps_development.cer; sourceTree = "<group>"; };
+		00D7ECFE288308EC00788DEB /* aps.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = aps.cer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,8 @@
 		0038EFD028637A8C0055B2E6 = {
 			isa = PBXGroup;
 			children = (
+				00D7ECFE288308EC00788DEB /* aps.cer */,
+				00D7ECFD288308C400788DEB /* aps_development.cer */,
 				0038EFDF28637A8C0055B2E6 /* Adiona WatchKit App */,
 				0038EFEA28637A8F0055B2E6 /* Adiona WatchKit Extension */,
 				0038F00328637A8F0055B2E6 /* AdionaTests */,

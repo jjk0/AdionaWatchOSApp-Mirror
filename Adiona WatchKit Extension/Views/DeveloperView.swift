@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DeveloperView: View {
     @State var showingKeypard = S3Session.dataBucket.bucketName == nil
-    @StateObject var location: Location
+    @EnvironmentObject private var extensionDelegate: ExtensionDelegate
 
     var buildNumber: String = {
         if let info = Bundle.main.infoDictionary {
@@ -22,9 +22,9 @@ struct DeveloperView: View {
     
     var body: some View {
         VStack {
-            Text(buildNumber)
+            Text(extensionDelegate.receivedPN ? "Recieved" : "None")
             Button("Upload") {
-                gExtensionDelegate.sendHealthData() {
+                extensionDelegate.sendHealthData() {
                     print("Sent")
                 }
             }
@@ -32,7 +32,7 @@ struct DeveloperView: View {
                 showingKeypard.toggle()
             }
             Button("Set Fence") {
-                Location.shared.resetGeofence()
+                HealthDataManager.shared.location?.resetGeofence()
             }
         }.fullScreenCover(isPresented: $showingKeypard) {
             KeypadView(dismissFlag: $showingKeypard)
@@ -42,6 +42,6 @@ struct DeveloperView: View {
 
 struct DeveloperView_Previews: PreviewProvider {
     static var previews: some View {
-        DeveloperView(location: Location.shared)
+        DeveloperView()
     }
 }

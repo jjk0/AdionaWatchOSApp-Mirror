@@ -19,13 +19,11 @@ class GeoFence: NSObject {
 }
 
 class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
-    static var shared = Location()
-    
     var geoFences = [GeoFence]()
     
     @Published var geoFenceStatus: String = "In Fence"
     
-    let manager = CLLocationManager()
+    var manager = CLLocationManager()
     
     override init() {
         super.init()
@@ -74,20 +72,19 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
             case .denied:
                 print("Alert user to change in settings")
             case .authorizedWhenInUse:
-                print("Alert user to change in settings")
+                restart()
             case .notDetermined:
                 manager.requestAlwaysAuthorization()
             case .restricted:
                 print("Alert user to change in settings")
             case .authorizedAlways:
-                manager.startUpdatingLocation()
+                restart()
             @unknown default:
                 print("Unknwon")
         }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        requestAuthorization()
     }
     
     func checkGeoFences(location: CLLocation) {
@@ -122,6 +119,11 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
         } catch {
             track(error)
         }
+    }
+    
+    func restart() {
+        manager.stopUpdatingLocation()
+        manager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

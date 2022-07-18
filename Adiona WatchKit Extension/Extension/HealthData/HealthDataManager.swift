@@ -43,6 +43,7 @@ class HealthDataManager: NSObject, ObservableObject {
     var adionaData = AdionaData()
     var activeDataQueries = [HKQuery]()
     var acclerometerData = AccelerometerData()
+    var location: Location?
     
     lazy var motion: CMMotionManager = {
         let m = CMMotionManager()
@@ -61,33 +62,31 @@ class HealthDataManager: NSObject, ObservableObject {
     override init() {
         super.init()
         
-        healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead) { success, error in
+        healthStore.requestAuthorization(toShare: typesToRead, read: typesToRead) { success, error in
             track(error)
-            self.restart()
+            if self.location == nil {
+                DispatchQueue.main.async {
+                    self.location = Location()
+                }
+            }
+            
+            self.start()
         }
     }
 
-    func restart() {
-        activeDataQueries.forEach { healthStore.stop($0) }
-        activeDataQueries.removeAll()
-        DispatchQueue.main.async {
-            Location.shared.manager.stopUpdatingLocation()
-        }
-        stopAccelerometer()
-        
-        for sampleType in quantityTypes {
-            self.startQuery(quantityTypeIdentifier: sampleType)
-        }
-        
-        for sampleType in typesToRead {
-            self.setupQueryMethod(for: sampleType)
-        }
-        
+    func start() {
+        self.stopAccelerometer()
         self.startAccelerometer()
-        
-        DispatchQueue.main.async {
-            Location.shared.manager.startUpdatingLocation()
+
+        self.activeDataQueries.forEach { healthStore.stop($0) }
+        self.activeDataQueries.removeAll()
+
+        // Start everything up
+        for sampleType in typesToRead {
+            self.setupObserverQuery(for: sampleType)
         }
+        
+        location?.restart()
     }
     
     func collectSamples() {
@@ -96,37 +95,9 @@ class HealthDataManager: NSObject, ObservableObject {
             self.adionaData.addSamples(for: sampleType, from: "cs")
         }
     }
-    
-    func startQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {
-           let datePredicate = HKQuery.predicateForSamples(withStart: Date(), end: nil, options: .strictStartDate)
-           let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
-           let queryPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:[datePredicate, devicePredicate])
-           
-           let updateHandler: ((HKAnchoredObjectQuery, [HKSample]?,
-               [HKDeletedObject]?,
-               HKQueryAnchor?,
-               Error?) -> Void) = { query,
-               samples,
-               deletedObjects,
-               queryAnchor,
-               error in
-               if let samples = samples as? [HKQuantitySample],
-                  samples.count > 0 {
-                   self.adionaData.addQuantitySamples(for: samples, source: "aq")
-               }
-           }
-           
-           let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: quantityTypeIdentifier)!,
-                                             predicate: queryPredicate,
-                                             anchor: nil,
-                                             limit: HKObjectQueryNoLimit,
-                                             resultsHandler: updateHandler)
-           query.updateHandler = updateHandler
-            activeDataQueries.append(query)
-           healthStore.execute(query)
-       }
 
-    func setupQueryMethod(for sampleType: HKSampleType) {
+    func setupObserverQuery(for sampleType: HKSampleType) {
+        
         let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
             if let error = errorOrNil {
                 track(error)
@@ -141,9 +112,6 @@ class HealthDataManager: NSObject, ObservableObject {
         activeDataQueries.append(query)
         healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { success, error in
             track(error)
-            if let _ = error {
-                print(sampleType)
-            }
         }
         
         healthStore.execute(query)
@@ -178,4 +146,3 @@ extension HealthDataManager {
         motion.stopAccelerometerUpdates()
     }
 }
-
