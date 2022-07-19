@@ -4,11 +4,15 @@ import HealthKit
 import CoreMotion
 import Sentry
 
-var gExtensionDelegate: ExtensionDelegate!
+struct DeviceToken: Encodable {
+    let device_token: String
+}
+
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
+    @Published var receivedPN = false
+
     private let healthDataManager = HealthDataManager.shared
-    private let location = Location.shared
     
     func applicationDidFinishLaunching() {
         SentrySDK.start { options in
@@ -16,17 +20,62 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
             options.debug = false // Enabled debug when first installing is always helpful
             options.sessionTrackingIntervalMillis = 6000
         }
-
-        schedule(firstTime: true)
+        
+        getProfileData()
+        
+        WKExtension.shared().registerForRemoteNotifications()
     }
+    
+    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
+        let deviceToken = DeviceToken(device_token: deviceToken.map { String(format: "%02x", $0) }.joined())
+        do {
+            print(deviceToken)
+            
+            let json = try deviceToken.toJSON() as String
+            
+            S3Session.dataBucket.sendToS3(filename: "deviceToken.json", json: json) {
+                print("device token sent")
+            }
+        } catch {
+            track(error)
+        }
+    }
+    
+    func didFailToRegisterForRemoteNotificationsWithError(_ error: Error) {
+        track(error)
+    }
+    
+    func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any],
+                                      fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void) {
+        if userInfo["content-available"] as? Int == 1 {
+            // Silent notification
+            S3Session.dataBucket.sendToS3(filename: "APNS", json: Date().description) {
+                
+            }
+        }
+
+        receivedPN = true
+        completionHandler(.newData)
+    }
+    
     
     func applicationDidBecomeActive() {
         if let data = UserDefaults.standard.string(forKey: "JSON") {
             print("Data count: \(data.count)")
         }
     }
-    
-    func applicationWillResignActive() {
+        
+    func getProfileData() {
+        S3Session.profileBucket.getFromS3(filename: "profileData.json") { JSON in
+            if let JSON = JSON,
+               let jsonData = JSON.data(using: .utf8) {
+                do {
+                    HealthDataManager.shared.profileData = try JSONDecoder().decode(ProfileData.self, from: jsonData)
+                } catch {
+                    track(error)
+                }
+            }
+        }
     }
     
     public func schedule(firstTime: Bool = false) {
@@ -45,26 +94,25 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
                 userInfo: nil
             ) { error in
                 if let error = error {
-                    print("Unable to schedule: \(error.localizedDescription)")
+                    track("Unable to schedule: \(error.localizedDescription)")
                 }
             }
         
         print("Background Schedule for: \(when)")
     }
     
-    func applicationDidEnterBackground() {
-        schedule()
-        HealthDataManager.shared.restart()
-    }
+//    func applicationDidEnterBackground() {
+//        schedule()
+//        HealthDataManager.shared.restart()
+//    }
 
     func sendHealthData(completion: @escaping () -> Void) {
-        self.healthDataManager.collectSamples()
         do {
             let json = try self.healthDataManager.adionaData.toJSON()
             
             let filename = "\(UUID().uuidString).txt"
             
-            Uploader.shared.sendToS3(filename: filename, json: json as String) {
+            S3Session.dataBucket.sendToS3(filename: filename, json: json as String) {
                 self.healthDataManager.resetCollectors()
                 self.schedule()
                 completion()
@@ -89,13 +137,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
             default:
                 task.setTaskCompletedWithSnapshot(false)
             }
-        }
-    }
-
-    public static func updateActiveComplications() {
-        let server = CLKComplicationServer.sharedInstance()
-        server.activeComplications?.forEach {
-            server.reloadTimeline(for: $0)
         }
     }
 }

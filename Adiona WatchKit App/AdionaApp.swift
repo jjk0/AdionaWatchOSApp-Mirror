@@ -9,16 +9,25 @@ import SwiftUI
 
 @main
 struct AdionaApp: App {
-    @WKExtensionDelegateAdaptor(ExtensionDelegate.self)
-    private var extensionDelegate
+    @Environment(\.scenePhase) var scenePhase
 
-    init() {
-        gExtensionDelegate = extensionDelegate
-    }
+    @WKExtensionDelegateAdaptor(ExtensionDelegate.self) var extensionDelegate
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            ContentView(location: Location.shared)
+            DeveloperView()
+        }.onChange(of: scenePhase) { phase in
+            switch phase {
+                case .active:
+                    print("\(#function) REPORTS - App change of scenePhase to ACTIVE")
+                case .inactive:
+                    print("\(#function) REPORTS - App change of scenePhase Inactive")
+                case .background:
+                    extensionDelegate.schedule()
+                    HealthDataManager.shared.location?.restart()
+                default:
+                    print("\(#function) REPORTS - App change of scenePhase Default")
+            }
         }
     }
 }

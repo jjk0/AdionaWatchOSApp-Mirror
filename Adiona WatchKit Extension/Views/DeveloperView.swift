@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State var showingKeypard = Uploader.shared.bucketName == nil
-    @StateObject var location: Location
+struct DeveloperView: View {
+    @State var showingKeypard = S3Session.dataBucket.bucketName == nil
+    @EnvironmentObject private var extensionDelegate: ExtensionDelegate
 
     var buildNumber: String = {
         if let info = Bundle.main.infoDictionary {
@@ -22,9 +22,9 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text(buildNumber)
+            Text(extensionDelegate.receivedPN ? "Recieved" : "None")
             Button("Upload") {
-                gExtensionDelegate.sendHealthData() {
+                extensionDelegate.sendHealthData() {
                     print("Sent")
                 }
             }
@@ -32,16 +32,16 @@ struct ContentView: View {
                 showingKeypard.toggle()
             }
             Button("Set Fence") {
-                Location.shared.geoFence = nil
+                HealthDataManager.shared.location?.resetGeofence()
             }
         }.fullScreenCover(isPresented: $showingKeypard) {
-            KeypadView(enteredDigits: "")
+            KeypadView(dismissFlag: $showingKeypard)
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct DeveloperView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(location: Location.shared)
+        DeveloperView()
     }
 }

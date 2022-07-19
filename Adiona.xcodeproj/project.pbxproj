@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0006A28A28661CBF002E1306 /* Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0006A28928661CBF002E1306 /* Uploader.swift */; };
 		0006A28C28661CEA002E1306 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 0006A28B28661CEA002E1306 /* SotoS3 */; };
+		000CF6FA288094E600AE7580 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000CF6F9288094E600AE7580 /* ContentView.swift */; };
 		0031715A28677B1B009BF698 /* SampleTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0031715928677B1B009BF698 /* SampleTypes.swift */; };
 		0038EFDC28637A8C0055B2E6 /* Adiona WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0038EFDB28637A8C0055B2E6 /* Adiona WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0038EFE128637A8E0055B2E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0038EFE028637A8E0055B2E6 /* Assets.xcassets */; };
 		0038EFE728637A8F0055B2E6 /* Adiona WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0038EFE628637A8F0055B2E6 /* Adiona WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		0038EFEE28637A8F0055B2E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038EFED28637A8F0055B2E6 /* ContentView.swift */; };
+		0038EFEE28637A8F0055B2E6 /* DeveloperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038EFED28637A8F0055B2E6 /* DeveloperView.swift */; };
 		0038EFF428637A8F0055B2E6 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038EFF328637A8F0055B2E6 /* ComplicationController.swift */; };
 		0038EFF628637A8F0055B2E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0038EFF528637A8F0055B2E6 /* Assets.xcassets */; };
 		0038EFF928637A8F0055B2E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0038EFF828637A8F0055B2E6 /* Preview Assets.xcassets */; };
@@ -22,22 +22,16 @@
 		0038F02928637C5E0055B2E6 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0038F02828637C5E0055B2E6 /* HealthKit.framework */; };
 		0038F02B28637E570055B2E6 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038F02A28637E570055B2E6 /* ExtensionDelegate.swift */; };
 		0038F03128637F400055B2E6 /* HealthDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038F03028637F400055B2E6 /* HealthDataManager.swift */; };
-		0038F03328637FB40055B2E6 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0038F03228637FB40055B2E6 /* Notifications.swift */; };
-		006289ED2864782000CE868A /* NSDate+RFC3339.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289D62864782000CE868A /* NSDate+RFC3339.m */; };
-		006289EE2864782000CE868A /* OMHHealthKitConstantsMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289DB2864782000CE868A /* OMHHealthKitConstantsMapper.m */; };
-		006289EF2864782000CE868A /* OMHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289DC2864782000CE868A /* OMHError.m */; };
-		006289F02864782000CE868A /* OMHSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289DD2864782000CE868A /* OMHSerializer.m */; };
-		006289F12864782000CE868A /* NSArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289DF2864782000CE868A /* NSArray+ObjectiveSugar.m */; };
-		006289F22864782000CE868A /* NSNumber+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289E42864782000CE868A /* NSNumber+ObjectiveSugar.m */; };
-		006289F32864782000CE868A /* NSString+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289E72864782000CE868A /* NSString+ObjectiveSugar.m */; };
-		006289F42864782000CE868A /* NSDictionary+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289E82864782000CE868A /* NSDictionary+ObjectiveSugar.m */; };
-		006289F52864782000CE868A /* NSSet+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289E92864782000CE868A /* NSSet+ObjectiveSugar.m */; };
-		006289F62864782000CE868A /* NSMutableArray+ObjectiveSugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 006289EB2864782000CE868A /* NSMutableArray+ObjectiveSugar.m */; };
 		00806312286CDA83005E4954 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0038EFE028637A8E0055B2E6 /* Assets.xcassets */; };
 		00806314286DCEE4005E4954 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00806313286DCEE4005E4954 /* Location.swift */; };
+		008F10782881FCFB0086E2FE /* Profile.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F10772881FCFB0086E2FE /* Profile.model.swift */; };
+		009E7412287F2DF700869529 /* Geofences.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7411287F2DF700869529 /* Geofences.model.swift */; };
+		009E7416287F2FE000869529 /* S3Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7415287F2FE000869529 /* S3Session.swift */; };
+		009E7418287F3BB800869529 /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7417287F3BB800869529 /* Zip4Sequence.swift */; };
+		00B940A9288197C10086BFBB /* CodeChangeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */; };
+		00B940B02881C0020086BFBB /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B940AF2881C0020086BFBB /* KeypadView.swift */; };
 		00C9C24328649D6600EB6B78 /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C24228649D6600EB6B78 /* ComplicationViews.swift */; };
 		00C9C2452864A03200EB6B78 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C2442864A03200EB6B78 /* ErrorHandling.swift */; };
-		00D49E8A286CD21A00BED749 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D49E89286CD21A00BED749 /* Keypad.swift */; };
 		00D7E25B2865E2AC00FD518C /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 00D7E25A2865E2AC00FD518C /* Sentry */; };
 /* End PBXBuildFile section */
 
@@ -91,14 +85,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0006A28928661CBF002E1306 /* Uploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uploader.swift; sourceTree = "<group>"; };
+		000CF6F9288094E600AE7580 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0031715928677B1B009BF698 /* SampleTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTypes.swift; sourceTree = "<group>"; };
 		0038EFD728637A8C0055B2E6 /* Adiona.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adiona.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0038EFDB28637A8C0055B2E6 /* Adiona WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Adiona WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0038EFE028637A8E0055B2E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0038EFE628637A8F0055B2E6 /* Adiona WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Adiona WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0038EFEB28637A8F0055B2E6 /* AdionaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdionaApp.swift; sourceTree = "<group>"; };
-		0038EFED28637A8F0055B2E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0038EFED28637A8F0055B2E6 /* DeveloperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperView.swift; sourceTree = "<group>"; };
 		0038EFF328637A8F0055B2E6 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		0038EFF528637A8F0055B2E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0038EFF828637A8F0055B2E6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -110,33 +104,17 @@
 		0038F02828637C5E0055B2E6 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		0038F02A28637E570055B2E6 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		0038F03028637F400055B2E6 /* HealthDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthDataManager.swift; sourceTree = "<group>"; };
-		0038F03228637FB40055B2E6 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		006289D62864782000CE868A /* NSDate+RFC3339.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RFC3339.m"; sourceTree = "<group>"; };
-		006289D72864782000CE868A /* OMHHealthKitConstantsMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMHHealthKitConstantsMapper.h; sourceTree = "<group>"; };
-		006289D82864782000CE868A /* OMHSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMHSerializer.h; sourceTree = "<group>"; };
-		006289D92864782000CE868A /* OMHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMHError.h; sourceTree = "<group>"; };
-		006289DA2864782000CE868A /* NSDate+RFC3339.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RFC3339.h"; sourceTree = "<group>"; };
-		006289DB2864782000CE868A /* OMHHealthKitConstantsMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMHHealthKitConstantsMapper.m; sourceTree = "<group>"; };
-		006289DC2864782000CE868A /* OMHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMHError.m; sourceTree = "<group>"; };
-		006289DD2864782000CE868A /* OMHSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMHSerializer.m; sourceTree = "<group>"; };
-		006289DF2864782000CE868A /* NSArray+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ObjectiveSugar.m"; sourceTree = "<group>"; };
-		006289E02864782000CE868A /* NSSet+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+ObjectiveSugar.h"; sourceTree = "<group>"; };
-		006289E12864782000CE868A /* NSDictionary+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+ObjectiveSugar.h"; sourceTree = "<group>"; };
-		006289E22864782000CE868A /* ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveSugar.h; sourceTree = "<group>"; };
-		006289E32864782000CE868A /* NSString+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ObjectiveSugar.h"; sourceTree = "<group>"; };
-		006289E42864782000CE868A /* NSNumber+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ObjectiveSugar.m"; sourceTree = "<group>"; };
-		006289E52864782000CE868A /* NSMutableArray+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+ObjectiveSugar.h"; sourceTree = "<group>"; };
-		006289E62864782000CE868A /* NSArray+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ObjectiveSugar.h"; sourceTree = "<group>"; };
-		006289E72864782000CE868A /* NSString+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ObjectiveSugar.m"; sourceTree = "<group>"; };
-		006289E82864782000CE868A /* NSDictionary+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+ObjectiveSugar.m"; sourceTree = "<group>"; };
-		006289E92864782000CE868A /* NSSet+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+ObjectiveSugar.m"; sourceTree = "<group>"; };
-		006289EA2864782000CE868A /* NSNumber+ObjectiveSugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+ObjectiveSugar.h"; sourceTree = "<group>"; };
-		006289EB2864782000CE868A /* NSMutableArray+ObjectiveSugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+ObjectiveSugar.m"; sourceTree = "<group>"; };
 		00806313286DCEE4005E4954 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		00C9C24128649BE500EB6B78 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		008F10772881FCFB0086E2FE /* Profile.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.model.swift; sourceTree = "<group>"; };
+		009E7411287F2DF700869529 /* Geofences.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geofences.model.swift; sourceTree = "<group>"; };
+		009E7415287F2FE000869529 /* S3Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Session.swift; sourceTree = "<group>"; };
+		009E7417287F3BB800869529 /* Zip4Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip4Sequence.swift; sourceTree = "<group>"; };
+		00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeChangeConfirmation.swift; sourceTree = "<group>"; };
+		00B940AF2881C0020086BFBB /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		00C9C24228649D6600EB6B78 /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
 		00C9C2442864A03200EB6B78 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
-		00D49E89286CD21A00BED749 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
+		00D7ECFD288308C400788DEB /* aps_development.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = aps_development.cer; sourceTree = "<group>"; };
+		00D7ECFE288308EC00788DEB /* aps.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = aps.cer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +141,8 @@
 		0038EFD028637A8C0055B2E6 = {
 			isa = PBXGroup;
 			children = (
+				00D7ECFE288308EC00788DEB /* aps.cer */,
+				00D7ECFD288308C400788DEB /* aps_development.cer */,
 				0038EFDF28637A8C0055B2E6 /* Adiona WatchKit App */,
 				0038EFEA28637A8F0055B2E6 /* Adiona WatchKit Extension */,
 				0038F00328637A8F0055B2E6 /* AdionaTests */,
@@ -194,20 +174,10 @@
 		0038EFEA28637A8F0055B2E6 /* Adiona WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				00C9C24128649BE500EB6B78 /* BridgingHeader.h */,
-				006289D42864782000CE868A /* Serializer */,
 				0038F02628637C5D0055B2E6 /* Adiona WatchKit Extension.entitlements */,
-				0038F02A28637E570055B2E6 /* ExtensionDelegate.swift */,
-				0006A28928661CBF002E1306 /* Uploader.swift */,
-				0038F03028637F400055B2E6 /* HealthDataManager.swift */,
-				0031715928677B1B009BF698 /* SampleTypes.swift */,
-				0038F03228637FB40055B2E6 /* Notifications.swift */,
-				00C9C2442864A03200EB6B78 /* ErrorHandling.swift */,
-				0038EFED28637A8F0055B2E6 /* ContentView.swift */,
-				00D49E89286CD21A00BED749 /* Keypad.swift */,
-				00806313286DCEE4005E4954 /* Location.swift */,
-				00C9C24228649D6600EB6B78 /* ComplicationViews.swift */,
-				0038EFF328637A8F0055B2E6 /* ComplicationController.swift */,
+				00B940AA2881BE9E0086BFBB /* Extension */,
+				00B940AB2881BEBE0086BFBB /* Views */,
+				009E7417287F3BB800869529 /* Zip4Sequence.swift */,
 				0038EFF528637A8F0055B2E6 /* Assets.xcassets */,
 				0038EFFA28637A8F0055B2E6 /* Info.plist */,
 				0038EFFB28637A8F0055B2E6 /* PushNotificationPayload.apns */,
@@ -240,48 +210,56 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		006289D42864782000CE868A /* Serializer */ = {
+		00B940AA2881BE9E0086BFBB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				006289D52864782000CE868A /* Granola */,
-				006289DE2864782000CE868A /* Objective Sugar */,
+				00B940AE2881BFCC0086BFBB /* HealthData */,
+				00B940AD2881BF9D0086BFBB /* S3 */,
+				00B940AC2881BF0E0086BFBB /* Location */,
+				00C9C2442864A03200EB6B78 /* ErrorHandling.swift */,
+				0038F02A28637E570055B2E6 /* ExtensionDelegate.swift */,
 			);
-			path = Serializer;
+			path = Extension;
 			sourceTree = "<group>";
 		};
-		006289D52864782000CE868A /* Granola */ = {
+		00B940AB2881BEBE0086BFBB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				006289D62864782000CE868A /* NSDate+RFC3339.m */,
-				006289D72864782000CE868A /* OMHHealthKitConstantsMapper.h */,
-				006289D82864782000CE868A /* OMHSerializer.h */,
-				006289D92864782000CE868A /* OMHError.h */,
-				006289DA2864782000CE868A /* NSDate+RFC3339.h */,
-				006289DB2864782000CE868A /* OMHHealthKitConstantsMapper.m */,
-				006289DC2864782000CE868A /* OMHError.m */,
-				006289DD2864782000CE868A /* OMHSerializer.m */,
+				00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */,
+				00B940AF2881C0020086BFBB /* KeypadView.swift */,
+				000CF6F9288094E600AE7580 /* ContentView.swift */,
+				0038EFED28637A8F0055B2E6 /* DeveloperView.swift */,
+				00C9C24228649D6600EB6B78 /* ComplicationViews.swift */,
+				0038EFF328637A8F0055B2E6 /* ComplicationController.swift */,
 			);
-			path = Granola;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		006289DE2864782000CE868A /* Objective Sugar */ = {
+		00B940AC2881BF0E0086BFBB /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				006289DF2864782000CE868A /* NSArray+ObjectiveSugar.m */,
-				006289E02864782000CE868A /* NSSet+ObjectiveSugar.h */,
-				006289E12864782000CE868A /* NSDictionary+ObjectiveSugar.h */,
-				006289E22864782000CE868A /* ObjectiveSugar.h */,
-				006289E32864782000CE868A /* NSString+ObjectiveSugar.h */,
-				006289E42864782000CE868A /* NSNumber+ObjectiveSugar.m */,
-				006289E52864782000CE868A /* NSMutableArray+ObjectiveSugar.h */,
-				006289E62864782000CE868A /* NSArray+ObjectiveSugar.h */,
-				006289E72864782000CE868A /* NSString+ObjectiveSugar.m */,
-				006289E82864782000CE868A /* NSDictionary+ObjectiveSugar.m */,
-				006289E92864782000CE868A /* NSSet+ObjectiveSugar.m */,
-				006289EA2864782000CE868A /* NSNumber+ObjectiveSugar.h */,
-				006289EB2864782000CE868A /* NSMutableArray+ObjectiveSugar.m */,
+				009E7411287F2DF700869529 /* Geofences.model.swift */,
+				00806313286DCEE4005E4954 /* Location.swift */,
 			);
-			path = "Objective Sugar";
+			path = Location;
+			sourceTree = "<group>";
+		};
+		00B940AD2881BF9D0086BFBB /* S3 */ = {
+			isa = PBXGroup;
+			children = (
+				009E7415287F2FE000869529 /* S3Session.swift */,
+			);
+			path = S3;
+			sourceTree = "<group>";
+		};
+		00B940AE2881BFCC0086BFBB /* HealthData */ = {
+			isa = PBXGroup;
+			children = (
+				0038F03028637F400055B2E6 /* HealthDataManager.swift */,
+				0031715928677B1B009BF698 /* SampleTypes.swift */,
+				008F10772881FCFB0086E2FE /* Profile.model.swift */,
+			);
+			path = HealthData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,28 +432,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0038F03328637FB40055B2E6 /* Notifications.swift in Sources */,
 				0038F02528637B6A0055B2E6 /* AdionaApp.swift in Sources */,
-				006289F32864782000CE868A /* NSString+ObjectiveSugar.m in Sources */,
-				006289F42864782000CE868A /* NSDictionary+ObjectiveSugar.m in Sources */,
-				006289F22864782000CE868A /* NSNumber+ObjectiveSugar.m in Sources */,
-				006289F52864782000CE868A /* NSSet+ObjectiveSugar.m in Sources */,
-				0038EFEE28637A8F0055B2E6 /* ContentView.swift in Sources */,
-				006289EF2864782000CE868A /* OMHError.m in Sources */,
-				0006A28A28661CBF002E1306 /* Uploader.swift in Sources */,
+				00B940B02881C0020086BFBB /* KeypadView.swift in Sources */,
+				009E7412287F2DF700869529 /* Geofences.model.swift in Sources */,
+				0038EFEE28637A8F0055B2E6 /* DeveloperView.swift in Sources */,
+				009E7416287F2FE000869529 /* S3Session.swift in Sources */,
+				008F10782881FCFB0086E2FE /* Profile.model.swift in Sources */,
 				0038F03128637F400055B2E6 /* HealthDataManager.swift in Sources */,
+				00B940A9288197C10086BFBB /* CodeChangeConfirmation.swift in Sources */,
 				00C9C2452864A03200EB6B78 /* ErrorHandling.swift in Sources */,
-				00D49E8A286CD21A00BED749 /* Keypad.swift in Sources */,
+				000CF6FA288094E600AE7580 /* ContentView.swift in Sources */,
 				00806314286DCEE4005E4954 /* Location.swift in Sources */,
 				0031715A28677B1B009BF698 /* SampleTypes.swift in Sources */,
 				00C9C24328649D6600EB6B78 /* ComplicationViews.swift in Sources */,
-				006289F12864782000CE868A /* NSArray+ObjectiveSugar.m in Sources */,
-				006289EE2864782000CE868A /* OMHHealthKitConstantsMapper.m in Sources */,
-				006289F02864782000CE868A /* OMHSerializer.m in Sources */,
-				006289F62864782000CE868A /* NSMutableArray+ObjectiveSugar.m in Sources */,
 				0038F02B28637E570055B2E6 /* ExtensionDelegate.swift in Sources */,
 				0038EFF428637A8F0055B2E6 /* ComplicationController.swift in Sources */,
-				006289ED2864782000CE868A /* NSDate+RFC3339.m in Sources */,
+				009E7418287F3BB800869529 /* Zip4Sequence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,7 +626,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Adiona WatchKit Extension/BridgingHeader.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -696,7 +668,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Adiona WatchKit Extension/BridgingHeader.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
