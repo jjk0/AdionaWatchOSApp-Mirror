@@ -38,6 +38,7 @@ struct KeypadView: View {
     @State private var showingSuccessAlert = false
     @State private var showingExistsAlert = false
     @State private var showingProgress = false
+    
     @EnvironmentObject private var extensionDelegate: ExtensionDelegate
 
     let data = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "D"].map { "\($0)" }
@@ -96,7 +97,9 @@ struct KeypadView: View {
                 .background(Color("BackgroundBlue"))
             }
             .background(Color("BackgroundBlue"))
-            .frame(width: geometry.size.width, height: geometry.size.height - geometry.safeAreaInsets.top, alignment: .center)
+            .frame(width: geometry.size.width,
+                   height: geometry.size.height - geometry.safeAreaInsets.top,
+                   alignment: .center)
             .safeAreaInset(edge: .top) {
                 ZStack(alignment: .center) {
                     VStack {
@@ -136,10 +139,8 @@ struct KeypadView: View {
                     }
 
                     if showingProgress {
-                        // this Rectangle is a semi-transparent black overlay
                         Rectangle()
                             .fill(Color.black).opacity(showingProgress ? 0.6 : 0)
-                            .edgesIgnoringSafeArea(.all)
                         
                         VStack(alignment: .center) {
                             Spacer()

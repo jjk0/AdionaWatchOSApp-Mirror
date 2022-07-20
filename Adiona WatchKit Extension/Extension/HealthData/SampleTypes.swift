@@ -10,14 +10,13 @@ import CoreLocation
 import HealthKit
 
 struct DataPoints<T>: Encodable where T: Encodable {
-    var sources = [String]()
     var values = [T]()
     var timestamps = [Date]()
 
     var lastQueryTime = Date()
     
     private enum CodingKeys: String, CodingKey {
-        case values, timestamps, sources
+        case values, timestamps
     }
 }
 
@@ -65,22 +64,18 @@ class AdionaData: Encodable {
     var number_of_times_fallen = DataPoints<Double>()
     var locations = LocationData()
     
-    func addQuantitySamples(for samples: [HKQuantitySample], source: String) {
+    func addQuantitySamples(for samples: [HKQuantitySample]) {
         let collectionDate = Date().addingTimeInterval(1.0)
         for s in samples {
             switch s.sampleType.identifier {
             case "HKQuantityTypeIdentifierHeartRateVariabilitySDNN":
                 let value = s.quantity.doubleValue(for: HKUnit.second())
-                self.heart_rate_variability.sources.append(source)
                 self.heart_rate_variability.values.append(value)
                 self.heart_rate_variability.timestamps.append(s.startDate)
                 self.heart_rate_variability.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierHeartRate":
                 let value = s.quantity.doubleValue(for: HKUnit(from: "count/min"))
-                if value > 30 { // This removes those fractional heart rates (Anomolies)
-                    HealthDataManager.shared.heartrate = "\(Int(value))"
-                }
-                self.heart_rate.sources.append(source)
+                HealthDataManager.shared.heartrate = "\(Int(value))"
                 self.heart_rate.values.append(value)
                 self.heart_rate.timestamps.append(s.startDate)
                 self.heart_rate.lastQueryTime = collectionDate
@@ -88,38 +83,32 @@ class AdionaData: Encodable {
                 let unit = HKUnit(from: "count/min")
                 let value = s.quantity.doubleValue(for: unit)
                 self.resting_heart_rate.values.append(value)
-                self.resting_heart_rate.sources.append(source)
                 self.resting_heart_rate.timestamps.append(s.startDate)
                 self.resting_heart_rate.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierStepCount":
                 let value = s.quantity.doubleValue(for: .count())
                 self.step_count.values.append(value)
-                self.step_count.sources.append(source)
                 self.step_count.timestamps.append(s.startDate)
                 self.step_count.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierActiveEnergyBurned":
                 let unit = HKUnit(from: "kcal")
                 let value = s.quantity.doubleValue(for: unit)
-                self.active_energy_burned.sources.append(source)
                 self.active_energy_burned.values.append(value)
                 self.active_energy_burned.timestamps.append(s.startDate)
                 self.active_energy_burned.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierDistanceWalkingRunning":
                 let value = self.valueFromGenericQuantitySample(sample: s)
-                self.distance_walking_running.sources.append(source)
                 self.distance_walking_running.values.append(value)
                 self.distance_walking_running.timestamps.append(s.startDate)
                 self.distance_walking_running.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierOxygenSaturation":
                 let value = s.quantity.doubleValue(for: .percent())
-                self.oxygen_saturation.sources.append(source)
                 self.oxygen_saturation.values.append(value)
                 self.oxygen_saturation.timestamps.append(s.startDate)
                 self.oxygen_saturation.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierRespiratoryRate":
                 let unit = HKUnit(from: "count/min")
                 let value = s.quantity.doubleValue(for: unit)
-                self.respiratory_rate.sources.append(source)
                 self.respiratory_rate.values.append(value)
                 self.respiratory_rate.timestamps.append(s.startDate)
                 self.respiratory_rate.lastQueryTime = collectionDate
@@ -129,7 +118,7 @@ class AdionaData: Encodable {
         }
     }
     
-    func addSamples(for sampleType: HKSampleType, from source: String) {
+    func addSamples(for sampleType: HKSampleType) {
         let predicate = HKQuery.predicateForSamples(withStart: metaData.start_date, end: metaData.end_date, options: [.strictStartDate, .strictEndDate])
 
         let sampleQueryHR = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: 1000, sortDescriptors: nil)
@@ -137,7 +126,7 @@ class AdionaData: Encodable {
                 guard let samples = samples as? [HKQuantitySample],
                         samples.count > 0,
                         let self = self else { return }
-                self.addQuantitySamples(for: samples, source: source)
+                self.addQuantitySamples(for: samples)
             }
 
         healthStore.execute(sampleQueryHR)

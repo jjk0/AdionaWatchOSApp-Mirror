@@ -81,7 +81,6 @@ class HealthDataManager: NSObject, ObservableObject {
         self.activeDataQueries.forEach { healthStore.stop($0) }
         self.activeDataQueries.removeAll()
 
-        // Start everything up
         for sampleType in typesToRead {
             self.setupObserverQuery(for: sampleType)
         }
@@ -92,7 +91,7 @@ class HealthDataManager: NSObject, ObservableObject {
     func collectSamples() {
         HealthDataManager.shared.adionaData.metaData.end_date = Date()
         for sampleType in typesToRead {
-            self.adionaData.addSamples(for: sampleType, from: "cs")
+            self.adionaData.addSamples(for: sampleType)
         }
     }
 
@@ -103,7 +102,7 @@ class HealthDataManager: NSObject, ObservableObject {
                 track(error)
                 print(sampleType)
             } else {
-                self.adionaData.addSamples(for: sampleType, from: "qm")
+                self.adionaData.addSamples(for: sampleType)
             }
 
             completionHandler()
@@ -128,9 +127,9 @@ extension HealthDataManager {
             motion.stopAccelerometerUpdates()
             
             motion.startAccelerometerUpdates(to: accelerometerQueue) { [weak self] reading, error in
-                guard let self = self else { return }
-                guard error == nil else { return }
-                guard let reading = reading else { return }
+                guard let self = self,
+                      error == nil,
+                      let reading = reading else { return }
 
                 self.adionaData.acceleration.x_val.append(reading.acceleration.x)
                 self.adionaData.acceleration.y_val.append(reading.acceleration.y)
