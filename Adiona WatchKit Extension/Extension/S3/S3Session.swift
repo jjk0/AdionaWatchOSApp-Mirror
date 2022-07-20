@@ -104,7 +104,6 @@ class S3Session: NSObject {
                 let getResponse = try await s3.getObject(getObjectRequest)
                 completion(getResponse.body?.asString())
             } catch {
-                print("Error")
                 track(error)
                 completion(nil)
             }

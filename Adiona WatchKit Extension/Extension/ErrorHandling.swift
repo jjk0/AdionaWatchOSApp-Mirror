@@ -17,7 +17,3 @@ func track(_ message: String, file: String = #file, function: String = #function
     print("\(message) called from \(function) \(file):\(line)")
     SentrySDK.capture(message: "\(message) called from \(function) \(file):\(line)")
 }
-
-enum AdionaError: Error {
-    case couldNotConnectToDatabase
-}

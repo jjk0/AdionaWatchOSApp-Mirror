@@ -33,7 +33,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
             
             let json = try deviceToken.toJSON() as String
             
-            S3Session.dataBucket.sendToS3(filename: "deviceToken.json", json: json) {
+            S3Session.profileBucket.sendToS3(filename: "deviceToken.json", json: json) {
                 print("device token sent")
             }
         } catch {
@@ -49,7 +49,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
                                       fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void) {
         if userInfo["content-available"] as? Int == 1 {
             // Silent notification
-            S3Session.dataBucket.sendToS3(filename: "APNS", json: Date().description) {
+            S3Session.profileBucket.sendToS3(filename: "APNS.json", json: Date().description) {
                 
             }
         }
@@ -100,11 +100,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
         
         print("Background Schedule for: \(when)")
     }
-    
-//    func applicationDidEnterBackground() {
-//        schedule()
-//        HealthDataManager.shared.restart()
-//    }
 
     func sendHealthData(completion: @escaping () -> Void) {
         do {
