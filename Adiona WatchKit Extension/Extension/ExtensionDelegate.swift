@@ -70,9 +70,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
                                       fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void) {
         if userInfo["content-available"] as? Int == 1 {
             // Silent notification
-            S3Session.profileBucket.sendToS3(filename: "APNS.json", json: Date().description) {
-                
-            }
+            // Do Some 
         }
 
         receivedPN = true
