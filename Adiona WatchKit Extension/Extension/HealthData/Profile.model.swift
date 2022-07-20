@@ -14,5 +14,4 @@ struct Profile: Codable {
 
 struct ProfileData: Codable {
     let profile_info: Profile
-}
-
+} 
