@@ -22,7 +22,7 @@ struct DeveloperView: View {
     
     var body: some View {
         VStack {
-            Text(extensionDelegate.receivedPN ? "Recieved" : "None")
+            Text(buildNumber)
             Button("Upload") {
                 extensionDelegate.sendHealthData() {
                     print("Sent")

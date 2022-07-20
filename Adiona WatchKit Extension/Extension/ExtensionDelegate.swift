@@ -10,8 +10,6 @@ struct DeviceToken: Encodable {
 
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
-    @Published var receivedPN = false
-
     private let healthDataManager = HealthDataManager.shared
     private let networkConnectivity = NetworkConnectivity()
     private var apnsID: String = "unassigned"
@@ -70,10 +68,9 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
                                       fetchCompletionHandler completionHandler: @escaping (WKBackgroundFetchResult) -> Void) {
         if userInfo["content-available"] as? Int == 1 {
             // Silent notification
-            // Do Some 
+            // Do Some Work
         }
 
-        receivedPN = true
         completionHandler(.newData)
     }
     
