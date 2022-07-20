@@ -30,10 +30,42 @@
             filePath = "Adiona WatchKit Extension/Extension/ExtensionDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "didReceiveRemoteNotification(_:fetchCompletionHandler:)"
-            landmarkType = "7">
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "didFailToRegisterForRemoteNotificationsWithError(_:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "76C934AC-4E3A-487B-AF86-D8188FD473F1 - 5bdb0efb0fb8505"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in Adiona_WatchKit_Extension.ExtensionDelegate.getProfileData() -&gt; ()"
+                  moduleName = "Adiona WatchKit Extension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kenfranklin/Projects/AdionaWatchOSApp/Adiona%20WatchKit%20Extension/Extension/ExtensionDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "136">
+               </Location>
+               <Location
+                  uuid = "76C934AC-4E3A-487B-AF86-D8188FD473F1 - 5bdb0efb0fb8505"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in Adiona_WatchKit_Extension.ExtensionDelegate.getProfileData() -&gt; ()"
+                  moduleName = "Adiona WatchKit Extension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kenfranklin/Projects/AdionaWatchOSApp/Adiona%20WatchKit%20Extension/Extension/ExtensionDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "172">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

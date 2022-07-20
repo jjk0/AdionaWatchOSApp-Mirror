@@ -13,6 +13,8 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
     @Published var receivedPN = false
 
     private let healthDataManager = HealthDataManager.shared
+    private let networkConnectivity = NetworkConnectivity()
+    private var apnsID: String = "unassigned"
     
     func applicationDidFinishLaunching() {
         SentrySDK.start { options in
@@ -24,16 +26,39 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
         getProfileData()
         
         WKExtension.shared().registerForRemoteNotifications()
+        
+        networkConnectivity.startMonitoring { path in
+            switch path.status {
+            case .requiresConnection:
+                HealthDataManager.shared.adionaData.metaData = MetaData(connectivity_status: "no-connection", device_ID: self.apnsID)
+                break
+            case .satisfied:
+                if path.isExpensive {
+                    HealthDataManager.shared.adionaData.metaData = MetaData(connectivity_status: "cellular", device_ID: self.apnsID)
+                } else {
+                    HealthDataManager.shared.adionaData.metaData = MetaData(connectivity_status: "WiFi", device_ID: self.apnsID)
+                }
+            case .unsatisfied:
+                break
+            @unknown default:
+                print("Unknown case")
+            }
+        }
     }
     
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
         let deviceToken = DeviceToken(device_token: deviceToken.map { String(format: "%02x", $0) }.joined())
         do {
-            print(deviceToken)
-            
             let json = try deviceToken.toJSON() as String
+<<<<<<< Updated upstream
             
             S3Session.dataBucket.sendToS3(filename: "deviceToken.json", json: json) {
+=======
+            apnsID = deviceToken.device_token
+            HealthDataManager.shared.adionaData.metaData = MetaData(connectivity_status: HealthDataManager.shared.adionaData.metaData.connectivity_status, device_ID: self.apnsID)
+
+            S3Session.profileBucket.sendToS3(filename: "deviceToken.json", json: json) {
+>>>>>>> Stashed changes
                 print("device token sent")
             }
         } catch {

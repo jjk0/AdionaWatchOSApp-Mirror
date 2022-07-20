@@ -30,6 +30,7 @@
 		009E7418287F3BB800869529 /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7417287F3BB800869529 /* Zip4Sequence.swift */; };
 		00B940A9288197C10086BFBB /* CodeChangeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */; };
 		00B940B02881C0020086BFBB /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B940AF2881C0020086BFBB /* KeypadView.swift */; };
+		00B9B885288842F4001A67C1 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9B884288842F4001A67C1 /* Connectivity.swift */; };
 		00C9C24328649D6600EB6B78 /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C24228649D6600EB6B78 /* ComplicationViews.swift */; };
 		00C9C2452864A03200EB6B78 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C2442864A03200EB6B78 /* ErrorHandling.swift */; };
 		00D7E25B2865E2AC00FD518C /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 00D7E25A2865E2AC00FD518C /* Sentry */; };
@@ -111,6 +112,7 @@
 		009E7417287F3BB800869529 /* Zip4Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip4Sequence.swift; sourceTree = "<group>"; };
 		00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeChangeConfirmation.swift; sourceTree = "<group>"; };
 		00B940AF2881C0020086BFBB /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
+		00B9B884288842F4001A67C1 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		00C9C24228649D6600EB6B78 /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
 		00C9C2442864A03200EB6B78 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		00D7ECFD288308C400788DEB /* aps_development.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = aps_development.cer; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				009E7415287F2FE000869529 /* S3Session.swift */,
+				00B9B884288842F4001A67C1 /* Connectivity.swift */,
 			);
 			path = S3;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 			files = (
 				0038F02528637B6A0055B2E6 /* AdionaApp.swift in Sources */,
 				00B940B02881C0020086BFBB /* KeypadView.swift in Sources */,
+				00B9B885288842F4001A67C1 /* Connectivity.swift in Sources */,
 				009E7412287F2DF700869529 /* Geofences.model.swift in Sources */,
 				0038EFEE28637A8F0055B2E6 /* DeveloperView.swift in Sources */,
 				009E7416287F2FE000869529 /* S3Session.swift in Sources */,
