@@ -20,6 +20,7 @@ class GeoFence: NSObject {
 
 class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
     var geoFences = [GeoFence]()
+    var lastReportedLocation: CLLocation?
     
     @Published var geoFenceStatus: String = "In Fence"
     
@@ -108,7 +109,8 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
                         locationData.latitude.append(location.coordinate.latitude)
                         locationData.timestamp.append(Date())
 
-                        S3Session.dataBucket.sendToS3(filename: "Geofence \(fence.region.identifier) Exit at \(Date().description).txt", json: try locationData.toJSON() as String) {
+                        S3Session.dataBucket.sendToS3(filename: "Geofence \(fence.region.identifier) Exit at \(Date().description).json",
+                                                      json: try locationData.toJSON() as String) {
                             DispatchQueue.main.async {
                                 self.geoFenceStatus = "Out of fence \(fence.region.identifier): \(distanceInMeters)"
                             }
@@ -127,6 +129,8 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        lastReportedLocation = locations.last
+        
         for location in locations {
             HealthDataManager.shared.adionaData.locations.latitude.append(location.coordinate.latitude)
             HealthDataManager.shared.adionaData.locations.longitude.append(location.coordinate.longitude)

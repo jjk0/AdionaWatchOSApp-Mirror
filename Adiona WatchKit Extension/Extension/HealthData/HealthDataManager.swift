@@ -62,7 +62,7 @@ class HealthDataManager: NSObject, ObservableObject {
     override init() {
         super.init()
         
-        healthStore.requestAuthorization(toShare: typesToRead, read: typesToRead) { success, error in
+        healthStore.requestAuthorization(toShare: [], read: typesToRead) { success, error in
             track(error)
             if self.location == nil {
                 DispatchQueue.main.async {
@@ -134,6 +134,7 @@ extension HealthDataManager {
                 self.adionaData.acceleration.x_val.append(reading.acceleration.x)
                 self.adionaData.acceleration.y_val.append(reading.acceleration.y)
                 self.adionaData.acceleration.z_val.append(reading.acceleration.z)
+                self.adionaData.acceleration.timestamp.append(Date())
             }
         } else {
             print("Acceleromter not Available")

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0006A28C28661CEA002E1306 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 0006A28B28661CEA002E1306 /* SotoS3 */; };
 		000CF6FA288094E600AE7580 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000CF6F9288094E600AE7580 /* ContentView.swift */; };
 		0031715A28677B1B009BF698 /* SampleTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0031715928677B1B009BF698 /* SampleTypes.swift */; };
 		0038EFDC28637A8C0055B2E6 /* Adiona WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0038EFDB28637A8C0055B2E6 /* Adiona WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -28,11 +27,14 @@
 		009E7412287F2DF700869529 /* Geofences.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7411287F2DF700869529 /* Geofences.model.swift */; };
 		009E7416287F2FE000869529 /* S3Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7415287F2FE000869529 /* S3Session.swift */; };
 		009E7418287F3BB800869529 /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E7417287F3BB800869529 /* Zip4Sequence.swift */; };
+		00A259DE2889A6EA00CBA747 /* SotoS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 00A259DD2889A6EA00CBA747 /* SotoS3 */; };
+		00A259E02889A6F100CBA747 /* SotoPinpoint in Frameworks */ = {isa = PBXBuildFile; productRef = 00A259DF2889A6F100CBA747 /* SotoPinpoint */; };
 		00B940A9288197C10086BFBB /* CodeChangeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */; };
 		00B940B02881C0020086BFBB /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B940AF2881C0020086BFBB /* KeypadView.swift */; };
 		00B9B885288842F4001A67C1 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9B884288842F4001A67C1 /* Connectivity.swift */; };
 		00C9C24328649D6600EB6B78 /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C24228649D6600EB6B78 /* ComplicationViews.swift */; };
 		00C9C2452864A03200EB6B78 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C9C2442864A03200EB6B78 /* ErrorHandling.swift */; };
+		00CB0801288ED56200D51717 /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CB0800288ED56200D51717 /* NetworkTools.swift */; };
 		00D7E25B2865E2AC00FD518C /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 00D7E25A2865E2AC00FD518C /* Sentry */; };
 /* End PBXBuildFile section */
 
@@ -115,8 +117,8 @@
 		00B9B884288842F4001A67C1 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		00C9C24228649D6600EB6B78 /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
 		00C9C2442864A03200EB6B78 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
-		00D7ECFD288308C400788DEB /* aps_development.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = aps_development.cer; sourceTree = "<group>"; };
-		00D7ECFE288308EC00788DEB /* aps.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = aps.cer; sourceTree = "<group>"; };
+		00CB07F6288ED31500D51717 /* Adiona WatchKit Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Adiona WatchKit Extension-Bridging-Header.h"; sourceTree = "<group>"; };
+		00CB0800288ED56200D51717 /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,8 +126,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0006A28C28661CEA002E1306 /* SotoS3 in Frameworks */,
+				00A259DE2889A6EA00CBA747 /* SotoS3 in Frameworks */,
 				0038F02928637C5E0055B2E6 /* HealthKit.framework in Frameworks */,
+				00A259E02889A6F100CBA747 /* SotoPinpoint in Frameworks */,
 				00D7E25B2865E2AC00FD518C /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,8 +146,6 @@
 		0038EFD028637A8C0055B2E6 = {
 			isa = PBXGroup;
 			children = (
-				00D7ECFE288308EC00788DEB /* aps.cer */,
-				00D7ECFD288308C400788DEB /* aps_development.cer */,
 				0038EFDF28637A8C0055B2E6 /* Adiona WatchKit App */,
 				0038EFEA28637A8F0055B2E6 /* Adiona WatchKit Extension */,
 				0038F00328637A8F0055B2E6 /* AdionaTests */,
@@ -259,8 +260,10 @@
 			isa = PBXGroup;
 			children = (
 				0038F03028637F400055B2E6 /* HealthDataManager.swift */,
+				00CB0800288ED56200D51717 /* NetworkTools.swift */,
 				0031715928677B1B009BF698 /* SampleTypes.swift */,
 				008F10772881FCFB0086E2FE /* Profile.model.swift */,
+				00CB07F6288ED31500D51717 /* Adiona WatchKit Extension-Bridging-Header.h */,
 			);
 			path = HealthData;
 			sourceTree = "<group>";
@@ -283,7 +286,8 @@
 			name = Adiona;
 			packageProductDependencies = (
 				00C9C2472864A05B00EB6B78 /* Sentry */,
-				0006A28828661BDC002E1306 /* SotoS3 */,
+				00A259DB2889A6CD00CBA747 /* SotoPinpoint */,
+				00A259DC2889A6CD00CBA747 /* SotoS3 */,
 			);
 			productName = Adiona;
 			productReference = 0038EFD728637A8C0055B2E6 /* Adiona.app */;
@@ -321,7 +325,8 @@
 			name = "Adiona WatchKit Extension";
 			packageProductDependencies = (
 				00D7E25A2865E2AC00FD518C /* Sentry */,
-				0006A28B28661CEA002E1306 /* SotoS3 */,
+				00A259DD2889A6EA00CBA747 /* SotoS3 */,
+				00A259DF2889A6F100CBA747 /* SotoPinpoint */,
 			);
 			productName = "Adiona WatchKit Extension";
 			productReference = 0038EFE628637A8F0055B2E6 /* Adiona WatchKit Extension.appex */;
@@ -363,6 +368,7 @@
 					};
 					0038EFE528637A8F0055B2E6 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 					};
 					0038EFFF28637A8F0055B2E6 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -381,7 +387,7 @@
 			mainGroup = 0038EFD028637A8C0055B2E6;
 			packageReferences = (
 				00C9C2462864A05B00EB6B78 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
-				0006A28728661BDB002E1306 /* XCRemoteSwiftPackageReference "soto" */,
+				00A259DA2889A6CC00CBA747 /* XCRemoteSwiftPackageReference "soto" */,
 			);
 			productRefGroup = 0038EFD828637A8C0055B2E6 /* Products */;
 			projectDirPath = "";
@@ -440,6 +446,7 @@
 				00B9B885288842F4001A67C1 /* Connectivity.swift in Sources */,
 				009E7412287F2DF700869529 /* Geofences.model.swift in Sources */,
 				0038EFEE28637A8F0055B2E6 /* DeveloperView.swift in Sources */,
+				00CB0801288ED56200D51717 /* NetworkTools.swift in Sources */,
 				009E7416287F2FE000869529 /* S3Session.swift in Sources */,
 				008F10782881FCFB0086E2FE /* Profile.model.swift in Sources */,
 				0038F03128637F400055B2E6 /* HealthDataManager.swift in Sources */,
@@ -600,11 +607,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Adiona WatchKit Extension/Adiona WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Adiona WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
@@ -625,12 +633,13 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Adiona WatchKit Extension/Extension/HealthData/Adiona WatchKit Extension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -642,11 +651,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Adiona WatchKit Extension/Adiona WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Adiona WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
@@ -667,12 +677,12 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Adiona WatchKit Extension/Extension/HealthData/Adiona WatchKit Extension-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -688,14 +698,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
 				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -714,14 +724,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
 				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -737,9 +747,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -750,9 +760,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C6PR6SGEU;
+				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.Adiona;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -768,7 +778,7 @@
 				DEVELOPMENT_TEAM = 7C6PR6SGEU;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.AdionaTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.AdionaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -789,7 +799,7 @@
 				DEVELOPMENT_TEAM = 7C6PR6SGEU;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gnashermobilesoft.AdionaTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.AdionaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -851,7 +861,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0006A28728661BDB002E1306 /* XCRemoteSwiftPackageReference "soto" */ = {
+		00A259DA2889A6CC00CBA747 /* XCRemoteSwiftPackageReference "soto" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/soto-project/soto";
 			requirement = {
@@ -870,15 +880,25 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0006A28828661BDC002E1306 /* SotoS3 */ = {
+		00A259DB2889A6CD00CBA747 /* SotoPinpoint */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0006A28728661BDB002E1306 /* XCRemoteSwiftPackageReference "soto" */;
+			package = 00A259DA2889A6CC00CBA747 /* XCRemoteSwiftPackageReference "soto" */;
+			productName = SotoPinpoint;
+		};
+		00A259DC2889A6CD00CBA747 /* SotoS3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00A259DA2889A6CC00CBA747 /* XCRemoteSwiftPackageReference "soto" */;
 			productName = SotoS3;
 		};
-		0006A28B28661CEA002E1306 /* SotoS3 */ = {
+		00A259DD2889A6EA00CBA747 /* SotoS3 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0006A28728661BDB002E1306 /* XCRemoteSwiftPackageReference "soto" */;
+			package = 00A259DA2889A6CC00CBA747 /* XCRemoteSwiftPackageReference "soto" */;
 			productName = SotoS3;
+		};
+		00A259DF2889A6F100CBA747 /* SotoPinpoint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00A259DA2889A6CC00CBA747 /* XCRemoteSwiftPackageReference "soto" */;
+			productName = SotoPinpoint;
 		};
 		00C9C2472864A05B00EB6B78 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;

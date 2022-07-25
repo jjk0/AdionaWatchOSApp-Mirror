@@ -12,12 +12,6 @@ import HealthKit
 struct DataPoints<T>: Encodable where T: Encodable {
     var values = [T]()
     var timestamps = [Date]()
-
-    var lastQueryTime = Date()
-    
-    private enum CodingKeys: String, CodingKey {
-        case values, timestamps
-    }
 }
 
 class LocationData: Encodable {
@@ -31,24 +25,25 @@ class AccelerometerData: Encodable {
     var x_val = Array<Double>()
     var y_val = Array<Double>()
     var z_val = Array<Double>()
+    var timestamp = Array<Date>()
+
 }
 
 class MetaData: Encodable {
+    var batteryLevel: Float = 0.0
     var geofences: GeofenceData?
-    let connectivity_status: String
-    let device_ID: String
+    var connectivity_status = [String]()
+    var device_ID: String = "undetermined"
+    let has_cellular_capabilities = NetworkTools.hasCellularCapabilites() ? "true" : "false"
     let start_date = Date()
     var end_date: Date?
     
-    init(connectivity_status: String, device_ID: String, end_date: Date? = nil) {
-        self.connectivity_status = connectivity_status
-        self.device_ID = device_ID
-        self.end_date = end_date
+    init() {
     }
 }
 
 class AdionaData: Encodable {
-    var metaData = MetaData(connectivity_status: "wifi", device_ID: UUID().uuidString)
+    var metaData = MetaData()
     let acceleration = AccelerometerData()
     var heart_rate = DataPoints<Double>()
     var heart_rate_variability = DataPoints<Double>()
@@ -65,53 +60,44 @@ class AdionaData: Encodable {
     var locations = LocationData()
     
     func addQuantitySamples(for samples: [HKQuantitySample]) {
-        let collectionDate = Date().addingTimeInterval(1.0)
         for s in samples {
             switch s.sampleType.identifier {
             case "HKQuantityTypeIdentifierHeartRateVariabilitySDNN":
                 let value = s.quantity.doubleValue(for: HKUnit.second())
                 self.heart_rate_variability.values.append(value)
                 self.heart_rate_variability.timestamps.append(s.startDate)
-                self.heart_rate_variability.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierHeartRate":
                 let value = s.quantity.doubleValue(for: HKUnit(from: "count/min"))
                 HealthDataManager.shared.heartrate = "\(Int(value))"
                 self.heart_rate.values.append(value)
                 self.heart_rate.timestamps.append(s.startDate)
-                self.heart_rate.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierRestingHeartRate":
                 let unit = HKUnit(from: "count/min")
                 let value = s.quantity.doubleValue(for: unit)
                 self.resting_heart_rate.values.append(value)
                 self.resting_heart_rate.timestamps.append(s.startDate)
-                self.resting_heart_rate.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierStepCount":
                 let value = s.quantity.doubleValue(for: .count())
                 self.step_count.values.append(value)
                 self.step_count.timestamps.append(s.startDate)
-                self.step_count.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierActiveEnergyBurned":
                 let unit = HKUnit(from: "kcal")
                 let value = s.quantity.doubleValue(for: unit)
                 self.active_energy_burned.values.append(value)
                 self.active_energy_burned.timestamps.append(s.startDate)
-                self.active_energy_burned.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierDistanceWalkingRunning":
                 let value = self.valueFromGenericQuantitySample(sample: s)
                 self.distance_walking_running.values.append(value)
                 self.distance_walking_running.timestamps.append(s.startDate)
-                self.distance_walking_running.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierOxygenSaturation":
                 let value = s.quantity.doubleValue(for: .percent())
                 self.oxygen_saturation.values.append(value)
                 self.oxygen_saturation.timestamps.append(s.startDate)
-                self.oxygen_saturation.lastQueryTime = collectionDate
             case "HKQuantityTypeIdentifierRespiratoryRate":
                 let unit = HKUnit(from: "count/min")
                 let value = s.quantity.doubleValue(for: unit)
                 self.respiratory_rate.values.append(value)
                 self.respiratory_rate.timestamps.append(s.startDate)
-                self.respiratory_rate.lastQueryTime = collectionDate
             default:
                 break
             }
