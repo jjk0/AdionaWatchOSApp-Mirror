@@ -10,7 +10,12 @@ import SotoS3
 import NIO
 
 class S3Session: NSObject {
+    #if DEBUG
     static let dataBucket = S3Session(rootBucket: "development-adiona-watch-data")
+    #else
+    static let dataBucket = S3Session(rootBucket: "raw-adiona-watch-app-data")
+    #endif
+    
     static let profileBucket = S3Session(rootBucket: "adiona-user-profile-data")
 
     let rootBucket: String

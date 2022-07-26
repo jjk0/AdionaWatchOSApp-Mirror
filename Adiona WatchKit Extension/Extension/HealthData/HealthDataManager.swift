@@ -75,6 +75,9 @@ class HealthDataManager: NSObject, ObservableObject {
     }
 
     func start() {
+        // Note the stop/start code here is intended to make this call
+        // safe to make multiple times without worrying about current state (Re-entrant)
+        
         self.stopAccelerometer()
         self.startAccelerometer()
 
@@ -100,7 +103,6 @@ class HealthDataManager: NSObject, ObservableObject {
         let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
             if let error = errorOrNil {
                 track(error)
-                print(sampleType)
             } else {
                 self.adionaData.addSamples(for: sampleType)
             }

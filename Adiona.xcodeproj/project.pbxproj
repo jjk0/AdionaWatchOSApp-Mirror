@@ -626,6 +626,7 @@
 				INFOPLIST_KEY_NSLocationUsageDescription = "To track your location and provide safety.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To track your location and provide safety.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "To  collect accleromter data";
+				INFOPLIST_KEY_WKExtensionDelegateClassName = ExtensionDelegate;
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -670,6 +671,7 @@
 				INFOPLIST_KEY_NSLocationUsageDescription = "To track your location and provide safety.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To track your location and provide safety.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "To  collect accleromter data";
+				INFOPLIST_KEY_WKExtensionDelegateClassName = ExtensionDelegate;
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -701,7 +703,7 @@
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
-				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
@@ -727,7 +729,7 @@
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
-				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
@@ -748,6 +750,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = ExtensionDelegate;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -761,6 +764,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = ExtensionDelegate;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona;
 				PRODUCT_NAME = "$(TARGET_NAME)";

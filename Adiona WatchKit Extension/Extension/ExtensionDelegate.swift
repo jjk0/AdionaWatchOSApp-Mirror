@@ -29,7 +29,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
             switch path.status {
             case .requiresConnection:
                 HealthDataManager.shared.adionaData.metaData.connectivity_status.append("no-connection")
-                break
             case .satisfied:
                 if path.isExpensive {
                     HealthDataManager.shared.adionaData.metaData.connectivity_status.append("cellular")
@@ -37,7 +36,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
                     HealthDataManager.shared.adionaData.metaData.connectivity_status.append("WiFi")
                 }
             case .unsatisfied:
-                break
+                HealthDataManager.shared.adionaData.metaData.connectivity_status.append("unsatisfied")
             @unknown default:
                 print("Unknown case")
             }
@@ -118,7 +117,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
 
     func sendHealthData(completion: @escaping () -> Void) {
         do {
-            self.healthDataManager.adionaData.metaData.batteryLevel = WKInterfaceDevice.current().batteryLevel
+            self.healthDataManager.adionaData.metaData.battery_level = WKInterfaceDevice.current().batteryLevel
             
             let json = try self.healthDataManager.adionaData.toJSON()
             

@@ -30,7 +30,7 @@ class AccelerometerData: Encodable {
 }
 
 class MetaData: Encodable {
-    var batteryLevel: Float = 0.0
+    var battery_level: Float = 0.0
     var geofences: GeofenceData?
     var connectivity_status = [String]()
     var device_ID: String = "undetermined"
@@ -38,8 +38,7 @@ class MetaData: Encodable {
     let start_date = Date()
     var end_date: Date?
     
-    init() {
-    }
+    init() {}
 }
 
 class AdionaData: Encodable {
