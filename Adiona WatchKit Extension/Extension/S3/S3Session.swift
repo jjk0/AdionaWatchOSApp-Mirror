@@ -7,14 +7,13 @@
 
 import Foundation
 import SotoS3
-import NIO
 
 class S3Session: NSObject {
-    #if DEBUG
+#if DEBUG
     static let dataBucket = S3Session(rootBucket: "development-adiona-watch-data")
-    #else
+#else
     static let dataBucket = S3Session(rootBucket: "raw-adiona-watch-app-data")
-    #endif
+#endif
     
     static let profileBucket = S3Session(rootBucket: "adiona-user-profile-data")
 
@@ -66,7 +65,7 @@ class S3Session: NSObject {
             track(error)
             completion(error)
         })
-        
+
         createBucketFuture.whenSuccess({ output in
             self.bucketName = bucketName
             completion(nil)
@@ -84,7 +83,7 @@ class S3Session: NSObject {
             bucket: bucket,
             key: filename
         )
-        
+
         let _ = self.s3.putObject(putObjectRequest).always { result in
             switch result {
             case .failure(let error):
@@ -105,7 +104,7 @@ class S3Session: NSObject {
         Task {
             do {
                 let getObjectRequest = S3.GetObjectRequest(bucket: bucket, key: filename)
-                
+
                 let getResponse = try await s3.getObject(getObjectRequest)
                 completion(getResponse.body?.asString())
             } catch {

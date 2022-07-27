@@ -68,8 +68,10 @@
       enableGPUValidationMode = "1"
       allowLocationSimulation = "YES"
       notificationPayloadFile = "Adiona WatchKit Extension/PushNotificationPayload.apns">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Adiona">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0038EFDA28637A8C0055B2E6"
@@ -77,7 +79,7 @@
             BlueprintName = "Adiona WatchKit App"
             ReferencedContainer = "container:Adiona.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
       <AdditionalOptions>
          <AdditionalOption
             key = "NSZombieEnabled"
@@ -92,8 +94,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Adiona">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0038EFDA28637A8C0055B2E6"
@@ -101,7 +105,16 @@
             BlueprintName = "Adiona WatchKit App"
             ReferencedContainer = "container:Adiona.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0038EFDA28637A8C0055B2E6"
+            BuildableName = "Adiona WatchKit App.app"
+            BlueprintName = "Adiona WatchKit App"
+            ReferencedContainer = "container:Adiona.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

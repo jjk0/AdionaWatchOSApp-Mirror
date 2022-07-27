@@ -25,7 +25,7 @@ class AccelerometerData: Encodable {
     var x_val = Array<Double>()
     var y_val = Array<Double>()
     var z_val = Array<Double>()
-    var timestamp = Array<Date>()
+    let startQueryTime = Date()
 
 }
 

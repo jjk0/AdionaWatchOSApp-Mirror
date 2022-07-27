@@ -4,7 +4,6 @@ import HealthKit
 import UIKit
 import CoreMotion
 import Sentry
-import SotoPinpoint
 
 struct DeviceToken: Encodable {
     let device_token: String
@@ -41,6 +40,8 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject {
                 print("Unknown case")
             }
         }
+        
+        WKInterfaceDevice.current().isBatteryMonitoringEnabled = true
     }
     
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {

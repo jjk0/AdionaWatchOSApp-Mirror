@@ -136,7 +136,6 @@ extension HealthDataManager {
                 self.adionaData.acceleration.x_val.append(reading.acceleration.x)
                 self.adionaData.acceleration.y_val.append(reading.acceleration.y)
                 self.adionaData.acceleration.z_val.append(reading.acceleration.z)
-                self.adionaData.acceleration.timestamp.append(Date())
             }
         } else {
             print("Acceleromter not Available")
