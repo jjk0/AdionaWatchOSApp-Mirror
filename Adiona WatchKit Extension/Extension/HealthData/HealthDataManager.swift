@@ -13,6 +13,7 @@ let quantityTypes: Set<HKQuantityTypeIdentifier> = [
     .heartRate,
     .restingHeartRate,
     .stepCount,
+    .numberOfTimesFallen,
     .activeEnergyBurned,
     .oxygenSaturation,
     .stairAscentSpeed,
@@ -34,7 +35,7 @@ var healthStore: HKHealthStore = {
     return healthStore
 }()
 
-class HealthDataManager: NSObject, ObservableObject {
+class HealthDataManager: NSObject, ObservableObject, CMFallDetectionDelegate {
     static var shared = HealthDataManager()
     @Published var stepsToday: String = "-"
     @Published var heartrate: String = "-"
@@ -73,7 +74,7 @@ class HealthDataManager: NSObject, ObservableObject {
             self.start()
         }
     }
-
+    
     func start() {
         // Note the stop/start code here is intended to make this call
         // safe to make multiple times without worrying about current state (Re-entrant)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DeveloperView: View {
-    @State var showingKeypard = S3Session.dataBucket.bucketName == nil
+    @State var showingKeypard = S3.dataBucket.bucketName == nil
     @EnvironmentObject private var extensionDelegate: ExtensionDelegate
 
     var buildNumber: String = {
@@ -24,15 +24,10 @@ struct DeveloperView: View {
         VStack {
             Text(buildNumber)
             Button("Upload") {
-                extensionDelegate.sendHealthData() {
-                    print("Sent")
-                }
+                extensionDelegate.sendHealthData()
             }
             Button("Enter Code") {
                 showingKeypard.toggle()
-            }
-            Button("Set Fence") {
-                HealthDataManager.shared.location?.resetGeofence()
             }
         }.fullScreenCover(isPresented: $showingKeypard) {
             KeypadView(dismissFlag: $showingKeypard)

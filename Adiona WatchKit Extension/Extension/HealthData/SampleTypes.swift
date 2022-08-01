@@ -37,6 +37,7 @@ class MetaData: Encodable {
     let has_cellular_capabilities = NetworkTools.hasCellularCapabilites() ? "true" : "false"
     let start_date = Date()
     var end_date: Date?
+    var user_id = "12345"//UserDefaults.standard.string(forKey: "bucket_name")
     
     init() {}
 }
@@ -61,6 +62,10 @@ class AdionaData: Encodable {
     func addQuantitySamples(for samples: [HKQuantitySample]) {
         for s in samples {
             switch s.sampleType.identifier {
+            case "HKQuantityTypeIdentifierNumberOfTimesFallen":
+                let value = s.quantity.doubleValue(for: HKUnit.count())
+                self.number_of_times_fallen.values.append(value)
+                self.number_of_times_fallen.timestamps.append(s.startDate)
             case "HKQuantityTypeIdentifierHeartRateVariabilitySDNN":
                 let value = s.quantity.doubleValue(for: HKUnit.second())
                 self.heart_rate_variability.values.append(value)
@@ -138,11 +143,10 @@ class AdionaData: Encodable {
 
 extension Encodable {
     /// Converting object to postable JSON
-    func toJSON(_ encoder: JSONEncoder = JSONEncoder()) throws -> NSString {
+    func toJSON(_ encoder: JSONEncoder = JSONEncoder()) throws -> String {
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
         let data = try encoder.encode(self)
-        let result = String(decoding: data, as: UTF8.self)
-        return NSString(string: result)
+        return String(decoding: data, as: UTF8.self)
     }
 }
