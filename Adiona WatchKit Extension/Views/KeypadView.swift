@@ -50,30 +50,19 @@ struct KeypadView: View {
             }
             
             if enteredDigits.count == 5 {
-                showingProgress = true
-                S3Session.dataBucket.lookupBucket(bucketName: enteredDigits) { exists in
-                    showingExistsAlert = exists
-                    
-                    if !exists {
-                        S3Session.dataBucket.createBucket(bucketName: enteredDigits) { success in
-                            showingProgress = false
-                            showingSuccessAlert = true
-                        }
-                    } else {
-                        showingProgress = false
-                    }
-                }
+                showingExistsAlert = true
             }
         }
 
         GeometryReader { geometry in
             VStack {
             }
-            .alert("ID \(enteredDigits) is in use.  Are you sure you entered it correctly?", isPresented: $showingExistsAlert) {
+            .alert("Are you sure you entered it correctly?", isPresented: $showingExistsAlert) {
                 ZStack {
                     Color("BackgroundBlue")
                     Button("YES", role: .destructive) {
-                        S3Session.dataBucket.bucketName = enteredDigits
+                        S3.dataBucket.bucketName = enteredDigits
+                        HealthDataManager.shared.adionaData.metaData.user_id = enteredDigits
                         self.showingExistsAlert.toggle()
                         self.showingSuccessAlert.toggle()
                     }
