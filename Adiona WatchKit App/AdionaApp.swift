@@ -15,7 +15,7 @@ struct AdionaApp: App {
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            ContentView()
+            DeveloperView()
         }.onChange(of: scenePhase) { phase in
             switch phase {
                 case .active:

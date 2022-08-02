@@ -12,10 +12,10 @@ struct DeviceToken: Encodable {
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, URLSessionDownloadDelegate, URLSessionTaskDelegate, URLSessionDataDelegate, CMFallDetectionDelegate {
     private let healthDataManager = HealthDataManager.shared
-    private let networkConnectivity = NetworkConnectivity()
     var refreshBackgroundTask: WKApplicationRefreshBackgroundTask?
     var sessionBackgroundTask: WKURLSessionRefreshBackgroundTask?
     let fallDetector = CMFallDetectionManager()
+    var location: Location?
 
     func applicationDidFinishLaunching() {
         SentrySDK.start { options in
@@ -28,33 +28,20 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
 
         WKExtension.shared().registerForRemoteNotifications()
 
-        networkConnectivity.startMonitoring { path in
-            switch path.status {
-            case .requiresConnection:
-                HealthDataManager.shared.adionaData.metaData.connectivity_status.append("no-connection")
-            case .satisfied:
-                if path.isExpensive {
-                    HealthDataManager.shared.adionaData.metaData.connectivity_status.append("cellular")
-                } else {
-                    HealthDataManager.shared.adionaData.metaData.connectivity_status.append("WiFi")
-                }
-            case .unsatisfied:
-                HealthDataManager.shared.adionaData.metaData.connectivity_status.append("unsatisfied")
-            @unknown default:
-                print("Unknown case")
-            }
-        }
-
         WKInterfaceDevice.current().isBatteryMonitoringEnabled = true
-        
+
         fallDetector.delegate = self
-        //fallDetector.requestAuthorization { _ in }
+        // fallDetector.requestAuthorization { _ in }
+
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("geofence_breached"), object: nil, queue: nil) { _ in
+            self.sendHealthData()
+        }
     }
 
     func fallDetectionManager(_ fallDetectionManager: CMFallDetectionManager, didDetect event: CMFallDetectionEvent, completionHandler handler: @escaping () -> Void) {
         sendHealthData()
     }
-    
+
     func fallDetectionManagerDidChangeAuthorization(_ fallDetectionManager: CMFallDetectionManager) {
         switch fallDetectionManager.authorizationStatus {
         case .notDetermined:
@@ -64,17 +51,16 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
         case .denied:
             track("Falldetection Authorization denied")
         case .authorized:
-            self.fallDetector.delegate = self
+            fallDetector.delegate = self
         @unknown default:
             track("Falldetection Authorization unknown")
         }
     }
 
-    
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
         let deviceToken = DeviceToken(device_token: deviceToken.map { String(format: "%02x", $0) }.joined())
-            HealthDataManager.shared.adionaData.metaData.device_ID = deviceToken.device_token
-            sendHealthData()
+        HealthDataManager.shared.adionaData.metaData.device_ID = deviceToken.device_token
+        sendHealthData()
     }
 
     func didFailToRegisterForRemoteNotificationsWithError(_ error: Error) {
@@ -96,12 +82,50 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
 
     func applicationDidBecomeActive() {
         if let data = UserDefaults.standard.string(forKey: "JSON") {
-            print("Data count: \(data.count)")
+            print("Data count: (data.count)")
         }
     }
 
     func getProfileData() {
-        download(filename: "profileData.json")
+        do {
+            let json = try healthDataManager.adionaData.metaData.toJSON()
+            let fileURL = tempFileFor(json: json)!
+
+            let url = URL(string: "https://vbar9mhxvd.execute-api.us-east-1.amazonaws.com/default/adiona-watch-api-get-profile-trigger")!
+//
+//            let url = URL(string: "https://8b5wq9o68d.execute-api.us-east-1.amazonaws.com/adiona-watch-api-trigger")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("(json.count)", forHTTPHeaderField: "Content-Length")
+            request.setValue(fileURL.lastPathComponent, forHTTPHeaderField: "filename")
+
+            let config = URLSessionConfiguration.default
+            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            let task = session.uploadTask(with: request, fromFile: fileURL)
+            task.resume()
+        } catch {
+            
+        }
+        
+//        do {
+//            let json = try healthDataManager.adionaData.metaData.toJSON()
+//
+//            let url = URL(string: "https://vbar9mhxvd.execute-api.us-east-1.amazonaws.com/default/adiona-watch-api-get-profile-trigger")!
+//
+//            var request = URLRequest(url: url)
+//            request.httpMethod = "POST"
+//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            request.setValue("(json.count)", forHTTPHeaderField: "Content-Length")
+//            request.httpBody = json.data(using: .utf8)
+//
+//            let config = URLSessionConfiguration.default
+//            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+//            let task = session.downloadTask(with: request)
+//            task.resume()
+//        } catch {
+//            track(error)
+//        }
     }
 
     public func schedule(firstTime: Bool = false) {
@@ -120,11 +144,11 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
                 userInfo: nil
             ) { error in
                 if let error = error {
-                    track("Unable to schedule: \(error.localizedDescription)")
+                    track("Unable to schedule: (error.localizedDescription)")
                 }
             }
 
-        print("Background Schedule for: \(when)")
+        print("Background Schedule for: (when)")
     }
 
     func sendHealthData() {
@@ -147,7 +171,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
 
         return config
     }
-
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
         backgroundTasks.forEach { task in
@@ -184,27 +207,37 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
             sessionBackgroundTask = nil
             schedule()
         }
-        
+
+        // Need to handle error here and store off data to retry, at least not resetting the collectors on error prevents any data loss.
+        if error == nil, session.configuration.identifier?.contains("adiona_data") ?? false {
+            healthDataManager.resetCollectors()
+        }
+
         track(error)
     }
 
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-    }
-    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {}
+
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        do {
+            let result = try String(contentsOf: location)
+            print(result)
+        } catch {
+            track(error)
+        }
     }
 
     func upload(json: String) {
         let fileURL = tempFileFor(json: json)!
-        
+
         let url = URL(string: "https://8b5wq9o68d.execute-api.us-east-1.amazonaws.com/adiona-watch-api-trigger")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("\(json.count)", forHTTPHeaderField: "Content-Length")
+        request.setValue("(json.count)", forHTTPHeaderField: "Content-Length")
         request.setValue(fileURL.lastPathComponent, forHTTPHeaderField: "filename")
 
-        let session = URLSession(configuration: config(with: UUID().uuidString), delegate: self, delegateQueue: nil)
+        let session = URLSession(configuration: config(with: "adiona_data_" + UUID().uuidString), delegate: self, delegateQueue: nil)
         let task = session.uploadTask(with: request, fromFile: fileURL)
         task.resume()
     }
@@ -224,187 +257,22 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
         return localURL
     }
 
-    func download(filename: String) {
-        var url = URL(string: "https://8b5wq9o68d.execute-api.us-east-1.amazonaws.com/adiona-watch-api-trigger")!
-        url = url.appendingPathComponent(filename)
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(filename, forHTTPHeaderField: "filename")
-
-        let config = URLSessionConfiguration.background(withIdentifier: filename)
-        let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-        let backgroundTask = session.downloadTask(with: url)
-        backgroundTask.earliestBeginDate = Date().addingTimeInterval(1) // 4 * 60)
-        backgroundTask.resume()
-    }
+//    func download(filename: String) {
+//        var url = URL(string: "https://8b5wq9o68d.execute-api.us-east-1.amazonaws.com/adiona-watch-api-trigger")!
+//        url = url.appendingPathComponent(filename)
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "GET"
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request.setValue(filename, forHTTPHeaderField: "filename")
+//
+//        let config = URLSessionConfiguration.background(withIdentifier: filename)
+//        let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+//        let backgroundTask = session.downloadTask(with: url)
+//        backgroundTask.earliestBeginDate = Date().addingTimeInterval(1) // 4 * 60)
+//        backgroundTask.resume()
+//    }
 }
-//        upload2(json: """
-//            {
-//              "oxygen_saturation" : {
-//                "values" : [
-//                  50, 60
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                  "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "respiratory_rate" : {
-//                "values" : [
-//                  14, 15
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                  "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "distance_walking_running" : {
-//                "values" : [
-//                  123, 156
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                  "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "active_energy_burned" : {
-//                "values" : [
-//                  123, 134
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                  "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "acceleration" : {
-//                "frequency" : 32,
-//                "z_val" : [
-//                  -0.0009765625
-//                ],
-//                "y_val": [
-//                  -0.0009765625
-//                ],
-//                "x_val" : [
-//                  -0.0009765625
-//                ],
-//                "startQueryTime": "2022-07-22T02:46:43Z"
-//              },
-//              "six_minute_walk_test" : {
-//                "values" : [
-//
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//
-//                ]
-//              },
-//              "heart_rate" : {
-//                "values" : [
-//                  80, 71
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                  "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "heart_rate_variability" : {
-//                "values" : [
-//                  0.115, 1.1
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                  "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "metaData" : {
-//                "device_ID" : "A01FF30D-288E-4B15-89FE-25A8F7071D92",
-//                "connectivity_status" : ["wifi"],
-//                "start_date" : "2022-07-22T02:46:43Z",
-//                "user_id" : 12345
-//              },
-//              "step_count" : {
-//                "values" : [
-//                  24, 25
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                    "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "resting_heart_rate" : {
-//                "values" : [
-//                  0.115, 1.1
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//                  "2022-07-22T02:46:43Z", "2022-07-23T02:46:43Z"
-//                ]
-//              },
-//              "stair_descent_speed" : {
-//                "values" : [
-//
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//
-//                ]
-//              },
-//              "stair_ascent_speed" : {
-//                "values" : [
-//
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//
-//                ]
-//              },
-//              "number_of_times_fallen" : {
-//                "values" : [
-//
-//                ],
-//                "sources" : [
-//
-//                ],
-//                "timestamps" : [
-//
-//                ]
-//              },
-//              "locations" : {
-//                "longitude" : [
-//                  71.11
-//                ],
-//                "latitude" : [
-//                  74.11
-//                ],
-//                "timestamp" : [
-//                  "2022-07-22T02:46:43Z"
-//                ]
-//              }
-//            }
-//            """
-//        )
-//        upload(json: "{'foo':'dog'}")
+
+
+"{"statusCodee": 200, "body": "{"version": "2.0", "routeKey": "ANY /adiona-watch-api-get-profile-trigger", "rawPath": "/default/adiona-watch-api-get-profile-trigger", "rawQueryString": "", "headers": {"accept": "*/*", "accept-encoding": "gzip, deflate, br", "accept-language": "en-US,en;q=0.9", "content-length": "162", "content-type": "application/json", "filename": "12345_2022-08-02T15:17:28Z.json", "host": "vbar9mhxvd.execute-api.us-east-1.amazonaws.com", "user-agent": "Adiona%20WatchKit%20Extension/4 CFNetwork/1331.0.7 Darwin/21.5.0", "x-amzn-trace-id": "Root=1-62e9400b-614b89734c71820b1130fe4a", "x-forwarded-for": "72.186.203.223", "x-forwarded-port": "443", "x-forwarded-proto": "https"}, "requestContext": {"accountId": "779792650170", "apiId": "vbar9mhxvd", "domainName": "vbar9mhxvd.execute-api.us-east-1.amazonaws.com", "domainPrefix": "vbar9mhxvd", "http": {"method": "POST", "path": "/default/adiona-watch-api-get-profile-trigger", "protocol": "HTTP/1.1", "sourceIp": "72.186.203.223", "userAgent": "Adiona%20WatchKit%20Extension/4 CFNetwork/1331.0.7 Darwin/21.5.0"}, "requestId": "WPbxyg8voAMEMDg=", "routeKey": "ANY /adiona-watch-api-get-profile-trigger", "stage": "default", "time": "02/Aug/2022:15:17:31 +0000", "timeEpoch": 1659453451295}, "body": "{n  "has_cellular_capabilities" : "false",n  "user_id" : "12345",n  "device_ID" : "undetermined",n  "battery_level" : 0,n  "start_date" : "2022-08-02T15:17:28Z"n}", "isBase64Encoded": false}"}"

@@ -21,7 +21,7 @@ class GeoFence: NSObject {
 class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
     var geoFences = [GeoFence]()
     var lastReportedLocation: CLLocation?
-    
+
     @Published var geoFenceStatus: String = "In Fence"
     
     var manager = CLLocationManager()
@@ -89,20 +89,13 @@ class Location: NSObject, CLLocationManagerDelegate, ObservableObject {
             } else {
                 if fence.inFence {
                     fence.inFence = false
-                        
-                    let locationData = LocationData()
-                    locationData.longitude.append(location.coordinate.longitude)
-                    locationData.latitude.append(location.coordinate.latitude)
-                    locationData.timestamp.append(Date())
-                    #warning("Need to send geofence breach")
-//                        S3Session.dataBucket.sendToS3(filename: "Geofence \(fence.region.identifier) Exit at \(Date().description).json",
-//                                                      json: try locationData.toJSON() as String) {
-//                            DispatchQueue.main.async {
-//                                self.geoFenceStatus = "Out of fence \(fence.region.identifier): \(distanceInMeters)"
-//                            }
-//                        }
+                    HealthDataManager.shared.adionaData.geofence_breaches.append(fence.region.identifier)
                 }
             }
+        }
+        
+        if HealthDataManager.shared.adionaData.geofence_breaches.count > 0 {
+            NotificationCenter.default.post(name: NSNotification.Name("geofence_breached"), object: nil)
         }
     }
     

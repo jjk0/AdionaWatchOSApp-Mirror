@@ -32,7 +32,6 @@ class AccelerometerData: Encodable {
 class MetaData: Encodable {
     var battery_level: Float = 0.0
     var geofences: GeofenceData?
-    var connectivity_status = [String]()
     var device_ID: String = "undetermined"
     let has_cellular_capabilities = NetworkTools.hasCellularCapabilites() ? "true" : "false"
     let start_date = Date()
@@ -44,6 +43,7 @@ class MetaData: Encodable {
 
 class AdionaData: Encodable {
     var metaData = MetaData()
+    var geofence_breaches = [String]()
     let acceleration = AccelerometerData()
     var heart_rate = DataPoints<Double>()
     var heart_rate_variability = DataPoints<Double>()

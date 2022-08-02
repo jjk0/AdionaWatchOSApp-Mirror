@@ -105,6 +105,7 @@
 		0038F02828637C5E0055B2E6 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		0038F02A28637E570055B2E6 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		0038F03028637F400055B2E6 /* HealthDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthDataManager.swift; sourceTree = "<group>"; };
+		005759CC28996D1C005FCE27 /* Adiona_Extension_Development.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adiona_Extension_Development.mobileprovision; sourceTree = "<group>"; };
 		00806313286DCEE4005E4954 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		008F10772881FCFB0086E2FE /* Profile.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.model.swift; sourceTree = "<group>"; };
 		009E7411287F2DF700869529 /* Geofences.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geofences.model.swift; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 		0038EFEA28637A8F0055B2E6 /* Adiona WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				005759CC28996D1C005FCE27 /* Adiona_Extension_Development.mobileprovision */,
 				0038F02628637C5D0055B2E6 /* Adiona WatchKit Extension.entitlements */,
 				00B940AA2881BE9E0086BFBB /* Extension */,
 				00B940AB2881BEBE0086BFBB /* Views */,
