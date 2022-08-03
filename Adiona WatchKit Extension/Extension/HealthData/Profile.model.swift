@@ -9,6 +9,7 @@ import Foundation
 
 struct Profile: Codable {
     let caregiver_phone: String
+    let caregiver_name: String
     let living_situation: String
 }
 

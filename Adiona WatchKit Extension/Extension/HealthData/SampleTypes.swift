@@ -57,6 +57,7 @@ class AdionaData: Encodable {
     var respiratory_rate = DataPoints<Double>()
     var oxygen_saturation = DataPoints<Double>()
     var number_of_times_fallen = DataPoints<Double>()
+    var last_fall_time: Date?
     var locations = LocationData()
     
     func addQuantitySamples(for samples: [HKQuantitySample]) {
