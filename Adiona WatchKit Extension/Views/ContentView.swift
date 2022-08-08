@@ -71,7 +71,7 @@ struct ContentView: View {
                             .foregroundColor(.blue)
                             .aspectRatio(1, contentMode: .fit)
                             .frame(width: 28, height: 28, alignment: .center)
-                        Text("Call Carer")
+                        Text("Call " + HealthDataManager.shared.carerName)
                             .font(.system(size: 18, weight: .heavy))
                             .foregroundColor(.blue)
                     }

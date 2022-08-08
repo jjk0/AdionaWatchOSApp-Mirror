@@ -65,6 +65,8 @@ struct KeypadView: View {
                         HealthDataManager.shared.adionaData.metaData.user_id = enteredDigits
                         self.showingExistsAlert.toggle()
                         self.showingSuccessAlert.toggle()
+                        self.dismissFlag.toggle()
+                        extensionDelegate.getProfileData()
                     }
                     Button("Re-enter", role: .cancel) {
                         showingExistsAlert = false

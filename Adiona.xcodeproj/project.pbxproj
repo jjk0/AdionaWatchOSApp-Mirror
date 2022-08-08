@@ -97,15 +97,14 @@
 		0038EFF328637A8F0055B2E6 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		0038EFF528637A8F0055B2E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0038EFF828637A8F0055B2E6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		0038EFFA28637A8F0055B2E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0038EFFB28637A8F0055B2E6 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		0038F00028637A8F0055B2E6 /* AdionaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdionaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0038F00428637A8F0055B2E6 /* AdionaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdionaTests.swift; sourceTree = "<group>"; };
-		0038F02628637C5D0055B2E6 /* Adiona WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Adiona WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		0038F02828637C5E0055B2E6 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		0038F02A28637E570055B2E6 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		0038F03028637F400055B2E6 /* HealthDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthDataManager.swift; sourceTree = "<group>"; };
-		005759CC28996D1C005FCE27 /* Adiona_Extension_Development.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adiona_Extension_Development.mobileprovision; sourceTree = "<group>"; };
+		00638C4E28A14EBF00E7412F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00638C4F28A152E500E7412F /* MainInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MainInfo.plist; sourceTree = "<group>"; };
 		00806313286DCEE4005E4954 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		008F10772881FCFB0086E2FE /* Profile.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.model.swift; sourceTree = "<group>"; };
 		009E7411287F2DF700869529 /* Geofences.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geofences.model.swift; sourceTree = "<group>"; };
@@ -114,6 +113,7 @@
 		00B940A8288197C10086BFBB /* CodeChangeConfirmation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeChangeConfirmation.swift; sourceTree = "<group>"; };
 		00B940AF2881C0020086BFBB /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		00B9B884288842F4001A67C1 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		00C78C5828A145D000824DCF /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		00C9C24228649D6600EB6B78 /* ComplicationViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
 		00C9C2442864A03200EB6B78 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		00CB07F6288ED31500D51717 /* Adiona WatchKit Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Adiona WatchKit Extension-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -143,6 +143,9 @@
 		0038EFD028637A8C0055B2E6 = {
 			isa = PBXGroup;
 			children = (
+				00638C4F28A152E500E7412F /* MainInfo.plist */,
+				00638C4E28A14EBF00E7412F /* Info.plist */,
+				00C78C5828A145D000824DCF /* Entitlements.plist */,
 				0038EFDF28637A8C0055B2E6 /* Adiona WatchKit App */,
 				0038EFEA28637A8F0055B2E6 /* Adiona WatchKit Extension */,
 				0038F00328637A8F0055B2E6 /* AdionaTests */,
@@ -174,13 +177,10 @@
 		0038EFEA28637A8F0055B2E6 /* Adiona WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				005759CC28996D1C005FCE27 /* Adiona_Extension_Development.mobileprovision */,
-				0038F02628637C5D0055B2E6 /* Adiona WatchKit Extension.entitlements */,
 				00B940AA2881BE9E0086BFBB /* Extension */,
 				00B940AB2881BEBE0086BFBB /* Views */,
 				009E7417287F3BB800869529 /* Zip4Sequence.swift */,
 				0038EFF528637A8F0055B2E6 /* Assets.xcassets */,
-				0038EFFA28637A8F0055B2E6 /* Info.plist */,
 				0038EFFB28637A8F0055B2E6 /* PushNotificationPayload.apns */,
 				0038EFF728637A8F0055B2E6 /* Preview Content */,
 			);
@@ -536,6 +536,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -592,6 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -607,15 +609,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Adiona WatchKit Extension/Adiona WatchKit Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Adiona WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_BITCODE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = Adiona_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSFallDetectionUsageDescription = "To send timely alerts of a fall.";
@@ -635,6 +637,8 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				NSFallDetectionUsageDescription = "To send timely alerts of a fall.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -655,15 +659,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Adiona WatchKit Extension/Adiona WatchKit Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Adiona WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_BITCODE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Adiona WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = Adiona_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSFallDetectionUsageDescription = "To send timely alerts of a fall.";
@@ -683,6 +687,8 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				NSFallDetectionUsageDescription = "To send timely alerts of a fall.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -704,12 +710,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_BITCODE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = MainInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
@@ -732,12 +738,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_BITCODE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = MainInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
@@ -757,9 +763,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_BITCODE = YES;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_WKExtensionDelegateClassName = ExtensionDelegate;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona;
@@ -773,9 +780,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = AJ7P2RU6TG;
 				ENABLE_BITCODE = YES;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_WKExtensionDelegateClassName = ExtensionDelegate;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adiona.Adiona;

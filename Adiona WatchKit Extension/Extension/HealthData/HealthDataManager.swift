@@ -39,8 +39,27 @@ class HealthDataManager: NSObject, ObservableObject, CMFallDetectionDelegate {
     static var shared = HealthDataManager()
     @Published var stepsToday: String = "-"
     @Published var heartrate: String = "-"
+    @Published var carerName: String = "Carer"
+
+    var profileData: ProfileData? {
+        get {
+            let defaults = UserDefaults.standard
+            guard let savedProfile = defaults.object(forKey: "profileData") as? Data else { return nil }
+
+            let decoder = JSONDecoder()
+            return try? decoder.decode(ProfileData.self, from: savedProfile)
+        }
+
+        set(newValue) {
+            carerName = newValue?.profile_info.caregiver_name ?? "Carer"
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(newValue) {
+                let defaults = UserDefaults.standard
+                defaults.set(encoded, forKey: "profileData")
+            }
+        }
+    }
     
-    var profileData: ProfileData?
     var adionaData = AdionaData()
     var activeDataQueries = [HKQuery]()
     var acclerometerData = AccelerometerData()
@@ -73,6 +92,8 @@ class HealthDataManager: NSObject, ObservableObject, CMFallDetectionDelegate {
             
             self.start()
         }
+
+        carerName = profileData?.profile_info.caregiver_name ?? "Carer"
     }
     
     func start() {

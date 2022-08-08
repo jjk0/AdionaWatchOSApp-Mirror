@@ -24,14 +24,16 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
             options.sessionTrackingIntervalMillis = 6000
         }
 
-        getProfileData()
+        if healthDataManager.profileData == nil {
+            getProfileData()
+        }
 
         WKExtension.shared().registerForRemoteNotifications()
 
         WKInterfaceDevice.current().isBatteryMonitoringEnabled = true
 
         fallDetector.delegate = self
-        // fallDetector.requestAuthorization { _ in }
+        fallDetector.requestAuthorization { _ in }
 
         NotificationCenter.default.addObserver(forName: NSNotification.Name("geofence_breached"), object: nil, queue: nil) { _ in
             self.sendHealthData()
@@ -82,9 +84,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
     }
 
     func applicationDidBecomeActive() {
-        if let data = UserDefaults.standard.string(forKey: "JSON") {
-            print("Data count: (data.count)")
-        }
     }
 
     public func schedule(firstTime: Bool = false) {
@@ -148,7 +147,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
     }
     
     func upload(json: String) {
-        let fileURL = tempFileFor(json: json)!
+        guard let fileURL = tempFileFor(json: json) else { return }
 
         let url = URL(string: "https://8b5wq9o68d.execute-api.us-east-1.amazonaws.com/adiona-watch-api-trigger")!
         var request = URLRequest(url: url)
@@ -165,11 +164,10 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
     
     func getProfileData() {
         do {
-            
             var json = try healthDataManager.adionaData.metaData.toJSON()
 
             json = "{ \"metaData\" : \(json) }"
-            let fileURL = tempFileFor(json: json)!
+            guard let fileURL = tempFileFor(json: json) else { return }
 
             let url = URL(string: "https://vbar9mhxvd.execute-api.us-east-1.amazonaws.com/default/adiona-watch-api-get-profile-trigger")!
             var request = URLRequest(url: url)
@@ -182,9 +180,8 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             let task = session.uploadTask(with: request, fromFile: fileURL)
             task.resume()
-
         } catch {
-
+            track(error)
         }
     }
 
@@ -216,7 +213,6 @@ extension ExtensionDelegate {
                     healthDataManager.location?.resetGeofence(with: geoFenceData)
                 }
             }
-            
         } catch {
             track(error)
         }
