@@ -36,9 +36,11 @@ class MetaData: Encodable {
     let has_cellular_capabilities = NetworkTools.hasCellularCapabilites() ? "true" : "false"
     let start_date = Date()
     var end_date: Date?
-    var user_id = "12345"//UserDefaults.standard.string(forKey: "bucket_name")
+    var user_id: String?
     
-    init() {}
+    init() {
+        user_id = UserDefaults.standard.string(forKey: "bucket_name")
+    }
 }
 
 class AdionaData: Encodable {
@@ -58,6 +60,7 @@ class AdionaData: Encodable {
     var oxygen_saturation = DataPoints<Double>()
     var number_of_times_fallen = DataPoints<Double>()
     var last_fall_time: Date?
+    var last_fall_resolution: Int?
     var locations = LocationData()
     
     func addQuantitySamples(for samples: [HKQuantitySample]) {

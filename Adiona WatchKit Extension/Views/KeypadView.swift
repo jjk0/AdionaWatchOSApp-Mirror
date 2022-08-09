@@ -62,6 +62,7 @@ struct KeypadView: View {
                     Color("BackgroundBlue")
                     Button("YES", role: .destructive) {
                         S3.dataBucket.bucketName = enteredDigits
+                        UserDefaults.standard.set(enteredDigits, forKey: "bucket_name")
                         HealthDataManager.shared.adionaData.metaData.user_id = enteredDigits
                         self.showingExistsAlert.toggle()
                         self.showingSuccessAlert.toggle()

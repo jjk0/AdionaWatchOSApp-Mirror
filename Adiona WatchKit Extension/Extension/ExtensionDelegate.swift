@@ -42,6 +42,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
 
     func fallDetectionManager(_ fallDetectionManager: CMFallDetectionManager, didDetect event: CMFallDetectionEvent, completionHandler handler: @escaping () -> Void) {
         healthDataManager.adionaData.last_fall_time = Date()
+        healthDataManager.adionaData.last_fall_resolution = event.resolution.rawValue
         sendHealthData()
     }
 
@@ -54,7 +55,7 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
         case .denied:
             track("Falldetection Authorization denied")
         case .authorized:
-            fallDetector.delegate = self
+            track("Falldetection Authorized")
         @unknown default:
             track("Falldetection Authorization unknown")
         }

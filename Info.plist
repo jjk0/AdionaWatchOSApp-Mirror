@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSFallDetectionUsageDescription</key>
-	<string>To detect and report falls.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To track location and provide alerts.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>To track location.</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>To share health data to app.</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
