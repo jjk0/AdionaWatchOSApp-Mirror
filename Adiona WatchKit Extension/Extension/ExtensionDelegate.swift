@@ -28,7 +28,12 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
             getProfileData()
         }
 
+#if targetEnvironment(simulator)
+  // your simulator code
+#else
         WKExtension.shared().registerForRemoteNotifications()
+#endif
+
 
         WKInterfaceDevice.current().isBatteryMonitoringEnabled = true
 
@@ -88,7 +93,12 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
     }
 
     public func schedule(firstTime: Bool = false) {
+#if targetEnvironment(simulator)
+        let minutes = 1
+#else
         let minutes = 15
+#endif
+
 
         let when = Calendar.current.date(
             byAdding: .minute,
@@ -120,7 +130,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
         }
     }
 
-
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
         backgroundTasks.forEach { task in
             switch task {
@@ -131,7 +140,8 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
                 refreshBackgroundTask = task
             case let task as WKURLSessionRefreshBackgroundTask:
                 _ = URLSession(configuration: config(with: task.sessionIdentifier), delegate: self, delegateQueue: nil)
-                sessionBackgroundTask = task
+                task.setTaskCompletedWithSnapshot(false)
+                //sessionBackgroundTask = task
             default:
                 task.setTaskCompletedWithSnapshot(false)
             }
@@ -159,7 +169,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
 
         let session = URLSession(configuration: config(with: "adiona_data_" + UUID().uuidString), delegate: self, delegateQueue: nil)
         let task = session.uploadTask(with: request, fromFile: fileURL)
-        task.earliestBeginDate = Date().addingTimeInterval(15 * 60)
         task.resume()
     }
     

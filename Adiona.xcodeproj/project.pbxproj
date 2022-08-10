@@ -715,7 +715,6 @@
 				ENABLE_BITCODE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
-				INFOPLIST_FILE = MainInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_NSFallDetectionUsageDescription = "To detect and report falls.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -744,7 +743,6 @@
 				ENABLE_BITCODE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = Adiona_WatchKit_Extension;
-				INFOPLIST_FILE = MainInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Adiona;
 				INFOPLIST_KEY_NSFallDetectionUsageDescription = "To detect and report falls.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
