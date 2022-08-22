@@ -104,7 +104,6 @@
 		0038F02A28637E570055B2E6 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		0038F03028637F400055B2E6 /* HealthDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthDataManager.swift; sourceTree = "<group>"; };
 		00638C4E28A14EBF00E7412F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00638C4F28A152E500E7412F /* MainInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MainInfo.plist; sourceTree = "<group>"; };
 		00806313286DCEE4005E4954 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		008F10772881FCFB0086E2FE /* Profile.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.model.swift; sourceTree = "<group>"; };
 		009E7411287F2DF700869529 /* Geofences.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geofences.model.swift; sourceTree = "<group>"; };
@@ -143,7 +142,6 @@
 		0038EFD028637A8C0055B2E6 = {
 			isa = PBXGroup;
 			children = (
-				00638C4F28A152E500E7412F /* MainInfo.plist */,
 				00638C4E28A14EBF00E7412F /* Info.plist */,
 				00C78C5828A145D000824DCF /* Entitlements.plist */,
 				0038EFDF28637A8C0055B2E6 /* Adiona WatchKit App */,

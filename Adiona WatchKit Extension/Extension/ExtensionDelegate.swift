@@ -141,7 +141,6 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate, ObservableObject, 
             case let task as WKURLSessionRefreshBackgroundTask:
                 _ = URLSession(configuration: config(with: task.sessionIdentifier), delegate: self, delegateQueue: nil)
                 task.setTaskCompletedWithSnapshot(false)
-                //sessionBackgroundTask = task
             default:
                 task.setTaskCompletedWithSnapshot(false)
             }
