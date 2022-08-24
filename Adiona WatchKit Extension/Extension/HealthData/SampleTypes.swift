@@ -43,6 +43,8 @@ class MetaData: Encodable {
     }
 }
 
+var lastQueryTime = [HKSampleType: Date]()
+
 class AdionaData: Encodable {
     var metaData = MetaData()
     var geofence_breaches = [String]()
@@ -113,7 +115,16 @@ class AdionaData: Encodable {
     }
     
     func addSamples(for sampleType: HKSampleType) {
-        let predicate = HKQuery.predicateForSamples(withStart: metaData.start_date, end: metaData.end_date, options: [.strictStartDate, .strictEndDate])
+        var startDate = metaData.start_date
+        
+        if let lastQueryForSampleType = lastQueryTime[sampleType] {
+            startDate = lastQueryForSampleType
+            lastQueryTime[sampleType] = Date()
+        } else {
+            lastQueryTime[sampleType] = startDate
+        }
+        
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: [])
 
         let sampleQueryHR = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: 1000, sortDescriptors: nil)
             { [weak self] (_, samples, _) -> Void in

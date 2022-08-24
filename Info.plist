@@ -14,13 +14,17 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>processing</string>
 		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>WKBackgroundModes</key>
 	<array>
-		<string>workout-processing</string>
+		<string>self-care</string>
+	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)_location</string>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)_remote_notifications</string>
 	</array>
 </dict>
 </plist>

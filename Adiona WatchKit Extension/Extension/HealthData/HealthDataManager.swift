@@ -113,13 +113,6 @@ class HealthDataManager: NSObject, ObservableObject, CMFallDetectionDelegate {
         location?.restart()
     }
     
-    func collectSamples() {
-        HealthDataManager.shared.adionaData.metaData.end_date = Date()
-        for sampleType in typesToRead {
-            self.adionaData.addSamples(for: sampleType)
-        }
-    }
-
     func setupObserverQuery(for sampleType: HKSampleType) {
         
         let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { _, completionHandler, errorOrNil in
@@ -150,7 +143,7 @@ extension HealthDataManager {
         if motion.isAccelerometerAvailable {
             motion.stopAccelerometerUpdates()
             
-            motion.startAccelerometerUpdates(to: accelerometerQueue) { [weak self] reading, error in
+            motion.startAccelerometerUpdates(to: .current!) { [weak self] reading, error in
                 guard let self = self,
                       error == nil,
                       let reading = reading else { return }
