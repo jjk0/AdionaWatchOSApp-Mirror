@@ -24,7 +24,8 @@ struct AdionaApp: App {
                     print("\(#function) REPORTS - App change of scenePhase Inactive")
                 case .background:
                     extensionDelegate.schedule()
-                    HealthDataManager.shared.location?.restart()
+                HealthDataManager.shared.startAccelerometer()
+                HealthDataManager.shared.location?.restart()
                 default:
                     print("\(#function) REPORTS - App change of scenePhase Default")
             }

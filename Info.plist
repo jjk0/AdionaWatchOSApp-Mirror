@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)_location</string>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)_remote_notifications</string>
+	</array>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -20,11 +25,6 @@
 	<key>WKBackgroundModes</key>
 	<array>
 		<string>self-care</string>
-	</array>
-	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array>
-		<string>$(PRODUCT_BUNDLE_IDENTIFIER)_location</string>
-		<string>$(PRODUCT_BUNDLE_IDENTIFIER)_remote_notifications</string>
 	</array>
 </dict>
 </plist>

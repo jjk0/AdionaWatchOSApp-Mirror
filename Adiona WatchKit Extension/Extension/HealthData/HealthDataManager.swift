@@ -40,6 +40,11 @@ class HealthDataManager: NSObject, ObservableObject, CMFallDetectionDelegate {
     @Published var stepsToday: String = "-"
     @Published var heartrate: String = "-"
     @Published var carerName: String = "Carer"
+    private let opQueue: OperationQueue = {
+        let o = OperationQueue()
+        o.name = "core-motion-updates"
+        return o
+    }()
 
     var profileData: ProfileData? {
         get {
@@ -143,7 +148,7 @@ extension HealthDataManager {
         if motion.isAccelerometerAvailable {
             motion.stopAccelerometerUpdates()
             
-            motion.startAccelerometerUpdates(to: .current!) { [weak self] reading, error in
+            motion.startAccelerometerUpdates(to: opQueue) { [weak self] reading, error in
                 guard let self = self,
                       error == nil,
                       let reading = reading else { return }
